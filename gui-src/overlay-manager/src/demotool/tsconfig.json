@@ -1,0 +1,18 @@
+{
+	"compilerOptions": {
+		"module": "ES2020",
+		"target": "ES2017",
+		"sourceMap": true,
+		"downlevelIteration": true,
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"skipLibCheck": true
+	},
+	"exclude": [
+		"./node_modules"
+	],
+	"include": [
+		"./demotool.worker.ts",
+		"./comlinktest.worker.ts"
+	]
+}

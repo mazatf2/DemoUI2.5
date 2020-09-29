@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"allowJs": true,
+		"checkJs": true,
+		"resolveJsonModule": true,
+		"strict": false,
+		"noEmit": true
+	},
+	"exclude": [
+		"node_modules",
+		"dist",
+		"lib",
+		".cache"
+	]
+}

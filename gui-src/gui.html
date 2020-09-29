@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>DemoUI2.5</title>
+	<link href="./gui.css" rel="stylesheet"/>
+</head>
+<body>
+
+<script src="./img/img-icon.js" type=module></script>
+<script src="./castingessentials/ce-cameratools-spec-class.js" type="module"></script>
+<script src="./overlay-manager/src/overlay-manager.js" type="module"></script>
+
+<div id="container">
+	
+	<!-- data-type=hud !== data-type="hud" for css attribute selectors -->
+	
+	<div class="mount" data-keybind=KeyQ data-type=hud id=mount1>
+		<ce-cameratools-spec-class id=mount1></ce-cameratools-spec-class>
+	</div>
+	
+	<div class="mount" data-keybind=CapsLock data-type=overlay id=mount3>
+		<overlay-manager id=mount3 name=test style="width: 100%; height: 100%;">
+		</overlay-manager>
+	</div>
+</div>
+
+<div class=debug id=dot style="width: 2px; height: 2px; background: red; position: absolute"></div>
+
+<script src=gui.js type=module></script>
+
+</body>
+</html>

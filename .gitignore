@@ -1,0 +1,8 @@
+node_modules
+demos
+dist
+lib
+sound
+.cache
+*.log
+*.txt
