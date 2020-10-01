@@ -22,6 +22,40 @@ type parse = {
 	gameEvents: string[],
 	parserMode: ParseMode
 }
+type conds = {
+	INVULNERABLE: boolean,
+	INVULNERABLE_WEARINGOFF: boolean,
+	BLASTJUMPING: boolean,
+	CRITBOOSTED: boolean
+}
+type startEnd = {
+	start: number,
+	end: number,
+}
+type dbEntry = {
+	INVULNERABLE: startEnd[],
+	INVULNERABLE_WEARINGOFF: startEnd[],
+	BLASTJUMPING: startEnd[],
+	CRITBOOSTED: startEnd[],
+}
+
+const dbEntry_placeholder = (): dbEntry => {
+	return {
+		INVULNERABLE: [],
+		INVULNERABLE_WEARINGOFF: [],
+		BLASTJUMPING: [],
+		CRITBOOSTED: [],
+	}
+}
+
+const conds_placeholder = (): conds => {
+	return {
+		INVULNERABLE: false,
+		INVULNERABLE_WEARINGOFF: false,
+		BLASTJUMPING: false,
+		CRITBOOSTED: false,
+	}
+}
 
 export class DemoTool {
 	public demo: Demo
@@ -29,8 +63,8 @@ export class DemoTool {
 	public match: Match
 	public outputBatchBuffer: outputBatch
 	public callback: (outputBatch) => void
-	
 	public lastTickConds = new Map()
+	public db = new Map<number, dbEntry>()
 	
 	constructor() {
 		this.outputBatchBuffer = []
@@ -166,8 +200,7 @@ export class DemoTool {
 				CRITBOOSTED: player?.hasCondition(PlayerCondition.TF_COND_CRITBOOSTED) || false,
 			}
 		}
-		
-		const conds_placeholder = conds(-100)
+
 		
 		const newEventEntities = (e: GameEvent | DemoToolEvents, tick: number) => {
 			
@@ -183,7 +216,7 @@ export class DemoTool {
 			
 			const get = id => {
 				if (id === -100)
-					return conds_placeholder
+					return conds_placeholder()
 				
 				return conds(id)
 			}
@@ -195,9 +228,9 @@ export class DemoTool {
 			}
 			
 			const extend_conds_last = {
-				targetid: this.lastTickConds.get(e.values?.targetid) || conds_placeholder,
-				userid: this.lastTickConds.get(e.values?.userid || conds_placeholder),
-				attacker: this.lastTickConds.get(e.values?.attacker || conds_placeholder),
+				targetid: this.lastTickConds.get(e.values?.targetid) || conds_placeholder(),
+				userid: this.lastTickConds.get(e.values?.userid) || conds_placeholder(),
+				attacker: this.lastTickConds.get(e.values?.attacker) || conds_placeholder(),
 			}
 			
 			const out = {
@@ -281,6 +314,39 @@ export class DemoTool {
 						if (packet.tick > packetTick) {
 							for (const player of match.playerEntityMap.values()) {
 								const userId = player.user.userId
+								
+								const newConds: conds = conds(userId)
+								const oldConds: conds = this.lastTickConds.get(userId) || conds_placeholder()
+								
+								const setEntry = (i: dbEntry) => this.db.set(userId, i)
+								const getEntry = () => {
+									let entry = this.db.get(userId)
+									if (!entry) {
+										entry = this.dbEntry_placeholder()
+										setEntry(entry)
+									}
+									return entry
+									
+								}
+								
+								for (const [key, newVal] of Object.entries(newConds)) {
+									if (oldConds[key] === false && newVal === true) { // start
+										const entry = getEntry()
+										const entries: startEnd[] = entry[key]
+										entries.push({start: correctedTick(), end: -1})
+										entry[key] = entries
+										
+										setEntry(entry)
+									}
+									
+									if (oldConds[key] === true && newVal === false) {
+										const entry: dbEntry = getEntry()
+										const entries: startEnd[] = entry[key]
+										entries[entries.length - 1].end = correctedTick()
+										
+										setEntry(entry)
+									}
+								}
 								
 								this.lastTickConds.set(userId, conds(userId))
 								
