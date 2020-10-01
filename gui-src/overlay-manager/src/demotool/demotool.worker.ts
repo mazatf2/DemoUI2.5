@@ -1,10 +1,10 @@
 import * as Comlink from 'comlink'
-import {GameEvent} from '@demostf/demo.js/build'
-import {Demo, Match} from '@demostf/demo.js'
-import {Analyser} from '@demostf/demo.js/build/Analyser'
-import {MessageType} from '@demostf/demo.js/build/Data/Message'
+import {GameEvent} from '@demostf/demo.js/src/Data/GameEventTypes'
+import {Demo, Match, PlayerCondition} from '@demostf/demo.js/src'
+import {Analyser} from '@demostf/demo.js/src/Analyser'
+import {MessageType} from '@demostf/demo.js/src/Data/Message'
 import {DemoToolEvents} from './demoToolEvents'
-import {ParseMode} from '@demostf/demo.js/build/Demo'
+import {ParseMode} from '@demostf/demo.js/src/Demo'
 
 type outputType = 'json' | 'obj'
 type output = {
@@ -29,6 +29,8 @@ export class DemoTool {
 	public match: Match
 	public outputBatchBuffer: outputBatch
 	public callback: (outputBatch) => void
+	
+	public lastTickConds = new Map()
 	
 	constructor() {
 		this.outputBatchBuffer = []
@@ -148,7 +150,66 @@ export class DemoTool {
 		
 		output.start()
 		
-		const newEventEntities = (e: GameEvent | DemoToolEvents, tick: number) => {}
+		const conds = (userId) => {
+			let player
+			const get = userId => this.match.getPlayerByUserId(userId)
+			
+			if (userId === -100)
+				player = null
+			else
+				player = get(userId)
+			
+			return {
+				BLASTJUMPING: player?.hasCondition(PlayerCondition.TF_COND_BLASTJUMPING) || false,
+				INVULNERABLE: player?.hasCondition(PlayerCondition.TF_COND_INVULNERABLE) || false,
+				INVULNERABLE_WEARINGOFF: player?.hasCondition(PlayerCondition.TF_COND_INVULNERABLE_WEARINGOFF) || false,
+				CRITBOOSTED: player?.hasCondition(PlayerCondition.TF_COND_CRITBOOSTED) || false,
+			}
+		}
+		
+		const conds_placeholder = conds(-100)
+		
+		const newEventEntities = (e: GameEvent | DemoToolEvents, tick: number) => {
+			
+			const extend = {
+				targetid: this.match.parserState.userInfo.get(e.values?.targetid)?.steamId || '',
+				userid: this.match.parserState.userInfo.get(e.values?.userid)?.steamId || '',
+				attacker: this.match.parserState.userInfo.get(e.values?.attacker)?.steamId || '',
+			}
+			
+			const targetid = e.values?.targetid || -100
+			const userid = e.values?.userid || -100
+			const attacker = e.values?.attacker || -100
+			
+			const get = id => {
+				if (id === -100)
+					return conds_placeholder
+				
+				return conds(id)
+			}
+			
+			const extend_conds = {
+				targetid: get(targetid),
+				userid: get(userid),
+				attacker: get(attacker),
+			}
+			
+			const extend_conds_last = {
+				targetid: this.lastTickConds.get(e.values?.targetid) || conds_placeholder,
+				userid: this.lastTickConds.get(e.values?.userid || conds_placeholder),
+				attacker: this.lastTickConds.get(e.values?.attacker || conds_placeholder),
+			}
+			
+			const out = {
+				tick: tick,
+				...e,
+				extend: extend,
+				extend_conds: extend_conds,
+				extend_conds_last: extend_conds_last,
+			}
+			
+			return output.msg(out)
+		}
 		
 		const newEventMinimal = (e: GameEvent | DemoToolEvents, tick: number) => {
 			let extend = {}
@@ -181,6 +242,7 @@ export class DemoTool {
 		
 		let pauseOffset: number = 0
 		let isPaused = false
+		let packetTick = 0
 		
 		for (const msg of analyser.getMessages()) {
 			
@@ -213,6 +275,17 @@ export class DemoTool {
 						
 						if (captureThese.includes(packet.event.name)) {
 							newEvent(packet.event, correctedTick())
+						}
+					}
+					if (packet.packetType === 'netTick') {
+						if (packet.tick > packetTick) {
+							for (const player of match.playerEntityMap.values()) {
+								const userId = player.user.userId
+								
+								this.lastTickConds.set(userId, conds(userId))
+								
+							}
+							packetTick = packet.tick
 						}
 					}
 				}

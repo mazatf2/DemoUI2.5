@@ -882,12 +882,11 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@demostf/demo.js@^2.1.0":
+"@demostf/demo.js@https://github.com/mazatf2/demo.js#player-has-condition":
   version "2.1.1"
-  resolved "https://registry.yarnpkg.com/@demostf/demo.js/-/demo.js-2.1.1.tgz#5fdeb3751db25d8e9218cab9435ee8efd6efec06"
-  integrity sha512-0dDx2++f8ILRsHayPQK2aMzVIbkd5CO6Y8tykvwimrLE4y2CFHm2MgICSuDgSPcEeHc9UMHyRBXwy4XQWKgK2g==
+  resolved "https://github.com/mazatf2/demo.js#175020ff2fcfb8e36be27de36015a26187e18505"
   dependencies:
-    bit-buffer "^0.2.3"
+    bit-buffer "^0.2.4"
     snappyjs "^0.6.0"
     text-encoding-shim "git+https://gitlab.com/hongaar/text-encoding-shim.git#83ff0f77f48d05b8ce83ddc7ca49d8df61363b31"
 
@@ -1376,7 +1375,7 @@ bindings@^1.5.0:
   dependencies:
     file-uri-to-path "1.0.0"
 
-bit-buffer@^0.2.3:
+bit-buffer@^0.2.4:
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/bit-buffer/-/bit-buffer-0.2.4.tgz#5520ffb2f656734d44ab9227d88a4be234364a0b"
   integrity sha512-j4rQZTEpdCkb662lkiemA4mlcv9IraC8yA+BnMT4wzOldUCKPTkbgKXL6nwRqtlqiuh+GZYh/sFAzXPpUd9FPQ==

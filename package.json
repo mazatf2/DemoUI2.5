@@ -21,7 +21,7 @@
 		"electron 10.0"
 	],
 	"dependencies": {
-		"@demostf/demo.js": "^2.1.0",
+		"@demostf/demo.js": "https://github.com/mazatf2/demo.js#player-has-condition",
 		"comlink": "^4.3.0",
 		"rcon-srcds": "^1.2.1",
 		"tail": "^2.0.4",
