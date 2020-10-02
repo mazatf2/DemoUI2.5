@@ -1,7 +1,11 @@
-const {overlay_manager_key} = require('../config.json')
+const path = require('path')
 import {define} from 'https://unpkg.com/uce@1.11.4?module'
+const {overlay_manager_key, tf2_path} = require('../config.json')
 
 import './page/roundinfo.js'
+import './page/events.js'
+
+const demoPath = path.join(tf2_path + '/tf/custom/demoui2.5/test.dem')
 
 const style = `
 #main {
@@ -39,6 +43,9 @@ const hide = () => {
 
 define('overlay-manager', {
 	attachShadow: {mode: 'open'},
+	
+	arrayBuffer: new ArrayBuffer(0),
+	
 	render(router) {
 		if (!router) router = ''
 		
@@ -48,6 +55,7 @@ define('overlay-manager', {
 			hide()
 		}}>Hide</button>
 		<page-roundinfo/>
+		<page-events .arrayBuffer="${this.arrayBuffer}"/>
 		</div>
 	`
 	},
@@ -69,6 +77,15 @@ define('overlay-manager', {
 		console.log('overlay-manager init')
 		
 		window.addEventListener('keydown', e => this._onKeydown(e)) // this.onKeydown doesnt work with uce/electron
+		
+		const get = async() => {
+			const demo = await fetch(demoPath)
+			return await demo.arrayBuffer()
+		}
+		get().then(i => {
+			this.arrayBuffer = i
+			this.route()
+		})
 		
 		this.route()
 	},
