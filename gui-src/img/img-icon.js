@@ -1,4 +1,4 @@
-const {define, css} = require('uce')
+import {define, css} from 'https://unpkg.com/uce@1.11.4?module'
 
 define('img-icon', {
 	attachShadow: {mode: 'open'},

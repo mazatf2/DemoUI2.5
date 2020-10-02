@@ -1,6 +1,6 @@
 const path = require('path')
 const Comlink = require('comlink')
-const {define, html, css} = require('uce')
+import {define, html, css} from 'https://unpkg.com/uce@1.11.4?module'
 import {commands} from '../../../commands.js'
 import {strings, team_from_index, teams} from '../../../utils.js'
 const {tf2_path} = require('../config.json')

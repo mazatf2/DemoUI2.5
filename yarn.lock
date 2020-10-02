@@ -5137,6 +5137,11 @@ rcon-srcds@^1.2.1:
   dependencies:
     queue "^6.0.1"
 
+reactive-props@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/reactive-props/-/reactive-props-0.2.0.tgz#c626726611356c5d6da49b41b3653e39f8f73f88"
+  integrity sha512-Az/XeaJN4T1LQ0f0eGpX/MT12Ia32DrduKFSF7hz8LFIOEz4Q4nQASvjKCsPDs5/bz9rPBoiFK+tHtvxIpzejg==
+
 read-config-file@6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/read-config-file/-/read-config-file-6.0.0.tgz#224b5dca6a5bdc1fb19e63f89f342680efdb9299"
@@ -6155,13 +6160,14 @@ uarray@^1.0.0:
   resolved "https://registry.yarnpkg.com/uarray/-/uarray-1.0.0.tgz#e89bf0ea2129596f4bf653b66e53246ed6562b6c"
   integrity sha512-LHmiAd5QuAv7pU2vbh+Zq9YOnqVK0H764p2Ozinpfy9ka58OID4IsGLiXsitqH7n0NAIDxvax1A/kDXpii/Ckg==
 
-uce@^1.6.1:
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/uce/-/uce-1.6.1.tgz#c003f63077257fde9d4411734cd4dba4c485e890"
-  integrity sha512-9CvKd6bDLyUGoozYcyc7DX86DQxDltVXBQcnRTKwHd/31/d3gBGVb/NJUd/yx1aGXIbWh4ZFgCWT80o6aF5wUQ==
+uce@^1.11.4:
+  version "1.11.4"
+  resolved "https://registry.yarnpkg.com/uce/-/uce-1.11.4.tgz#1dec26712c0f89f3db00cf98837fc8892d08d59c"
+  integrity sha512-Z3UzzxmCHGZMU7TlXlh5Xo+GPB9E52FLcakd3ewY3UKI5sfnCsw86aDzSUcFHEzJ+V1dtD5VvvRTdxPfN18AcQ==
   dependencies:
     plain-tag "^0.1.3"
-    uhtml "^2.1.1"
+    reactive-props "^0.2.0"
+    uhtml "^2.1.2"
     umap "^1.0.2"
 
 udomdiff@^1.1.0:
@@ -6176,10 +6182,10 @@ uhandlers@^0.3.6:
   dependencies:
     uarray "^1.0.0"
 
-uhtml@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/uhtml/-/uhtml-2.1.1.tgz#316bc12f182ab299344554f7389c5d5f18f89378"
-  integrity sha512-2lR3NXVMJ7se0+Uznv3GJLw9w5sCIfQs3Kc0x90EXc6S7MsDCikVkw8wzi0OXawfZ5KziUYemfj+kSwackZrjw==
+uhtml@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/uhtml/-/uhtml-2.1.2.tgz#7170789dc0b6c1fced4aee826b8174bd254aea29"
+  integrity sha512-2kBz7ank/FnDDk1l1+0/Behj5ptTgi2/GdLg+/8jyofi5ipIwWBh5CJg0vbRZF90LVvZ+EfSmLRBJAyNs3mcEA==
   dependencies:
     "@ungap/create-content" "^0.2.0"
     uarray "^1.0.0"

@@ -1,5 +1,5 @@
-const {define} = require('uce')
 const {overlay_manager_key} = require('../config.json')
+import {define} from 'https://unpkg.com/uce@1.11.4?module'
 
 import './page/roundinfo.js'
 
