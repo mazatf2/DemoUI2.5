@@ -203,16 +203,20 @@ export class DemoTool {
 
 		
 		const newEventEntities = (e: GameEvent | DemoToolEvents, tick: number) => {
+			let targetid = e.values?.targetid || -100
+			let userid = e.values?.userid || -100
+			let attacker = e.values?.attacker || -100
 			
-			const extend = {
-				targetid: this.match.parserState.userInfo.get(e.values?.targetid)?.steamId || '',
-				userid: this.match.parserState.userInfo.get(e.values?.userid)?.steamId || '',
-				attacker: this.match.parserState.userInfo.get(e.values?.attacker)?.steamId || '',
+			if(e.name === 'crossbow_heal'){
+				targetid = e.values.target || -100
+				userid = e.values.healer || -100
 			}
 			
-			const targetid = e.values?.targetid || -100
-			const userid = e.values?.userid || -100
-			const attacker = e.values?.attacker || -100
+			const extend = {
+				targetid: this.match.parserState.userInfo.get(targetid)?.steamId || '',
+				userid: this.match.parserState.userInfo.get(userid)?.steamId || '',
+				attacker: this.match.parserState.userInfo.get(attacker)?.steamId || '',
+			}
 			
 			const get = id => {
 				if (id === -100)
@@ -228,9 +232,9 @@ export class DemoTool {
 			}
 			
 			const extend_conds_last = {
-				targetid: this.lastTickConds.get(e.values?.targetid) || conds_placeholder(),
-				userid: this.lastTickConds.get(e.values?.userid) || conds_placeholder(),
-				attacker: this.lastTickConds.get(e.values?.attacker) || conds_placeholder(),
+				targetid: this.lastTickConds.get(targetid) || conds_placeholder(),
+				userid: this.lastTickConds.get(userid) || conds_placeholder(),
+				attacker: this.lastTickConds.get(attacker) || conds_placeholder(),
 			}
 			
 			const out = {
