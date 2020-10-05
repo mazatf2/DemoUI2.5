@@ -5,11 +5,10 @@ const Comlink = require('comlink')
 const events = []
 
 async function getEvents(arrayBuffer) {
-	const demotool_worker = new Worker('file:../lib/demotool.worker.js')
-	const Demotool = Comlink.wrap(demotool_worker)
-	
 	if (arrayBuffer.byteLength < 100) return
 	
+	const demotool_worker = new Worker('file:../lib/demotool.worker.js')
+	const Demotool = Comlink.wrap(demotool_worker)
 	const demotool = await new Demotool()
 	
 	await demotool.parse({
@@ -17,6 +16,8 @@ async function getEvents(arrayBuffer) {
 			'player_chargedeployed',
 			'player_death',
 			'crossbow_heal',
+			'rocket_jump',
+			'sticky_jump',
 			
 			'demotool_pause_start',
 			'demotool_pause_end',
@@ -37,6 +38,7 @@ function onGameEvent(eventArr) {
 	
 	const dmg_blast = () => e.values.damagebits & (1<<6) // DMG_BLAST
 	const blasting = () => e.extend_conds.userid.BLASTJUMPING || e.extend_conds_last.userid.BLASTJUMPING
+	const ubered = () => e.extend_conds.userid.INVULNERABLE || e.extend_conds.userid.INVULNERABLE_WEARINGOFF
 	const on = eventName => e.name === eventName
 	const event = (ev) => {
 		ev.name = e.name
@@ -45,16 +47,22 @@ function onGameEvent(eventArr) {
 	}
 	
 	on('player_death') && blasting() && dmg_blast()
-	&& event({steamId: e.extend.userid, labelShort: 'Player died while blasting'})
+	&& event({steamId: e.extend.userid, labelShort: 'Player died from airshot while blasting'})
 	
 	on('player_death') && e.extend_conds.attacker.BLASTJUMPING || e.extend_conds_last.attacker.BLASTJUMPING && dmg_blast()
-	&& event({steamId: e.extend.attacker, labelShort: 'Attacker got kill while blasting'})
+	&& event({steamId: e.extend.attacker, labelShort: 'Attacker got airshot kill while blasting'})
 	
 	on('player_chargedeployed') && blasting()
 	&& event({steamId: e.extend.userid, labelShort: 'ÜberCharge activated while blasting'})
 	
 	on('crossbow_heal') && e.extend_conds.targetid.BLASTJUMPING || e.extend_conds_last.targetid.BLASTJUMPING
 	&& event({steamId: e.extend.userid, labelShort: 'Airshot healing arrow'})
+	
+	on('rocket_jump') || on('sticky_jump') && ubered()
+	&& event({steamId: e.extend.userid, labelShort: 'Blast jump while ubered'})
+	
+	on('rocket_jump') || on('sticky_jump') && e.extend_conds.userid.CRITBOOSTED
+	&& event({steamId: e.extend.userid, labelShort: 'Blast jump while kritzed'})
 	
 	if (blasting()) {
 		console.log('blasting', e)
