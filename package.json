@@ -12,6 +12,7 @@
 		"prebuild": "parcel build ./gui-src/overlay-manager/src/demotool/demotool.worker.ts --out-dir lib",
 		"build": "electron-builder --dir",
 		"watch-demotool": "parcel watch ./gui-src/overlay-manager/src/demotool/demotool.worker.ts --out-dir lib",
+		"watch-gh-pages": "parcel watch ./gh-pages/index.html",
 		"pack": "electron-builder --dir"
 	},
 	"build": {
