@@ -54,7 +54,7 @@ define('overlay-manager', {
 		<button onclick=${() => {
 			hide()
 		}}>Hide</button>
-		<page-roundinfo/>
+		<page-roundinfo .arrayBuffer="${this.arrayBuffer}"/>
 		<page-events .arrayBuffer="${this.arrayBuffer}"/>
 		</div>
 	`

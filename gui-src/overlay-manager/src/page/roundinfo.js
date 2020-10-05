@@ -1,20 +1,13 @@
-const path = require('path')
 const Comlink = require('comlink')
 import {define, html, css} from 'https://unpkg.com/uce@1.11.4?module'
 import {commands} from '../../../commands.js'
 import {strings, team_from_index, teams} from '../../../utils.js'
-const {tf2_path} = require('../config.json')
 
-const demoPath = path.join(tf2_path + '/tf/custom/demoui2.5/test.dem')
-
-async function getRounds() {
+async function getRounds(arrayBuffer) {
+	if (arrayBuffer.byteLength < 100) return
+	
 	const demotool_worker = new Worker('file:../lib/demotool.worker.js')
 	const Demotool = Comlink.wrap(demotool_worker)
-	
-	const demo = await fetch(demoPath)
-	const arrayBuffer = await demo.arrayBuffer()
-	console.log('arrayBuffer', arrayBuffer.byteLength)
-	
 	const demotool = await new Demotool()
 	
 	await demotool.parse({
@@ -327,22 +320,29 @@ function onGameEvent(eventArr = []) {
 
 define('page-roundinfo', {
 	attachShadow: {mode: 'open'},
+	props: {arrayBuffer: new ArrayBuffer(0)},
 	async init() {
 		this.render()
-		
-		let rounds = await getRounds()
+	},
+	async update() {
+		const rounds = await getRounds(this.arrayBuffer)
 		console.log(rounds)
 		const options = {showSpoilers: true, scalePx: 16}
-		let components = rounds.map(round => RoundComponent(round, options))
+		const components = rounds.map(round => RoundComponent(round, options))
 		
-		this.render(components)
-	},
-	
-	render(r = []) {
 		this.html`
 			<style>${style}</style>
 			<div class="timeline">
-				${r}
+				${components}
+			</div>`
+	},
+	render(r = []) {
+		this.update()
+		
+		this.html`
+			<style>${style}</style>
+			<div class="timeline">
+				<span>Waiting</span>
 			</div>
 		`
 	},
