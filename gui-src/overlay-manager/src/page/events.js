@@ -1,4 +1,5 @@
-import {define, html} from 'https://unpkg.com/uce@1.11.4?module'
+const define = globalThis.define
+const html = globalThis.html
 
 const Comlink = require('comlink')
 

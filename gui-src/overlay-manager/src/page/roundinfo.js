@@ -1,5 +1,7 @@
 const Comlink = require('comlink')
-import {define, html, css} from 'https://unpkg.com/uce@1.11.4?module'
+const define = globalThis.define
+const html = globalThis.html
+const css = globalThis.css
 import {commands} from '../../../commands.js'
 import {strings, team_from_index, teams} from '../../../utils.js'
 
