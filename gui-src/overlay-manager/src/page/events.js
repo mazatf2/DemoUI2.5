@@ -50,13 +50,13 @@ function onGameEvent(eventArr) {
 	on('player_death') && blasting() && dmg_blast()
 	&& event({steamId: e.extend.userid, labelShort: 'Player died from airshot while blasting'})
 	
-	on('player_death') && e.extend_conds.attacker.BLASTJUMPING || e.extend_conds_last.attacker.BLASTJUMPING && dmg_blast()
+	on('player_death') && (e.extend_conds.attacker.BLASTJUMPING || e.extend_conds_last.attacker.BLASTJUMPING) && dmg_blast()
 	&& event({steamId: e.extend.attacker, labelShort: 'Attacker got airshot kill while blasting'})
 	
 	on('player_chargedeployed') && blasting()
 	&& event({steamId: e.extend.userid, labelShort: 'ÜberCharge activated while blasting'})
 	
-	on('crossbow_heal') && e.extend_conds.targetid.BLASTJUMPING || e.extend_conds_last.targetid.BLASTJUMPING
+	on('crossbow_heal') && (e.extend_conds.targetid.BLASTJUMPING || e.extend_conds_last.targetid.BLASTJUMPING)
 	&& event({steamId: e.extend.userid, labelShort: 'Airshot healing arrow'})
 	
 	on('rocket_jump') || on('sticky_jump') && ubered()
