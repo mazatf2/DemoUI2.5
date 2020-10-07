@@ -8,7 +8,10 @@ import {strings, team_from_index, teams} from '../../../utils.js'
 async function getRounds(arrayBuffer) {
 	if (arrayBuffer.byteLength < 100) return
 	
-	const demotool_worker = new Worker('file:../lib/demotool.worker.js')
+	let demotool_worker = new Worker('../../../../lib/demotool.worker.js')
+	if (process && process?.versions?.electron)
+		demotool_worker = new Worker('file:../lib/demotool.worker.js')
+	
 	const Demotool = Comlink.wrap(demotool_worker)
 	const demotool = await new Demotool()
 	
