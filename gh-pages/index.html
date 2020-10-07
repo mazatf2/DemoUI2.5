@@ -5,6 +5,48 @@
 	<title>Title</title>
 </head>
 <body>
-<a href="./events.html">Events</a>
+<script>
+	window.global = window
+	var parcelRequire
+</script>
+<script type=module>
+	import {define, html, css} from 'https://unpkg.com/uce@1.11.6?module'
+	
+	window.define = define
+	window.html = html
+	window.css = css
+</script>
+
+<script src="dropfiles.js" type="module"></script>
+<script src="../gui-src/overlay-manager/src/page/roundinfo.js" type="module"></script>
+<script src="../gui-src/overlay-manager/src/page/events.js" type="module"></script>
+<div id="root"></div>
+<div id="roundinfo"></div>
+<div id="events"></div>
+<script type=module>
+	import {render, html} from 'https://unpkg.com/uce@1.11.6?module'
+	
+	window.addEventListener('DOMContentLoaded', main)
+	
+	function main() {
+		render(document.querySelector('#root'),
+			html`
+			<component-dropfile .onArrayBuffer="${(e) => {
+				RoundInfo(e)
+				Events(e)
+			}}"/>`,
+		)
+	}
+	
+	function RoundInfo(arrayBuffer) {
+		render(document.querySelector('#roundinfo'),
+			html`<page-roundinfo .arrayBuffer=${arrayBuffer}/>`)
+	}
+	
+	function Events(arrayBuffer) {
+		render(document.querySelector('#events'),
+			html`<page-events .arrayBuffer=${arrayBuffer}/>`)
+	}
+</script>
 </body>
 </html>
