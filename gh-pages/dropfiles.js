@@ -4,46 +4,59 @@ globalThis.define('component-dropfile', {
 		onArrayBuffer: (buff) => {
 		},
 	},
+	init() {
+		const owner = this.shadowRoot.host.ownerDocument
+		owner.addEventListener('dragenter', (e) => this.stop(e))
+		owner.addEventListener('dragover', (e) => this.stop(e))
+		owner.addEventListener('drop', (e) => this.handleDrop(e))
+	},
 	render() {
 		this.html`
+		Drag & drop or
+		<button
+			onclick=${(e) => {this.showFileSelect(e)}}
+		>
+			select a .dem
+		</button>
 		<input
+			id="select"
 			type="file"
 		 	accept=".dem"
-		 	onchange=${(e) => {
-			this.onchange(e)
-		}}
-		 	style="border: 1px solid black;width: 20rem;height: 10rem"
+		 	onchange=${(e) => {this.onchange(e)}}
+		 	style="display: none;"
 		>
-			component-dropfile
 		</input>`
 	},
-	handleDrop(arrayBuffer) {
-		this.onArrayBuffer(arrayBuffer)
-	},
-	ondragenter(e) {
-		e.stopPropagation()
-		e.preventDefault()
-	},
-	ondragover(e) {
-		e.stopPropagation()
-		e.preventDefault()
-	},
-	async ondrop(e) {
-		e.stopPropagation()
-		e.preventDefault()
+	async handleFile(e) {
+		let files = []
 		
-		const files = e.dataTransfer.files
+		if (e.type === 'drop')
+			files = e.dataTransfer.files
+		if (e.type === 'change')
+			files = e.target.files
+		
 		for (const file of files) {
+			if (!file.name.match('.dem$')) continue
+			
 			const buff = await file.arrayBuffer()
-			this.handleDrop(buff)
+			this.onArrayBuffer(buff)
+			break
 		}
 	},
-	onchange(e) {
+	stop(e) {
 		e.stopPropagation()
 		e.preventDefault()
-		console.log(e, 'onchange')
-		
-		const fileList = e.target.files
-		console.log(fileList)
+	},
+	handleDrop(e) {
+		this.stop(e)
+		this.handleFile(e)
+	},
+	onchange(e) {
+		this.stop(e)
+		this.handleFile(e)
+	},
+	showFileSelect(e) {
+		this.stop(e)
+		this.shadowRoot.querySelector('#select').click()
 	},
 })
