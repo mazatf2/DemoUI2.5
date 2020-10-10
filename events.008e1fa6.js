@@ -756,7 +756,7 @@ const events = [];
 
 async function getEvents(arrayBuffer) {
   if (arrayBuffer.byteLength < 100) return;
-  let demotool_worker = new Worker("/demotool.worker.b2d91ddd.js");
+  let demotool_worker = new Worker("https://mazatf2.github.io/DemoUI2.5/demotool.worker.b2d91ddd.js");
   if (process && process?.versions?.electron) demotool_worker = new Worker('file:../lib/demotool.worker.js');
   const Demotool = Comlink.wrap(demotool_worker);
   const demotool = await new Demotool();
