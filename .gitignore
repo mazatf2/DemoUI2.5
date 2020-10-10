@@ -3,6 +3,7 @@ demos
 dist
 lib
 sound
+_site
 .cache
 *.log
 *.txt
