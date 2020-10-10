@@ -3,6 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Title</title>
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<link href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" rel="stylesheet">
 </head>
 <body>
 <script>
@@ -20,10 +22,10 @@
 <script src="dropfiles.js" type="module"></script>
 <script src="../gui-src/overlay-manager/src/page/roundinfo.js" type="module"></script>
 <script src="../gui-src/overlay-manager/src/page/events.js" type="module"></script>
-<div id="root"></div>
-<div id="roundinfo"></div>
-<div id="events"></div>
-<script type=module>
+<section class="section" id="root"></section>
+<section class="section" id="roundinfo"></section>
+<section class="section" id="events"></section>
+<script type="module">
 	import {render, html} from 'https://unpkg.com/uce@1.11.6?module'
 	
 	window.addEventListener('DOMContentLoaded', main)

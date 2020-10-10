@@ -12,12 +12,19 @@ globalThis.define('component-dropfile', {
 	},
 	render() {
 		this.html`
-		Drag & drop or
-		<button
-			onclick=${(e) => {this.showFileSelect(e)}}
-		>
-			select a .dem
-		</button>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+		<div class="container content">
+		<p>
+			Drag & drop or
+			<a
+				href=""
+				onclick=${(e) => {this.showFileSelect(e)}}
+				class=""
+			>
+				select a .dem
+			</a>
+		</p>
+		</div>
 		<input
 			id="select"
 			type="file"
