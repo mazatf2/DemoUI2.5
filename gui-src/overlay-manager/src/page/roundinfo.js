@@ -176,7 +176,9 @@ const RoundComponent = (round, options) => {
 			position: absolute;
 			left: ${pxFromRoundStart + 'px'};
 		`
-		return html`<img-icon data-tick=${event.tick} class=icon style=${style} src=${icon} onclick=${onclick} title=${title}/>`
+		
+		const img = html`<img-icon data-tick=${event.tick} class=icon style=${style} src=${icon} onclick=${onclick} title=${title} />`
+		events.push(img)
 	}
 	
 	if (round.type === 'round-normal') {
@@ -190,14 +192,12 @@ const RoundComponent = (round, options) => {
 		const offset = 200
 		const n = tick => Number(tick) - offset
 		
-		events = [
-			event(round.midCapture, 'cap-point/' + midWinner, () => {
-				commands.goto_tick(n(round.midCapture?.tick))
-			}, 'Skip to mid point capture'),
-			event(round.firstDeath, 'health_dead', () => {
-				commands.goto_tick_extend(n(round.firstDeath?.tick), 'ce_cameratools_spec_steamid ' + round.firstDeath?.extend?.userid || '' )
-			}, 'Skip to first kill'),
-		]
+		event(round.midCapture, 'cap-point/' + midWinner, () => {
+			commands.goto_tick(n(round.midCapture?.tick))
+		}, 'Skip to mid point capture')
+		event(round.firstDeath, 'health_dead', () => {
+			commands.goto_tick_extend(n(round.firstDeath?.tick), 'ce_cameratools_spec_steamid ' + round.firstDeath?.extend?.userid || '' )
+		}, 'Skip to first kill')
 	}
 	
 	return html`
