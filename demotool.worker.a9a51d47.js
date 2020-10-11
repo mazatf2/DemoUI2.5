@@ -6155,19 +6155,19 @@ parcelRequire = function (e, r, t, n) {
     }
 
     const i = () => ({
-      INVULNERABLE: [],
-      INVULNERABLE_WEARINGOFF: [],
-      BLASTJUMPING: [],
-      CRITBOOSTED: []
+      TF_COND_INVULNERABLE: [],
+      TF_COND_INVULNERABLE_WEARINGOFF: [],
+      TF_COND_BLASTJUMPING: [],
+      TF_COND_CRITBOOSTED: []
     }),
           u = () => ({
-      INVULNERABLE: !1,
-      INVULNERABLE_WEARINGOFF: !1,
-      BLASTJUMPING: !1,
-      CRITBOOSTED: !1
+      TF_COND_INVULNERABLE: !1,
+      TF_COND_INVULNERABLE_WEARINGOFF: !1,
+      TF_COND_BLASTJUMPING: !1,
+      TF_COND_CRITBOOSTED: !1
     });
 
-    class d {
+    class l {
       constructor() {
         this.lastTickConds = new Map(), this.db = new Map(), this.outputBatchBuffer = [], console.log(this);
       }
@@ -6213,58 +6213,58 @@ parcelRequire = function (e, r, t, n) {
       }
 
       parse(t, r) {
-        t.outputBatchSize || (t.outputBatchSize = 1), t.outputType || (t.outputType = "obj"), t.parserMode || (t.parserMode = a.ParseMode.MINIMAL), r || (this.callback = () => {}), r && (this.callback = r);
+        t.outputBatchSize || (t.outputBatchSize = 1), t.outputType || (t.outputType = "obj"), t.parserMode || (t.parserMode = a.ParseMode.MINIMAL), r || (this.callback = () => {}), r && (this.callback = r), console.log(r, this.callback);
         let n = ["round_start", "round_end", "teamplay_round_start", "teamplay_round_win", "teamplay_team_ready"];
         t.gameEvents && (n = t.gameEvents, console.log(t.gameEvents, "gameEvents")), this.demo = new e.Demo(t.arrayBuffer), this.analyser = this.demo.getAnalyser(t.parserMode || a.ParseMode.MINIMAL), this.match = this.analyser.match;
         this.demo;
-        const i = this.analyser,
+        const l = this.analyser,
               d = this.match,
-              l = this.output(t.outputType, t.outputBatchSize);
-        l.start();
+              c = this.output(t.outputType, t.outputBatchSize);
+        c.start();
 
-        const c = t => {
+        const h = t => {
           let s;
           return {
-            BLASTJUMPING: (null == (s = -100 === t ? null : (t => this.match.getPlayerByUserId(t))(t)) ? void 0 : s.hasCondition(e.PlayerCondition.TF_COND_BLASTJUMPING)) || !1,
-            INVULNERABLE: (null == s ? void 0 : s.hasCondition(e.PlayerCondition.TF_COND_INVULNERABLE)) || !1,
-            INVULNERABLE_WEARINGOFF: (null == s ? void 0 : s.hasCondition(e.PlayerCondition.TF_COND_INVULNERABLE_WEARINGOFF)) || !1,
-            CRITBOOSTED: (null == s ? void 0 : s.hasCondition(e.PlayerCondition.TF_COND_CRITBOOSTED)) || !1
+            TF_COND_BLASTJUMPING: (null == (s = -100 === t ? null : (t => this.match.getPlayerByUserId(t))(t)) ? void 0 : s.hasCondition(e.PlayerCondition.TF_COND_BLASTJUMPING)) || !1,
+            TF_COND_INVULNERABLE: (null == s ? void 0 : s.hasCondition(e.PlayerCondition.TF_COND_INVULNERABLE)) || !1,
+            TF_COND_INVULNERABLE_WEARINGOFF: (null == s ? void 0 : s.hasCondition(e.PlayerCondition.TF_COND_INVULNERABLE_WEARINGOFF)) || !1,
+            TF_COND_CRITBOOSTED: (null == s ? void 0 : s.hasCondition(e.PlayerCondition.TF_COND_CRITBOOSTED)) || !1
           };
         },
               p = (t, e) => {
           var s, o, a, r, n, i;
-          let d = (null === (s = t.values) || void 0 === s ? void 0 : s.targetid) || -100,
-              p = (null === (o = t.values) || void 0 === o ? void 0 : o.userid) || -100,
-              h = (null === (a = t.values) || void 0 === a ? void 0 : a.attacker) || -100;
-          "crossbow_heal" === t.name && (d = t.values.target || -100, p = t.values.healer || -100);
+          let l = (null === (s = t.values) || void 0 === s ? void 0 : s.targetid) || -100,
+              d = (null === (o = t.values) || void 0 === o ? void 0 : o.userid) || -100,
+              p = (null === (a = t.values) || void 0 === a ? void 0 : a.attacker) || -100;
+          "crossbow_heal" === t.name && (l = t.values.target || -100, d = t.values.healer || -100);
 
-          const m = {
-            targetid: (null === (r = this.match.parserState.userInfo.get(d)) || void 0 === r ? void 0 : r.steamId) || "",
-            userid: (null === (n = this.match.parserState.userInfo.get(p)) || void 0 === n ? void 0 : n.steamId) || "",
-            attacker: (null === (i = this.match.parserState.userInfo.get(h)) || void 0 === i ? void 0 : i.steamId) || ""
+          const _ = {
+            targetid: (null === (r = this.match.parserState.userInfo.get(l)) || void 0 === r ? void 0 : r.steamId) || "",
+            userid: (null === (n = this.match.parserState.userInfo.get(d)) || void 0 === n ? void 0 : n.steamId) || "",
+            attacker: (null === (i = this.match.parserState.userInfo.get(p)) || void 0 === i ? void 0 : i.steamId) || ""
           },
-                v = t => -100 === t ? u() : c(t),
+                m = t => -100 === t ? u() : h(t),
+                v = {
+            targetid: m(l),
+            userid: m(d),
+            attacker: m(p)
+          },
                 g = {
-            targetid: v(d),
-            userid: v(p),
-            attacker: v(h)
+            targetid: this.lastTickConds.get(l) || u(),
+            userid: this.lastTickConds.get(d) || u(),
+            attacker: this.lastTickConds.get(p) || u()
           },
-                f = {
-            targetid: this.lastTickConds.get(d) || u(),
-            userid: this.lastTickConds.get(p) || u(),
-            attacker: this.lastTickConds.get(h) || u()
-          },
-                I = Object.assign(Object.assign({
+                f = Object.assign(Object.assign({
             tick: e
           }, t), {
-            extend: m,
-            extend_conds: g,
-            extend_conds_last: f
+            extend: _,
+            extend_conds: v,
+            extend_conds_last: g
           });
 
-          return l.msg(I);
+          return c.msg(f);
         },
-              h = (t, e) => {
+              _ = (t, e) => {
           var s, o, a, r, n, i;
           let u = {};
           u = {
@@ -6272,36 +6272,36 @@ parcelRequire = function (e, r, t, n) {
             userid: (null === (r = this.match.parserState.userInfo.get(null === (a = t.values) || void 0 === a ? void 0 : a.userid)) || void 0 === r ? void 0 : r.steamId) || "",
             attacker: (null === (i = this.match.parserState.userInfo.get(null === (n = t.values) || void 0 === n ? void 0 : n.attacker)) || void 0 === i ? void 0 : i.steamId) || ""
           };
-          const d = Object.assign(Object.assign({
+          const l = Object.assign(Object.assign({
             tick: e
           }, t), {
             extend: u
           });
-          return l.msg(d);
+          return c.msg(l);
         };
 
         let m = (t, e) => {};
 
-        m = t.parserMode === a.ParseMode.MINIMAL ? h : p;
+        m = t.parserMode === a.ParseMode.MINIMAL ? _ : p;
         let v = 0,
             g = !1,
             f = 0;
 
-        for (const e of i.getMessages()) if (e.type === s.MessageType.Packet) for (const s of e.packets) {
+        for (const e of l.getMessages()) if (e.type === s.MessageType.Packet) for (const s of e.packets) {
           const r = d.tick - d.startTick,
-                i = () => r + v;
+                l = () => r + v;
 
-          if ("setPause" === s.packetType && (v += e.tick - r, s.paused ? (g = !0, m(o.DemoToolEvents.demotool_pause_start(), i()), console.log(r, i(), "packet.paused", g, v)) : (g = !1, v += e.tick - r, m(o.DemoToolEvents.demotool_pause_end(), i()), console.log(r, i(), "packet.paused", g, v))), "gameEvent" === s.packetType && n.includes(s.event.name) && m(s.event, i()), "netTick" === s.packetType && s.tick > f) {
+          if ("setPause" === s.packetType && (v += e.tick - r, s.paused ? (g = !0, m(o.DemoToolEvents.demotool_pause_start(), l()), console.log(r, l(), "packet.paused", g, v)) : (g = !1, v += e.tick - r, m(o.DemoToolEvents.demotool_pause_end(), l()), console.log(r, l(), "packet.paused", g, v))), "gameEvent" === s.packetType && n.includes(s.event.name) && m(s.event, l()), "netTick" === s.packetType && s.tick > f) {
             for (const e of d.playerEntityMap.values()) {
               const s = e.user.userId;
-              if (this.lastTickConds.set(s, c(s)), t.parserMode === a.ParseMode.MINIMAL) return;
+              if (t.parserMode === a.ParseMode.MINIMAL) return void this.lastTickConds.set(s, h(s));
 
-              const o = c(s),
+              const o = h(s),
                     r = this.lastTickConds.get(s) || u(),
                     n = t => this.db.set(s, t),
                     d = () => {
                 let t = this.db.get(s);
-                return t || (t = this.dbEntry_placeholder(), n(t)), t;
+                return t || (t = i(), n(t)), t;
               };
 
               for (const [t, e] of Object.entries(o)) {
@@ -6309,7 +6309,7 @@ parcelRequire = function (e, r, t, n) {
                   const e = d(),
                         s = e[t];
                   s.push({
-                    start: i(),
+                    start: l(),
                     end: -1
                   }), e[t] = s, n(e);
                 }
@@ -6317,21 +6317,31 @@ parcelRequire = function (e, r, t, n) {
                 if (!0 === r[t] && !1 === e) {
                   const e = d(),
                         s = e[t];
-                  s[s.length - 1].end = i(), n(e);
+                  s[s.length - 1].end = l(), n(e);
                 }
               }
+
+              this.lastTickConds.set(s, h(s));
             }
 
             f = s.tick;
           }
         }
 
-        l.msg_last(), l.end();
+        c.msg_last(), c.end();
+      }
+
+      async getUsers() {
+        return [...this.match.users.values()];
+      }
+
+      async getDB() {
+        return console.log(this.db), [...this.db.entries()];
       }
 
     }
 
-    exports.DemoTool = d, t.expose(d);
+    exports.DemoTool = l, t.expose(l);
   }, {
     "comlink": "vZpu",
     "@demostf/demo.js/src": "ie32",
