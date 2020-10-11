@@ -49,9 +49,7 @@ function onGameEvent(eventArr) {
 	const ubered = () => e.extend_conds.userid.TF_COND_INVULNERABLE || e.extend_conds.userid.TF_COND_INVULNERABLE_WEARINGOFF
 	const on = eventName => e.name === eventName
 	const event = (ev) => {
-		const user = userInfo.find(i => i.steamId === ev.steamId)
-		
-		ev.nickname = user.name || ''
+
 		ev.name = e.name
 		ev.tick = e.tick
 		events.push(ev)
@@ -81,10 +79,13 @@ function onGameEvent(eventArr) {
 }
 
 const Row = (e) => {
+	const user = userInfo.find(i => i.steamId === e.steamId)
+	const nickName = user.name || ''
+	
 	return html`
 	<tr>
 		<td>${e.name}</td>
-		<td>${e.nickName}</td>
+		<td>${nickName}</td>
 		<td>${e.steamId}</td>
 		<td>${e.tick}</td>
 		<td>${e.labelShort}</td>
