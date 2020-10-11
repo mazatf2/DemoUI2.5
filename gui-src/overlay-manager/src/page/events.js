@@ -44,9 +44,9 @@ function onGameEvent(eventArr) {
 	if (eventArr.length !== 1) debugger
 	const e = eventArr[0]
 	
-	const dmg_blast = () => e.values.damagebits & (1<<6) // DMG_BLAST
-	const blasting = () => e.extend_conds.userid.BLASTJUMPING || e.extend_conds_last.userid.BLASTJUMPING
-	const ubered = () => e.extend_conds.userid.INVULNERABLE || e.extend_conds.userid.INVULNERABLE_WEARINGOFF
+	const dmg_blast = () => e.values.damagebits & (1 << 6) // DMG_BLAST
+	const blasting = () => e.extend_conds.userid.TF_COND_BLASTJUMPING || e.extend_conds_last.userid.TF_COND_BLASTJUMPING
+	const ubered = () => e.extend_conds.userid.TF_COND_INVULNERABLE || e.extend_conds.userid.TF_COND_INVULNERABLE_WEARINGOFF
 	const on = eventName => e.name === eventName
 	const event = (ev) => {
 		const user = userInfo.find(i => i.steamId === ev.steamId)
@@ -60,19 +60,19 @@ function onGameEvent(eventArr) {
 	on('player_death') && blasting() && dmg_blast()
 	&& event({steamId: e.extend.userid, labelShort: 'Player died from airshot while blasting'})
 	
-	on('player_death') && (e.extend_conds.attacker.BLASTJUMPING || e.extend_conds_last.attacker.BLASTJUMPING) && dmg_blast()
+	on('player_death') && (e.extend_conds.attacker.TF_COND_BLASTJUMPING || e.extend_conds_last.attacker.BLASTJUMPING) && dmg_blast()
 	&& event({steamId: e.extend.attacker, labelShort: 'Attacker got airshot kill while blasting'})
 	
 	on('player_chargedeployed') && blasting()
 	&& event({steamId: e.extend.userid, labelShort: 'ÜberCharge activated while blasting'})
 	
-	on('crossbow_heal') && (e.extend_conds.targetid.BLASTJUMPING || e.extend_conds_last.targetid.BLASTJUMPING)
+	on('crossbow_heal') && (e.extend_conds.targetid.TF_COND_BLASTJUMPING || e.extend_conds_last.targetid.BLASTJUMPING)
 	&& event({steamId: e.extend.userid, labelShort: 'Airshot healing arrow'})
 	
 	on('rocket_jump') || on('sticky_jump') && ubered()
 	&& event({steamId: e.extend.userid, labelShort: 'Blast jump while ubered'})
 	
-	on('rocket_jump') || on('sticky_jump') && e.extend_conds.userid.CRITBOOSTED
+	on('rocket_jump') || on('sticky_jump') && e.extend_conds.userid.TF_COND_CRITBOOSTED
 	&& event({steamId: e.extend.userid, labelShort: 'Blast jump while kritzed'})
 	
 	if (blasting()) {

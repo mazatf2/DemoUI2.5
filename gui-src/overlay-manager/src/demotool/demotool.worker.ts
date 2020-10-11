@@ -23,37 +23,37 @@ type parse = {
 	parserMode: ParseMode
 }
 type conds = {
-	INVULNERABLE: boolean,
-	INVULNERABLE_WEARINGOFF: boolean,
-	BLASTJUMPING: boolean,
-	CRITBOOSTED: boolean
+	TF_COND_INVULNERABLE: boolean,
+	TF_COND_INVULNERABLE_WEARINGOFF: boolean,
+	TF_COND_BLASTJUMPING: boolean,
+	TF_COND_CRITBOOSTED: boolean
 }
 type startEnd = {
 	start: number,
 	end: number,
 }
 type dbEntry = {
-	INVULNERABLE: startEnd[],
-	INVULNERABLE_WEARINGOFF: startEnd[],
-	BLASTJUMPING: startEnd[],
-	CRITBOOSTED: startEnd[],
+	TF_COND_INVULNERABLE: startEnd[],
+	TF_COND_INVULNERABLE_WEARINGOFF: startEnd[],
+	TF_COND_BLASTJUMPING: startEnd[],
+	TF_COND_CRITBOOSTED: startEnd[],
 }
 
 const dbEntry_placeholder = (): dbEntry => {
 	return {
-		INVULNERABLE: [],
-		INVULNERABLE_WEARINGOFF: [],
-		BLASTJUMPING: [],
-		CRITBOOSTED: [],
+		TF_COND_INVULNERABLE: [],
+		TF_COND_INVULNERABLE_WEARINGOFF: [],
+		TF_COND_BLASTJUMPING: [],
+		TF_COND_CRITBOOSTED: [],
 	}
 }
 
 const conds_placeholder = (): conds => {
 	return {
-		INVULNERABLE: false,
-		INVULNERABLE_WEARINGOFF: false,
-		BLASTJUMPING: false,
-		CRITBOOSTED: false,
+		TF_COND_INVULNERABLE: false,
+		TF_COND_INVULNERABLE_WEARINGOFF: false,
+		TF_COND_BLASTJUMPING: false,
+		TF_COND_CRITBOOSTED: false,
 	}
 }
 
@@ -194,10 +194,10 @@ export class DemoTool {
 				player = get(userId)
 			
 			return {
-				BLASTJUMPING: player?.hasCondition(PlayerCondition.TF_COND_BLASTJUMPING) || false,
-				INVULNERABLE: player?.hasCondition(PlayerCondition.TF_COND_INVULNERABLE) || false,
-				INVULNERABLE_WEARINGOFF: player?.hasCondition(PlayerCondition.TF_COND_INVULNERABLE_WEARINGOFF) || false,
-				CRITBOOSTED: player?.hasCondition(PlayerCondition.TF_COND_CRITBOOSTED) || false,
+				TF_COND_BLASTJUMPING: player?.hasCondition(PlayerCondition.TF_COND_BLASTJUMPING) || false,
+				TF_COND_INVULNERABLE: player?.hasCondition(PlayerCondition.TF_COND_INVULNERABLE) || false,
+				TF_COND_INVULNERABLE_WEARINGOFF: player?.hasCondition(PlayerCondition.TF_COND_INVULNERABLE_WEARINGOFF) || false,
+				TF_COND_CRITBOOSTED: player?.hasCondition(PlayerCondition.TF_COND_CRITBOOSTED) || false,
 			}
 		}
 
