@@ -6,7 +6,7 @@ import {commands} from '../../../commands.js'
 import {strings, team_from_index, teams} from '../../../utils.js'
 
 async function getRounds(arrayBuffer) {
-	if (arrayBuffer.byteLength < 100) return
+	if (arrayBuffer.byteLength < 100) return []
 	
 	let demotool_worker = new Worker('../../../../lib/demotool.worker.js')
 	if (process && process?.versions?.electron)

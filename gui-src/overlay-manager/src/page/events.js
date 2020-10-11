@@ -8,7 +8,7 @@ let userInfo = []
 let db = []
 
 async function getEvents(arrayBuffer) {
-	if (arrayBuffer.byteLength < 100) return
+	if (arrayBuffer.byteLength < 100) return []
 	
 	let demotool_worker = new Worker('../../../../lib/demotool.worker.js')
 	if (process && process?.versions?.electron)
