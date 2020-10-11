@@ -756,7 +756,7 @@ const events = [];
 
 async function getEvents(arrayBuffer) {
   if (arrayBuffer.byteLength < 100) return;
-  let demotool_worker = new Worker("https://mazatf2.github.io/DemoUI2.5/demotool.worker.b2d91ddd.js");
+  let demotool_worker = new Worker("https://mazatf2.github.io/DemoUI2.5/demotool.worker.05d6fbe9.js");
   if (process && process?.versions?.electron) demotool_worker = new Worker('file:../lib/demotool.worker.js');
   const Demotool = Comlink.wrap(demotool_worker);
   const demotool = await new Demotool();
@@ -873,4 +873,4 @@ define('page-events', {
   }
 
 });
-},{"comlink":"JZPE","./../../../../lib/demotool.worker.js":[["demotool.worker.b2d91ddd.js","zs1v"],"zs1v"],"process":"pBGv"}]},{},["wLbz"], null)
+},{"comlink":"JZPE","./../../../../lib/demotool.worker.js":[["demotool.worker.05d6fbe9.js","zs1v"],"zs1v"],"process":"pBGv"}]},{},["wLbz"], null)

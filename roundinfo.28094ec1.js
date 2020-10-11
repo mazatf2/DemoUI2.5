@@ -817,7 +817,7 @@ const css = globalThis.css;
 
 async function getRounds(arrayBuffer) {
   if (arrayBuffer.byteLength < 100) return;
-  let demotool_worker = new Worker("https://mazatf2.github.io/DemoUI2.5/demotool.worker.b2d91ddd.js");
+  let demotool_worker = new Worker("https://mazatf2.github.io/DemoUI2.5/demotool.worker.05d6fbe9.js");
   if (process && process?.versions?.electron) demotool_worker = new Worker('file:../lib/demotool.worker.js');
   const Demotool = Comlink.wrap(demotool_worker);
   const demotool = await new Demotool();
@@ -965,7 +965,8 @@ const RoundComponent = (round, options) => {
 			position: absolute;
 			left: ${pxFromRoundStart + 'px'};
 		`;
-    return html`<img-icon data-tick=${event.tick} class=icon style=${style} src=${icon} onclick=${onclick} title=${title}/>`;
+    const img = html`<img-icon data-tick=${event.tick} class=icon style=${style} src=${icon} onclick=${onclick} title=${title} />`;
+    events.push(img);
   };
 
   if (round.type === 'round-normal') {
@@ -981,11 +982,12 @@ const RoundComponent = (round, options) => {
 
     const n = tick => Number(tick) - offset;
 
-    events = [event(round.midCapture, 'cap-point/' + midWinner, () => {
+    event(round.midCapture, 'cap-point/' + midWinner, () => {
       _commands.commands.goto_tick(n(round.midCapture?.tick));
-    }, 'Skip to mid point capture'), event(round.firstDeath, 'health_dead', () => {
+    }, 'Skip to mid point capture');
+    event(round.firstDeath, 'health_dead', () => {
       _commands.commands.goto_tick_extend(n(round.firstDeath?.tick), 'ce_cameratools_spec_steamid ' + round.firstDeath?.extend?.userid || '');
-    }, 'Skip to first kill')];
+    }, 'Skip to first kill');
   }
 
   return html`
@@ -1147,4 +1149,4 @@ define('page-roundinfo', {
   }
 
 });
-},{"comlink":"JZPE","../../../commands.js":"pq01","../../../utils.js":"Ndla","./../../../../lib/demotool.worker.js":[["demotool.worker.b2d91ddd.js","zs1v"],"zs1v"],"process":"pBGv"}]},{},["vvhj"], null)
+},{"comlink":"JZPE","../../../commands.js":"pq01","../../../utils.js":"Ndla","./../../../../lib/demotool.worker.js":[["demotool.worker.05d6fbe9.js","zs1v"],"zs1v"],"process":"pBGv"}]},{},["vvhj"], null)

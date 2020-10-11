@@ -6160,14 +6160,14 @@ parcelRequire = function (e, r, t, n) {
       BLASTJUMPING: [],
       CRITBOOSTED: []
     }),
-          l = () => ({
+          u = () => ({
       INVULNERABLE: !1,
       INVULNERABLE_WEARINGOFF: !1,
       BLASTJUMPING: !1,
       CRITBOOSTED: !1
     });
 
-    class u {
+    class d {
       constructor() {
         this.lastTickConds = new Map(), this.db = new Map(), this.outputBatchBuffer = [], console.log(this);
       }
@@ -6213,14 +6213,14 @@ parcelRequire = function (e, r, t, n) {
       }
 
       parse(t, r) {
-        t.outputBatchSize || (t.outputBatchSize = 1), t.outputType || (t.outputType = "obj"), t.parserMode || (t.parserMode = a.ParseMode.MINIMAL), r || (this.callback = () => {}), r && (this.callback = r), console.log(r, this.callback);
+        t.outputBatchSize || (t.outputBatchSize = 1), t.outputType || (t.outputType = "obj"), t.parserMode || (t.parserMode = a.ParseMode.MINIMAL), r || (this.callback = () => {}), r && (this.callback = r);
         let n = ["round_start", "round_end", "teamplay_round_start", "teamplay_round_win", "teamplay_team_ready"];
         t.gameEvents && (n = t.gameEvents, console.log(t.gameEvents, "gameEvents")), this.demo = new e.Demo(t.arrayBuffer), this.analyser = this.demo.getAnalyser(t.parserMode || a.ParseMode.MINIMAL), this.match = this.analyser.match;
         this.demo;
         const i = this.analyser,
-              u = this.match,
-              d = this.output(t.outputType, t.outputBatchSize);
-        d.start();
+              d = this.match,
+              l = this.output(t.outputType, t.outputBatchSize);
+        l.start();
 
         const c = t => {
           let s;
@@ -6233,26 +6233,26 @@ parcelRequire = function (e, r, t, n) {
         },
               p = (t, e) => {
           var s, o, a, r, n, i;
-          let u = (null === (s = t.values) || void 0 === s ? void 0 : s.targetid) || -100,
+          let d = (null === (s = t.values) || void 0 === s ? void 0 : s.targetid) || -100,
               p = (null === (o = t.values) || void 0 === o ? void 0 : o.userid) || -100,
               h = (null === (a = t.values) || void 0 === a ? void 0 : a.attacker) || -100;
-          "crossbow_heal" === t.name && (u = t.values.target || -100, p = t.values.healer || -100);
+          "crossbow_heal" === t.name && (d = t.values.target || -100, p = t.values.healer || -100);
 
           const m = {
-            targetid: (null === (r = this.match.parserState.userInfo.get(u)) || void 0 === r ? void 0 : r.steamId) || "",
+            targetid: (null === (r = this.match.parserState.userInfo.get(d)) || void 0 === r ? void 0 : r.steamId) || "",
             userid: (null === (n = this.match.parserState.userInfo.get(p)) || void 0 === n ? void 0 : n.steamId) || "",
             attacker: (null === (i = this.match.parserState.userInfo.get(h)) || void 0 === i ? void 0 : i.steamId) || ""
           },
-                v = t => -100 === t ? l() : c(t),
+                v = t => -100 === t ? u() : c(t),
                 g = {
-            targetid: v(u),
+            targetid: v(d),
             userid: v(p),
             attacker: v(h)
           },
                 f = {
-            targetid: this.lastTickConds.get(u) || l(),
-            userid: this.lastTickConds.get(p) || l(),
-            attacker: this.lastTickConds.get(h) || l()
+            targetid: this.lastTickConds.get(d) || u(),
+            userid: this.lastTickConds.get(p) || u(),
+            attacker: this.lastTickConds.get(h) || u()
           },
                 I = Object.assign(Object.assign({
             tick: e
@@ -6262,22 +6262,22 @@ parcelRequire = function (e, r, t, n) {
             extend_conds_last: f
           });
 
-          return d.msg(I);
+          return l.msg(I);
         },
               h = (t, e) => {
           var s, o, a, r, n, i;
-          let l = {};
-          l = {
+          let u = {};
+          u = {
             targetid: (null === (o = this.match.parserState.userInfo.get(null === (s = t.values) || void 0 === s ? void 0 : s.targetid)) || void 0 === o ? void 0 : o.steamId) || "",
             userid: (null === (r = this.match.parserState.userInfo.get(null === (a = t.values) || void 0 === a ? void 0 : a.userid)) || void 0 === r ? void 0 : r.steamId) || "",
             attacker: (null === (i = this.match.parserState.userInfo.get(null === (n = t.values) || void 0 === n ? void 0 : n.attacker)) || void 0 === i ? void 0 : i.steamId) || ""
           };
-          const u = Object.assign(Object.assign({
+          const d = Object.assign(Object.assign({
             tick: e
           }, t), {
-            extend: l
+            extend: u
           });
-          return d.msg(u);
+          return l.msg(d);
         };
 
         let m = (t, e) => {};
@@ -6288,25 +6288,25 @@ parcelRequire = function (e, r, t, n) {
             f = 0;
 
         for (const e of i.getMessages()) if (e.type === s.MessageType.Packet) for (const s of e.packets) {
-          const r = u.tick - u.startTick,
+          const r = d.tick - d.startTick,
                 i = () => r + v;
 
           if ("setPause" === s.packetType && (v += e.tick - r, s.paused ? (g = !0, m(o.DemoToolEvents.demotool_pause_start(), i()), console.log(r, i(), "packet.paused", g, v)) : (g = !1, v += e.tick - r, m(o.DemoToolEvents.demotool_pause_end(), i()), console.log(r, i(), "packet.paused", g, v))), "gameEvent" === s.packetType && n.includes(s.event.name) && m(s.event, i()), "netTick" === s.packetType && s.tick > f) {
-            for (const e of u.playerEntityMap.values()) {
+            for (const e of d.playerEntityMap.values()) {
               const s = e.user.userId;
               if (this.lastTickConds.set(s, c(s)), t.parserMode === a.ParseMode.MINIMAL) return;
 
               const o = c(s),
-                    r = this.lastTickConds.get(s) || l(),
+                    r = this.lastTickConds.get(s) || u(),
                     n = t => this.db.set(s, t),
-                    u = () => {
+                    d = () => {
                 let t = this.db.get(s);
                 return t || (t = this.dbEntry_placeholder(), n(t)), t;
               };
 
               for (const [t, e] of Object.entries(o)) {
                 if (!1 === r[t] && !0 === e) {
-                  const e = u(),
+                  const e = d(),
                         s = e[t];
                   s.push({
                     start: i(),
@@ -6315,7 +6315,7 @@ parcelRequire = function (e, r, t, n) {
                 }
 
                 if (!0 === r[t] && !1 === e) {
-                  const e = u(),
+                  const e = d(),
                         s = e[t];
                   s[s.length - 1].end = i(), n(e);
                 }
@@ -6326,12 +6326,12 @@ parcelRequire = function (e, r, t, n) {
           }
         }
 
-        d.msg_last(), d.end();
+        l.msg_last(), l.end();
       }
 
     }
 
-    exports.DemoTool = u, t.expose(u);
+    exports.DemoTool = d, t.expose(d);
   }, {
     "comlink": "vZpu",
     "@demostf/demo.js/src": "ie32",
