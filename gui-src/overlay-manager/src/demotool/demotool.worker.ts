@@ -318,10 +318,11 @@ export class DemoTool {
 						if (packet.tick > packetTick) {
 							for (const player of match.playerEntityMap.values()) {
 								const userId = player.user.userId
-								this.lastTickConds.set(userId, conds(userId))
 								
-								if(opts.parserMode === ParseMode.MINIMAL)
+								if(opts.parserMode === ParseMode.MINIMAL){
+									this.lastTickConds.set(userId, conds(userId))
 									return
+								}
 								
 								const newConds: conds = conds(userId)
 								const oldConds: conds = this.lastTickConds.get(userId) || conds_placeholder()
@@ -330,7 +331,7 @@ export class DemoTool {
 								const getEntry = () => {
 									let entry = this.db.get(userId)
 									if (!entry) {
-										entry = this.dbEntry_placeholder()
+										entry = dbEntry_placeholder()
 										setEntry(entry)
 									}
 									return entry
@@ -355,6 +356,7 @@ export class DemoTool {
 										setEntry(entry)
 									}
 								}
+								this.lastTickConds.set(userId, conds(userId))
 							}
 							packetTick = packet.tick
 						}
