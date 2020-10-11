@@ -1,6 +1,6 @@
 import * as Comlink from 'comlink'
 import {GameEvent} from '@demostf/demo.js/src/Data/GameEventTypes'
-import {Demo, Match, PlayerCondition} from '@demostf/demo.js/src'
+import {Demo, Match, PlayerCondition, UserInfo} from '@demostf/demo.js/src'
 import {Analyser} from '@demostf/demo.js/src/Analyser'
 import {MessageType} from '@demostf/demo.js/src/Data/Message'
 import {DemoToolEvents} from './demoToolEvents'
@@ -368,6 +368,15 @@ export class DemoTool {
 		output.msg_last()
 		output.end()
 		
+	}
+	
+	async getUsers(): Promise<UserInfo[]>{
+		return [...this.match.users.values()]
+	}
+	
+	async getDB(){
+		console.log(this.db)
+		return [...this.db.entries()]
 	}
 }
 

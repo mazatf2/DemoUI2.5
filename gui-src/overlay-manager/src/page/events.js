@@ -4,6 +4,8 @@ const html = globalThis.html
 const Comlink = require('comlink')
 
 const events = []
+let userInfo = []
+let db = []
 
 async function getEvents(arrayBuffer) {
 	if (arrayBuffer.byteLength < 100) return
@@ -29,6 +31,8 @@ async function getEvents(arrayBuffer) {
 		], parserMode: 1,
 	}, Comlink.proxy((onGameEvent)))
 	
+	userInfo = await demotool.getUsers()
+	db = await demotool.getDB()
 	console.log(demotool)
 	console.log(events)
 	
@@ -45,6 +49,9 @@ function onGameEvent(eventArr) {
 	const ubered = () => e.extend_conds.userid.INVULNERABLE || e.extend_conds.userid.INVULNERABLE_WEARINGOFF
 	const on = eventName => e.name === eventName
 	const event = (ev) => {
+		const user = userInfo.find(i => i.steamId === ev.steamId)
+		
+		ev.nickname = user.name || ''
 		ev.name = e.name
 		ev.tick = e.tick
 		events.push(ev)
@@ -77,6 +84,7 @@ const Row = (e) => {
 	return html`
 	<tr>
 		<td>${e.name}</td>
+		<td>${e.nickName}</td>
 		<td>${e.steamId}</td>
 		<td>${e.tick}</td>
 		<td>${e.labelShort}</td>
