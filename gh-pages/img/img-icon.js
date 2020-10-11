@@ -1,6 +1,4 @@
-import {define, css} from 'https://unpkg.com/uce@1.11.4?module'
-
-define('img-icon', {
+globalThis.define('img-icon', {
 	attachShadow: {mode: 'open'},
 	
 	init() {
@@ -10,11 +8,12 @@ define('img-icon', {
 	render() {
 		const path = this.props.src
 		
-		const src = `file:img/${path}.avif`
+		let src = `https://mazatf2.github.io/DemoUI2.5/img/${path}.avif`
+		if (process && process?.versions?.electron)
+			src = `../gh-pages/img/${path}.avif`
 		
 		return this.html`
 			<img style="width: 2rem;height: 2rem;" src=${src}/>
 		`
 	},
-	
 })
