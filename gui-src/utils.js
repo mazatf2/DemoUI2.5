@@ -19,6 +19,8 @@ export const team_from_index = team => _teams[team] || _teams['-1']
 
 export const strings = {
 	'round-pause': 'Pause',
+	'round-normal': 'Normal',
+	'round-after': 'Humiliation',
 	get(str) {
 		return this[str] || ''
 	},

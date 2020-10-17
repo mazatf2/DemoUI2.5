@@ -323,6 +323,40 @@ function onGameEvent(eventArr = []) {
 	
 }
 
+const TableHead = () => {
+	return html`
+		<thead>
+		<tr>
+			<th>Type</th>
+			<th>Start</th>
+			<th>End</th>
+			<th>First kill</th>
+			<th>Mid capture</th>
+		</tr>
+		</thead>`
+}
+
+const TableRow = (round) => {
+	const {type, start, end} = round
+	
+	const cells = [strings.get(type), start, end, round?.firstDeath?.tick || '', round?.midCapture?.tick || '']
+	const pauses = round.pauseList.map(i => html`
+		<tr>
+			<td>${strings.get(i.type)}</td>
+			<td>${i.start}</td>
+			<td>${i.end}</td>
+			<td></td>
+			<td></td>
+		</tr>`
+	)
+	
+	return html`
+	<tr>
+		${cells.map((i) => html`<td>${i}</td>`)}
+	</tr>
+	${pauses}`
+}
+
 define('page-roundinfo', {
 	attachShadow: {mode: 'open'},
 	props: {arrayBuffer: new ArrayBuffer(0)},
@@ -336,10 +370,19 @@ define('page-roundinfo', {
 		const components = rounds.map(round => RoundComponent(round, options))
 		
 		this.html`
+			<link href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" rel="stylesheet">
 			<style>${style}</style>
 			<div class="timeline">
 				${components}
-			</div>`
+			</div>
+			<br>
+			<table class="table is-hoverable">
+				${TableHead()}
+				<tbody>
+					${rounds.map(i => TableRow(i))}
+				</tbody>
+			</table>
+`
 	},
 	render(r = []) {
 		this.update()
