@@ -535,62 +535,6 @@ function requestResponseMessage(ep, msg, transfers) {
 function generateUUID() {
   return new Array(4).fill(0).map(() => Math.floor(Math.random() * Number.MAX_SAFE_INTEGER).toString(16)).join("-");
 }
-},{}],"pq01":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.commands = void 0;
-
-const commandOut = (type, arg) => {
-  const event = new CustomEvent(type + '', {
-    detail: arg
-  });
-  window.dispatchEvent(event);
-};
-
-const commands = {
-  goto_tick_extend: (tick, extend) => commandOut('app.goto_tick', `demo_gototick ${tick}; ${extend || ''}`),
-  goto_tick: tick => commandOut('app.goto_tick', 'demo_gototick ' + tick),
-  exec: str => commandOut('app.exec', str)
-};
-exports.commands = commands;
-},{}],"Ndla":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.strings = exports.team_from_index = exports.teams = void 0;
-const _teams = {
-  '-1': 'neutral',
-  '2': 'red',
-  '3': 'blu'
-};
-let teams = {
-  neutral: 'neutral',
-  red: 'red',
-  blu: 'blu'
-};
-exports.teams = teams;
-
-for (const i of Object.keys(_teams)) {
-  teams[i] = i;
-}
-
-const team_from_index = team => _teams[team] || _teams['-1'];
-
-exports.team_from_index = team_from_index;
-const strings = {
-  'round-pause': 'Pause',
-
-  get(str) {
-    return this[str] || '';
-  }
-
-};
-exports.strings = strings;
 },{}],"pBGv":[function(require,module,exports) {
 
 // shim for using process in browser
@@ -800,22 +744,19 @@ process.chdir = function (dir) {
 process.umask = function () {
   return 0;
 };
-},{}],"vvhj":[function(require,module,exports) {
+},{}],"wLbz":[function(require,module,exports) {
 
 var process = require("process");
-"use strict";
-
-var _commands = require("../../../commands.js");
-
-var _utils = require("../../../utils.js");
+const define = globalThis.define;
+const html = globalThis.html;
 
 const Comlink = require('comlink');
 
-const define = globalThis.define;
-const html = globalThis.html;
-const css = globalThis.css;
+const events = [];
+let userInfo = [];
+let db = [];
 
-async function getRounds(arrayBuffer) {
+async function getEvents(arrayBuffer) {
   if (arrayBuffer.byteLength < 100) return [];
   let demotool_worker = new Worker("https://mazatf2.github.io/DemoUI2.5/demotool.worker.a9a51d47.js");
   if (process && process?.versions?.electron) demotool_worker = new Worker('file:../lib/demotool.worker.js');
@@ -825,327 +766,130 @@ async function getRounds(arrayBuffer) {
     arrayBuffer: arrayBuffer,
     outputBatchSize: 1,
     outputType: 'obj',
-    gameEvents: ['medic_death', 'player_death', 'demotool_pause_start', 'demotool_pause_end', 'teamplay_game_over', 'tf_game_over', 'teamplay_point_captured', 'teamplay_round_selected', 'teamplay_round_start', 'teamplay_round_active', 'teamplay_restart_round', 'teamplay_round_win', 'teamplay_round_stalemate', 'teamplay_overtime_begin', 'teamplay_overtime_end'],
-    parserMode: 0
+    gameEvents: ['player_chargedeployed', 'player_death', 'crossbow_heal', 'rocket_jump', 'sticky_jump', 'demotool_pause_start', 'demotool_pause_end'],
+    parserMode: 1
   }, Comlink.proxy(onGameEvent));
+  userInfo = await demotool.getUsers();
+  db = await demotool.getDB();
   console.log(demotool);
-  console.log(rounds);
-  return rounds;
+  console.log(events);
+  return events;
 }
 
-const style = css`
-.timeline {
-	width: 100vw; /* viewport width */
-	height: 6rem;
-	display: grid;
-	/* grid-template-columns: repeat( auto-fill, minmax(50px, 1fr) ) */
-	grid-auto-flow: column;
-	overflow-x: scroll;
-	position: relative;
-}
+function onGameEvent(eventArr) {
+  console.log(...eventArr);
+  if (eventArr.length !== 1) debugger;
+  const e = eventArr[0];
 
-.timeline section {
-	height: 4rem;
-}
+  const dmg_blast = () => e.values.damagebits & 1 << 6; // DMG_BLAST
 
-.icon {
-	top: 2rem;
-}
 
-.round-pause {
-	z-index: 1;
-	height: 3rem !important;
-	top: 1rem;
-	
-	border-left: 1px black solid;
-	border-top: 1px black solid;
-	border-right: 1px black solid;
+  const blasting = () => e.extend_conds.userid.TF_COND_BLASTJUMPING || e.extend_conds_last.userid.TF_COND_BLASTJUMPING;
 
-	background: repeating-linear-gradient(
-		45deg,
-		hsla(0, 0%, 66%, 0.2),
-		hsla(0, 0%, 66%, 0.2) 1rem,
-		hsla(0, 0%, 66%, 0.3) 1rem,
-		hsla(0, 0%, 66%, 0.3) 2rem
-	)
-}
-.round-pause * {
-	z-index: 1;
-}
+  const ubered = () => e.extend_conds.userid.TF_COND_INVULNERABLE || e.extend_conds.userid.TF_COND_INVULNERABLE_WEARINGOFF;
 
-.round-normal {
-	border: 1px black solid;
-}
+  const on = eventName => e.name === eventName;
 
-.round-after {
-	border-left: 1px black solid;
-	border-top: 1px black solid;
-	border-bottom: 1px black solid;
-	background: #a9a9a9;
-}
+  const event = ev => {
+    ev.name = e.name;
+    ev.tick = e.tick;
+    events.push(ev);
+  };
 
-.round-normal span, .round-normal input, .round-normal button {
-	margin: 2px;
-}
-
-* {
-	/*border: 1px black dotted;*/
-}
-`;
-
-const GotoButton = (txt, tick, title = '') => {
-  return html`
-	<button
-		onclick=${() => {
-    _commands.commands.goto_tick(tick);
-  }}
-		title=${title}
-	>
-		${txt}
-	</button>`;
-};
-
-const RoundComponent = (round, options) => {
-  const {
-    start,
-    end,
-    type
-  } = round;
-  let {
-    showSpoilers,
-    scalePx
-  } = options;
-  if (scalePx) scalePx = 16;
-  const width = end - start;
-  let infoText = '';
-  let typeString = '';
-  let events = [];
-  let backgrounds = [];
-  let inputs = [];
-  let neutralTeam = _utils.teams.neutral;
-  let classNames = [];
-  classNames.push(type);
-
-  if (type === 'round-normal') {
-    typeString = _utils.strings.get(type);
-    infoText = `${start} - ${end}`;
-    inputs = [GotoButton('Start', start, `Skip to round start: ${start}`), GotoButton('End', end, `Skip to round end: ${end}`)];
-  }
-
-  let style = css`
-		position: absolute;
-		left: ${start / scalePx + 'px'};
-		width: ${width / scalePx + 'px'};
-	`;
-  const pauses = round.pauseList.map(i => {
-    const skip = GotoButton('Skip', i.end, `Skip pause. Skip to: ${i.end}`);
-    const pxFromRoundStart = (i.start - start) / scalePx;
-    const pauseLen = (i.end - i.start) / scalePx;
-    console.log(i, pxFromRoundStart, pauseLen);
-    const pauseTicks = `${i.start} - ${i.end}`;
-    let pauseStyle = css`
-		position: absolute;
-		left: ${pxFromRoundStart + 'px'};
-		width: ${pauseLen + 'px'};
-		`;
-    return html`<section
-			class=round-pause
-			style=${pauseStyle}
-		>
-			<span>Pause ${pauseTicks}</span>
-			${skip}
-		</section>`;
+  on('player_death') && blasting() && dmg_blast() && event({
+    steamId: e.extend.userid,
+    labelShort: 'Player died from airshot while blasting'
+  });
+  on('player_death') && (e.extend_conds.attacker.TF_COND_BLASTJUMPING || e.extend_conds_last.attacker.BLASTJUMPING) && dmg_blast() && event({
+    steamId: e.extend.attacker,
+    labelShort: 'Attacker got airshot kill while blasting'
+  });
+  on('player_chargedeployed') && blasting() && event({
+    steamId: e.extend.userid,
+    labelShort: 'ÜberCharge activated while blasting'
+  });
+  on('crossbow_heal') && (e.extend_conds.targetid.TF_COND_BLASTJUMPING || e.extend_conds_last.targetid.BLASTJUMPING) && event({
+    steamId: e.extend.userid,
+    labelShort: 'Airshot healing arrow'
+  });
+  on('rocket_jump') || on('sticky_jump') && ubered() && event({
+    steamId: e.extend.userid,
+    labelShort: 'Blast jump while ubered'
+  });
+  on('rocket_jump') || on('sticky_jump') && e.extend_conds.userid.TF_COND_CRITBOOSTED && event({
+    steamId: e.extend.userid,
+    labelShort: 'Blast jump while kritzed'
   });
 
-  let event = (event, icon, onclick, title) => {
-    if (!event) return null;
-    if (!onclick) onclick = '';
-    let pxFromRoundStart = (event.tick - start) / scalePx;
-    const style = css`
-			position: absolute;
-			left: ${pxFromRoundStart + 'px'};
-		`;
-    const img = html`<img-icon data-tick=${event.tick} class=icon style=${style} src=${icon} onclick=${onclick} title=${title} />`;
-    events.push(img);
-  };
-
-  if (round.type === 'round-normal') {
-    let midWinner,
-        roundWinner = neutralTeam;
-
-    if (showSpoilers) {
-      midWinner = (0, _utils.team_from_index)(round.midCapture?.values?.team) || neutralTeam;
-      roundWinner = (0, _utils.team_from_index)(round.endValue?.values?.team) || neutralTeam;
-    }
-
-    const offset = 200;
-
-    const n = tick => Number(tick) - offset;
-
-    event(round.midCapture, 'cap-point/' + midWinner, () => {
-      _commands.commands.goto_tick(n(round.midCapture?.tick));
-    }, 'Skip to mid point capture');
-    event(round.firstDeath, 'health_dead', () => {
-      _commands.commands.goto_tick_extend(n(round.firstDeath?.tick), 'ce_cameratools_spec_steamid ' + round.firstDeath?.extend?.userid || '');
-    }, 'Skip to first kill');
-  }
-
-  return html`
-		<section
-			class=${classNames}
-			style=${style}
-		>
-			<span>${infoText}</span>
-			${inputs}
-			${events}
-			${pauses}
-			${backgrounds}
-			<span>${typeString}</span>
-		</section>
-	`;
-};
-
-let state = {
-  isNormalRound: false,
-  isAfterRound: false // between rounds
-
-};
-
-let round = (start, end, type) => {
-  return {
-    start: start,
-    end: end,
-    type: type,
-    width: -1,
-    midCapture: -1,
-    firstDeath: -1,
-    pauseList: []
-  };
-};
-
-let pauseBlock = round(-1, -1, 'round-pause');
-let roundBlock = round(-1, -1, 'round-normal');
-let afterRoundBlock = round(-1, -1, 'round-after');
-let start = {
-  tick: -1
-};
-let end = {
-  tick: -1
-};
-const rounds = [];
-let pauses = [];
-let cpCaptures = [];
-let deaths = [];
-
-function onGameEvent(eventArr = []) {
-  //console.log('onEvent', ...eventArr)
-  const on = eventName => eventArr.filter(i => i.name === eventName);
-
-  const newPause = on('demotool_pause_start');
-  const newPauseEnd = on('demotool_pause_end');
-  if (newPause.length > 0) pauseBlock = round(newPause[0].tick, -1, 'round-pause'); //pauseBlock.start = newPause[0].tick
-
-  if (newPauseEnd.length > 0) {
-    pauseBlock.end = newPauseEnd[0].tick;
-    pauseBlock.width = pauseBlock.end - pauseBlock.start;
-    pauses.push(pauseBlock);
-  }
-
-  const death = on('player_death');
-  if (death.length > 0) deaths.push(death[0]);
-  const capture = on('teamplay_point_captured');
-  if (capture.length > 0) cpCaptures.push(capture[0]);
-  const newStart = on('teamplay_round_start');
-  const newEnd = on('teamplay_round_win');
-  if (newStart.length > 0) start = newStart[0];
-  if (newEnd.length > 0) end = newEnd[0];
-  let doRoundStart = false;
-  let doAfterRoundStart = false;
-
-  if (newStart[0]?.tick > 0) {
-    state.isNormalRound = true;
-    state.isAfterRound = false;
-    doRoundStart = true;
-  }
-
-  if (newEnd[0]?.tick > 0) {
-    state.isNormalRound = false;
-    state.isAfterRound = true;
-    doAfterRoundStart = true;
-  }
-
-  if (doRoundStart) {
-    console.log(newStart, 'newStart');
-    roundBlock = round(start.tick, -1, 'round-normal');
-    roundBlock.startvalues = start.values;
-
-    if (afterRoundBlock.start > 0) {
-      afterRoundBlock.end = start.tick;
-      afterRoundBlock.width = afterRoundBlock.end - afterRoundBlock.start;
-      afterRoundBlock.endvalues = start.values;
-      rounds.push(afterRoundBlock);
-      console.log(afterRoundBlock, 'afterRoundBlock');
-    }
-
-    pauses = [];
-    cpCaptures = [];
-    deaths = [];
-  }
-
-  if (doAfterRoundStart) {
-    console.log(newEnd, 'newEnd');
-    afterRoundBlock = round(end.tick, -1, 'round-after');
-    afterRoundBlock.startvalues = end.values;
-    roundBlock.end = end.tick;
-    roundBlock.width = roundBlock.end - roundBlock.start;
-    roundBlock.endvalues = end.values;
-    roundBlock.midCapture = cpCaptures[0];
-    roundBlock.firstDeath = deaths[0];
-    roundBlock.pauseList = pauses;
-    pauses = [];
-    cpCaptures = [];
-    deaths = [];
-    rounds.push(roundBlock);
-    console.log(roundBlock, 'roundBlock');
+  if (blasting()) {
+    console.log('blasting', e);
   }
 }
 
-define('page-roundinfo', {
+const Row = e => {
+  const user = userInfo.find(i => i.steamId === e.steamId);
+  const nickName = user.name || '';
+  return html`
+	<tr>
+		<td>${e.name}</td>
+		<td>${nickName}</td>
+		<td>${e.steamId}</td>
+		<td>${e.tick}</td>
+		<td>${e.labelShort}</td>
+		<td>${e.label}</td>
+	</tr>`;
+};
+
+const Thead = () => {
+  return html`
+	<thead>
+		<tr>
+			<th>Event</th>
+			<th>Nick</th>
+			<th>Steam id</th>
+			<th>Tick</th>
+			<th>Label</th>
+			<th></th>
+		</tr>
+	</thead>`;
+};
+
+define('page-events', {
   attachShadow: {
     mode: 'open'
   },
   props: {
     arrayBuffer: new ArrayBuffer(0)
   },
+  observedAttributes: ['arrayBuffer'],
 
-  async init() {
-    this.render();
+  attributeChanged(name, oldValue, newValue) {
+    // doesn't seem to work with < .arrayBuffer= />
+    console.log(name, oldValue, newValue, 'attributeChanged');
   },
 
   async update() {
-    const rounds = await getRounds(this.arrayBuffer);
-    console.log(rounds);
-    const options = {
-      showSpoilers: true,
-      scalePx: 16
-    };
-    const components = rounds.map(round => RoundComponent(round, options));
+    const data = await getEvents(this.arrayBuffer);
+    const rows = data.map(i => Row(i));
     this.html`
-			<style>${style}</style>
-			<div class="timeline">
-				${components}
-			</div>`;
+			<link href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" rel="stylesheet">
+			<table class="table is-hoverable">
+				${Thead()}
+				<tbody>
+					${rows}
+				</tbody>
+			</table>`;
   },
 
-  render(r = []) {
+  render() {
     this.update();
-    this.html`
-			<style>${style}</style>
-			<div class="timeline">
-				<span>Waiting</span>
-			</div>
-		`;
+    return this.html`Waiting`;
+  },
+
+  init() {
+    console.log('page-events init');
+    this.render();
   }
 
 });
-},{"comlink":"JZPE","../../../commands.js":"pq01","../../../utils.js":"Ndla","./../../../../lib/demotool.worker.js":[["demotool.worker.a9a51d47.js","zs1v"],"zs1v"],"process":"pBGv"}]},{},["vvhj"], null)
+},{"comlink":"JZPE","./../../../../lib/demotool.worker.js":[["demotool.worker.a9a51d47.js","zs1v"],"zs1v"],"process":"pBGv"}]},{},["wLbz"], null)
