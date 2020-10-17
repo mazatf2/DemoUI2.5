@@ -93,11 +93,18 @@ const Row = (e) => {
 	</tr>`
 }
 
-const Table = (rows) => {
+const Thead = () => {
 	return html`
-	<table>
-		${rows}
-	</table>`
+	<thead>
+		<tr>
+			<th>Event</th>
+			<th>Nick</th>
+			<th>Steam id</th>
+			<th>Tick</th>
+			<th>Label</th>
+			<th></th>
+		</tr>
+	</thead>`
 }
 
 define('page-events', {
@@ -113,18 +120,22 @@ define('page-events', {
 	
 	async update() {
 		const data = await getEvents(this.arrayBuffer)
-			.then(r => r.map(i => Row(i)))
-
+		const rows = data.map(i => Row(i))
+		
 		this.html`
-			${Table(data)}
-		`
+			<link href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" rel="stylesheet">
+			<table class="table is-hoverable">
+				${Thead()}
+				<tbody>
+					${rows}
+				</tbody>
+			</table>`
 	},
 	
 	render() {
 		this.update()
 		
-		return this.html`
-			dem len ${this.arrayBuffer.byteLength ?? 'waiting'}`
+		return this.html`Waiting`
 	},
 	
 	init() {
