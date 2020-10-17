@@ -194,10 +194,10 @@ const RoundComponent = (round, options) => {
 		
 		event(round.midCapture, 'cap-point/' + midWinner, () => {
 			commands.goto_tick(n(round.midCapture?.tick))
-		}, 'Skip to mid point capture')
+		}, `Skip to mid point capture: ${round.midCapture?.tick}`)
 		event(round.firstDeath, 'health_dead', () => {
 			commands.goto_tick_extend(n(round.firstDeath?.tick), 'ce_cameratools_spec_steamid ' + round.firstDeath?.extend?.userid || '' )
-		}, 'Skip to first kill')
+		}, `Skip to first kill: ${round.firstDeath?.tick}`)
 	}
 	
 	return html`
