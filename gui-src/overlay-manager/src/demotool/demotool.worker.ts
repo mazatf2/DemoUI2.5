@@ -5,6 +5,8 @@ import {Analyser} from '@demostf/demo.js/src/Analyser'
 import {MessageType} from '@demostf/demo.js/src/Data/Message'
 import {DemoToolEvents} from './demoToolEvents'
 import {ParseMode} from '@demostf/demo.js/src/Demo'
+import {newEventEntities} from './newEventEntities'
+import {newEventMinimal} from './newEventMinimal'
 
 type outputType = 'json' | 'obj'
 type output = {
@@ -93,12 +95,14 @@ export class DemoTool {
 	
 	obj(outputBatchSize: number): output {
 		const out = obj => this.outputBatch(outputBatchSize, obj)
+		const nullOut = () => {
+		}
 		
 		return {
-			start: () => {},
+			start: () => nullOut,
 			msg: obj => out(obj),
-			msg_last: () => {},
-			end: () => {},
+			msg_last: () => nullOut,
+			end: () => nullOut,
 		}
 	}
 	
@@ -116,10 +120,6 @@ export class DemoTool {
 			msg_last: () => out.msg_last(),
 			end: () => out.end(),
 		}
-	}
-	
-	inc() {
-		return 1
 	}
 	
 	parse(opts: parse, callback) {
@@ -141,8 +141,6 @@ export class DemoTool {
 		]
 		
 		if (opts.gameEvents) {
-			//gameEvents.filter(i => typeof i === 'string')
-			//if (gameEvents.length > 0) captureThese = gameEvents
 			captureThese = opts.gameEvents
 			console.log(opts.gameEvents, 'gameEvents')
 		}
@@ -156,31 +154,6 @@ export class DemoTool {
 		const match = this.match
 		
 		const output = this.output(opts.outputType, opts.outputBatchSize)
-		
-		/*
-		const msg = analyser.getMessages()
-			.filter(msg => msg.type === MessageType.Packet)
-			//.map(i => [...i.packets])
-			msg.packets
-			.filter(i => <Packet>i.packetType === 'gameEvent')
-			.filter(i=> i.packetType === 'gameEvent')
-		*/
-		
-		/*
-		const getPlayer = (id: number): Player => {
-			let players = {}
-			return (id: number) => {
-				if(id in players){
-					return players[id]
-				}
-				else {
-					const player = match.getPlayerByUserId(id)
-					players[id] = player
-					return player
-				}
-			}
-		}
-		 */
 		
 		output.start()
 		
@@ -200,81 +173,23 @@ export class DemoTool {
 				TF_COND_CRITBOOSTED: player?.hasCondition(PlayerCondition.TF_COND_CRITBOOSTED) || false,
 			}
 		}
-
 		
-		const newEventEntities = (e: GameEvent | DemoToolEvents, tick: number) => {
-			let targetid = e.values?.targetid || -100
-			let userid = e.values?.userid || -100
-			let attacker = e.values?.attacker || -100
-			
-			if(e.name === 'crossbow_heal'){
-				targetid = e.values.target || -100
-				userid = e.values.healer || -100
-			}
-			
-			const extend = {
-				targetid: this.match.parserState.userInfo.get(targetid)?.steamId || '',
-				userid: this.match.parserState.userInfo.get(userid)?.steamId || '',
-				attacker: this.match.parserState.userInfo.get(attacker)?.steamId || '',
-			}
-			
-			const get = id => {
-				if (id === -100)
-					return conds_placeholder()
-				
-				return conds(id)
-			}
-			
-			const extend_conds = {
-				targetid: get(targetid),
-				userid: get(userid),
-				attacker: get(attacker),
-			}
-			
-			const extend_conds_last = {
-				targetid: this.lastTickConds.get(targetid) || conds_placeholder(),
-				userid: this.lastTickConds.get(userid) || conds_placeholder(),
-				attacker: this.lastTickConds.get(attacker) || conds_placeholder(),
-			}
-			
-			const out = {
-				tick: tick,
-				...e,
-				extend: extend,
-				extend_conds: extend_conds,
-				extend_conds_last: extend_conds_last,
-			}
-			
+		const _newEventEntities = (e, tick) => {
+			const out = newEventEntities(this, e, tick, conds, conds_placeholder)
 			return output.msg(out)
 		}
 		
-		const newEventMinimal = (e: GameEvent | DemoToolEvents, tick: number) => {
-			let extend = {}
-			
-			extend = {
-				// for ParseMode.Minimal
-				targetid: this.match.parserState.userInfo.get(e.values?.targetid)?.steamId || '',
-				userid: this.match.parserState.userInfo.get(e.values?.userid)?.steamId || '',
-				attacker: this.match.parserState.userInfo.get(e.values?.attacker)?.steamId || '',
-			}
-			
-			const out = {
-				tick: tick,
-				// name: e.name
-				// values: e.values{}
-				...e,
-				extend: extend,
-			}
-			
+		const _newEventMinimal = (e: GameEvent | DemoToolEvents, tick: number) => {
+			const out = newEventMinimal(this, e, tick)
 			return output.msg(out)
-			
 		}
 		
-		let newEvent = (e: GameEvent | DemoToolEvents, tick: number) => {}
+		let newEvent = (e: GameEvent | DemoToolEvents, tick: number) => {
+		}
 		if (opts.parserMode === ParseMode.MINIMAL) {
-			newEvent = newEventMinimal
+			newEvent = _newEventMinimal
 		} else {
-			newEvent = newEventEntities
+			newEvent = _newEventEntities
 		}
 		
 		let pauseOffset: number = 0
@@ -319,7 +234,7 @@ export class DemoTool {
 							for (const player of match.playerEntityMap.values()) {
 								const userId = player.user.userId
 								
-								if(opts.parserMode === ParseMode.MINIMAL){
+								if (opts.parserMode === ParseMode.MINIMAL) {
 									this.lastTickConds.set(userId, conds(userId))
 									return
 								}
@@ -370,11 +285,11 @@ export class DemoTool {
 		
 	}
 	
-	async getUsers(): Promise<UserInfo[]>{
+	async getUsers(): Promise<UserInfo[]> {
 		return [...this.match.users.values()]
 	}
 	
-	async getDB(){
+	async getDB() {
 		console.log(this.db)
 		return [...this.db.entries()]
 	}
