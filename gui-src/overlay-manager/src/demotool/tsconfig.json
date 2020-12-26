@@ -6,7 +6,12 @@
 		"downlevelIteration": true,
 		"moduleResolution": "node",
 		"esModuleInterop": true,
-		"skipLibCheck": true
+		"skipLibCheck": true,
+		"lib": [
+			"es2018",
+			"dom",
+			"esnext"
+		]
 	},
 	"exclude": [
 		"./node_modules"

@@ -1,3 +1,34 @@
+import {PlayerCondition} from '@demostf/demo.js/src/index'
+
+export type playerCondKey = Partial<keyof typeof PlayerCondition>
+
+export interface DemoToolCondStart {
+	name: 'demotool_cond_start'
+	values: {
+		userid: number
+		cond: Partial<playerCondKey>
+	}
+}
+
+export interface DemoToolCondEnd {
+	name: 'demotool_cond_end'
+	values: {
+		userid: number
+		cond: Partial<playerCondKey>
+	}
+}
+
+export interface DemoToolCondDuration {
+	name: 'demotool_cond_duration'
+	values: {
+		userid: number
+		cond: Partial<playerCondKey>
+		start: number
+		end: number
+		duration: number
+	}
+}
+
 export interface DemoToolPauseStart {
 	name: 'demotool_pause_start'
 	values: {}
@@ -13,16 +44,8 @@ export interface DemoToolJsonEnd {
 	values: {}
 }
 
-export type DemoToolEvents = DemoToolPauseStart | DemoToolPauseEnd | DemoToolJsonEnd
+export type DemoToolEvents = DemoToolCondStart | DemoToolCondEnd | DemoToolCondDuration | DemoToolPauseStart | DemoToolPauseEnd | DemoToolJsonEnd
 
-const empyEvent = (name: DemoToolEvents['name']): DemoToolEvents => {
-	return {name: name, values: {}}
+export function DemoToolEvents<EVENT extends DemoToolEvents = DemoToolEvents>(arg: EVENT) {
+	return arg
 }
-
-export const DemoToolEvents = {
-	'demotool_pause_start': () => <DemoToolPauseStart>empyEvent('demotool_pause_start'),
-	'demotool_pause_end': () => <DemoToolPauseEnd>empyEvent('demotool_pause_end'),
-	'demotool_json_end': () => <DemoToolJsonEnd>empyEvent('demotool_json_end'),
-}
-
-

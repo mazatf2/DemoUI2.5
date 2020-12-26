@@ -1,7 +1,8 @@
 import {GameEvent} from '@demostf/demo.js/src/Data/GameEventTypes'
 import {DemoToolEvents} from './demoToolEvents'
+import {Conds} from './conds'
 
-export function newEventEntities(self, e: GameEvent | DemoToolEvents, tick: number, conds, conds_placeholder) {
+export function newEventEntities(self, e: GameEvent | DemoToolEvents, tick: number, conds: Conds) {
 	let targetid = e.values?.targetid || -100
 	let userid = e.values?.userid || -100
 	let attacker = e.values?.attacker || -100
@@ -19,9 +20,9 @@ export function newEventEntities(self, e: GameEvent | DemoToolEvents, tick: numb
 	
 	const get = id => {
 		if (id === -100)
-			return conds_placeholder()
+			return conds.conds_placeholder()
 		
-		return conds(id)
+		return conds.getActive(id, self.match)
 	}
 	
 	const extend_conds = {
@@ -31,9 +32,9 @@ export function newEventEntities(self, e: GameEvent | DemoToolEvents, tick: numb
 	}
 	
 	const extend_conds_last = {
-		targetid: self.lastTickConds.get(targetid) || conds_placeholder(),
-		userid: self.lastTickConds.get(userid) || conds_placeholder(),
-		attacker: self.lastTickConds.get(attacker) || conds_placeholder(),
+		targetid: self.lastTickConds.get(targetid) || conds.conds_placeholder(),
+		userid: self.lastTickConds.get(userid) || conds.conds_placeholder(),
+		attacker: self.lastTickConds.get(attacker) || conds.conds_placeholder(),
 	}
 	
 	return {

@@ -3,10 +3,11 @@ import {GameEvent} from '@demostf/demo.js/src/Data/GameEventTypes'
 import {Demo, Match, PlayerCondition, UserInfo} from '@demostf/demo.js/src'
 import {Analyser} from '@demostf/demo.js/src/Analyser'
 import {MessageType} from '@demostf/demo.js/src/Data/Message'
-import {DemoToolEvents} from './demoToolEvents'
+import {DemoToolEvents, playerCondKey} from './demoToolEvents'
 import {ParseMode} from '@demostf/demo.js/src/Demo'
 import {newEventEntities} from './newEventEntities'
 import {newEventMinimal} from './newEventMinimal'
+import {Conds} from './conds'
 
 type outputType = 'json' | 'obj'
 type output = {
@@ -23,41 +24,14 @@ type parse = {
 	outputType: outputType,
 	gameEvents: string[],
 	parserMode: ParseMode
+	conds: Partial<keyof typeof PlayerCondition>[]
+	condDurations: Partial<keyof typeof PlayerCondition>[]
 }
-type conds = {
-	TF_COND_INVULNERABLE: boolean,
-	TF_COND_INVULNERABLE_WEARINGOFF: boolean,
-	TF_COND_BLASTJUMPING: boolean,
-	TF_COND_CRITBOOSTED: boolean
-}
-type startEnd = {
+export type startEnd = {
 	start: number,
 	end: number,
 }
-type dbEntry = {
-	TF_COND_INVULNERABLE: startEnd[],
-	TF_COND_INVULNERABLE_WEARINGOFF: startEnd[],
-	TF_COND_BLASTJUMPING: startEnd[],
-	TF_COND_CRITBOOSTED: startEnd[],
-}
-
-const dbEntry_placeholder = (): dbEntry => {
-	return {
-		TF_COND_INVULNERABLE: [],
-		TF_COND_INVULNERABLE_WEARINGOFF: [],
-		TF_COND_BLASTJUMPING: [],
-		TF_COND_CRITBOOSTED: [],
-	}
-}
-
-const conds_placeholder = (): conds => {
-	return {
-		TF_COND_INVULNERABLE: false,
-		TF_COND_INVULNERABLE_WEARINGOFF: false,
-		TF_COND_BLASTJUMPING: false,
-		TF_COND_CRITBOOSTED: false,
-	}
-}
+export type dbEntry = Partial<Record<keyof typeof PlayerCondition, startEnd[]>>
 
 export class DemoTool {
 	public demo: Demo
@@ -66,7 +40,7 @@ export class DemoTool {
 	public outputBatchBuffer: outputBatch
 	public callback: (outputBatch) => void
 	public lastTickConds = new Map()
-	public db = new Map<number, dbEntry>()
+	public db = new Map<number, dbEntry>() // {cond1: [{start: 0, end: 1}, ..], cond2: [{start: 0, end: 1}, ..], ..})
 	
 	constructor() {
 		this.outputBatchBuffer = []
@@ -145,6 +119,17 @@ export class DemoTool {
 			console.log(opts.gameEvents, 'gameEvents')
 		}
 		
+		let captureConds: playerCondKey[] = []
+		let captureCondDurations: playerCondKey[] = []
+		
+		if (opts.conds) {
+			captureConds = opts.conds
+		}
+		
+		if (opts.condDurations) {
+			captureCondDurations = opts.condDurations
+		}
+		
 		this.demo = new Demo(opts.arrayBuffer)
 		this.analyser = this.demo.getAnalyser(opts.parserMode || ParseMode.MINIMAL)
 		this.match = this.analyser.match
@@ -152,30 +137,14 @@ export class DemoTool {
 		const demo = this.demo
 		const analyser = this.analyser
 		const match = this.match
+		const conds = new Conds(captureConds, captureCondDurations)
 		
 		const output = this.output(opts.outputType, opts.outputBatchSize)
 		
 		output.start()
 		
-		const conds = (userId) => {
-			let player
-			const get = userId => this.match.getPlayerByUserId(userId)
-			
-			if (userId === -100)
-				player = null
-			else
-				player = get(userId)
-			
-			return {
-				TF_COND_BLASTJUMPING: player?.hasCondition(PlayerCondition.TF_COND_BLASTJUMPING) || false,
-				TF_COND_INVULNERABLE: player?.hasCondition(PlayerCondition.TF_COND_INVULNERABLE) || false,
-				TF_COND_INVULNERABLE_WEARINGOFF: player?.hasCondition(PlayerCondition.TF_COND_INVULNERABLE_WEARINGOFF) || false,
-				TF_COND_CRITBOOSTED: player?.hasCondition(PlayerCondition.TF_COND_CRITBOOSTED) || false,
-			}
-		}
-		
 		const _newEventEntities = (e, tick) => {
-			const out = newEventEntities(this, e, tick, conds, conds_placeholder)
+			const out = newEventEntities(this, e, tick, conds)
 			return output.msg(out)
 		}
 		
@@ -211,13 +180,17 @@ export class DemoTool {
 						if (packet.paused) {
 							isPaused = true
 							
-							newEvent(DemoToolEvents.demotool_pause_start(), correctedTick())
+							if (captureThese.includes('demotool_pause_start')) {
+								newEvent(DemoToolEvents({name: 'demotool_pause_start', values: {}}), correctedTick())
+							}
 							console.log(tick, correctedTick(), 'packet.paused', isPaused, pauseOffset)
 						} else {
 							isPaused = false
 							pauseOffset += msg.tick - tick
 							
-							newEvent(DemoToolEvents.demotool_pause_end(), correctedTick())
+							if (captureThese.includes('demotool_pause_end')) {
+								newEvent(DemoToolEvents({name: 'demotool_pause_end', values: {}}), correctedTick())
+							}
 							console.log(tick, correctedTick(), 'packet.paused', isPaused, pauseOffset)
 						}
 					}
@@ -234,44 +207,76 @@ export class DemoTool {
 							for (const player of match.playerEntityMap.values()) {
 								const userId = player.user.userId
 								
+								const setLastTickConds = (userId) => this.lastTickConds.set(userId, conds.getActive(userId, match))
+								
 								if (opts.parserMode === ParseMode.MINIMAL) {
-									this.lastTickConds.set(userId, conds(userId))
+									setLastTickConds(userId)
 									return
 								}
 								
-								const newConds: conds = conds(userId)
-								const oldConds: conds = this.lastTickConds.get(userId) || conds_placeholder()
+								const newConds = conds.getActive(userId, match)
+								const oldConds = this.lastTickConds.get(userId) || conds.conds_placeholder()
 								
-								const setEntry = (i: dbEntry) => this.db.set(userId, i)
-								const getEntry = () => {
+								const setPlayerEntry = (i: dbEntry) => this.db.set(userId, i)
+								const getPlayerEntry = () => {
 									let entry = this.db.get(userId)
 									if (!entry) {
-										entry = dbEntry_placeholder()
-										setEntry(entry)
+										entry = conds.dbEntry_placeholder()
+										setPlayerEntry(entry)
 									}
 									return entry
 									
 								}
 								
-								for (const [key, newVal] of Object.entries(newConds)) {
+								for (const [_key, newVal] of Object.entries(newConds)) {
+									const key = _key as playerCondKey
+									
 									if (oldConds[key] === false && newVal === true) { // start
-										const entry = getEntry()
-										const entries: startEnd[] = entry[key]
+										const player = getPlayerEntry()
+										const entries: startEnd[] = player[key]
 										entries.push({start: correctedTick(), end: -1})
-										entry[key] = entries
+										player[key] = entries
 										
-										setEntry(entry)
+										setPlayerEntry(player)
+										
+										if (captureThese.includes('demotool_cond_start')) {
+											newEvent(DemoToolEvents({
+												name: 'demotool_cond_start',
+												values: {userid: userId, cond: key},
+											}), correctedTick())
+										}
 									}
 									
 									if (oldConds[key] === true && newVal === false) {
-										const entry: dbEntry = getEntry()
-										const entries: startEnd[] = entry[key]
-										entries[entries.length - 1].end = correctedTick()
+										const player: dbEntry = getPlayerEntry()
+										const entries: startEnd[] = player[key]
+										const current = entries[entries.length - 1]
+										current.end = correctedTick()
 										
-										setEntry(entry)
+										setPlayerEntry(player)
+										
+										if (captureThese.includes('demotool_cond_end')) {
+											newEvent(DemoToolEvents({
+												name: 'demotool_cond_end',
+												values: {userid: userId, cond: key},
+											}), correctedTick())
+										}
+										
+										if (captureThese.includes('demotool_cond_duration')) {
+											newEvent(DemoToolEvents({
+												name: 'demotool_cond_duration',
+												values: {
+													userid: userId,
+													cond: key,
+													start: current.start,
+													end: current.end,
+													duration: current.end - current.start,
+												},
+											}), correctedTick())
+										}
 									}
 								}
-								this.lastTickConds.set(userId, conds(userId))
+								setLastTickConds(userId)
 							}
 							packetTick = packet.tick
 						}

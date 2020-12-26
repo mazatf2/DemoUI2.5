@@ -24,11 +24,18 @@ async function getEvents(arrayBuffer) {
 			'crossbow_heal',
 			'rocket_jump',
 			'sticky_jump',
-			
 			'demotool_pause_start',
 			'demotool_pause_end',
-		
-		], parserMode: 1,
+			'demotool_cond_start',
+			'demotool_pause_end',
+		],
+		conds: [
+			'TF_COND_BLASTJUMPING',
+			'TF_COND_CRITBOOSTED',
+			'TF_COND_INVULNERABLE',
+			'TF_COND_INVULNERABLE_WEARINGOFF',
+		],
+		parserMode: 1,
 	}, Comlink.proxy((onGameEvent)))
 	
 	userInfo = await demotool.getUsers()
