@@ -62,7 +62,7 @@ export class DemoTool {
 		return {
 			start: () => out('{"data": [\n'),
 			msg: obj => outJSON(obj),
-			msg_last: () => outJSONNoTrailing(DemoToolEvents.demotool_json_end()),
+			msg_last: () => outJSONNoTrailing(DemoToolEvents({name: 'demotool_json_end', values: {}})),
 			end: () => out(']}'),
 		}
 	}

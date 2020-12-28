@@ -3,8 +3,12 @@ import {DemoToolEvents} from './demoToolEvents'
 import {Conds} from './conds'
 
 export function newEventEntities(self, e: GameEvent | DemoToolEvents, tick: number, conds: Conds) {
+	
+	// @ts-ignore
 	let targetid = e.values?.targetid || -100
+	// @ts-ignore
 	let userid = e.values?.userid || -100
+	// @ts-ignore
 	let attacker = e.values?.attacker || -100
 	
 	if (e.name === 'crossbow_heal') {

@@ -6,8 +6,12 @@ export function newEventMinimal(self, e: GameEvent | DemoToolEvents, tick: numbe
 	
 	extend = {
 		// for ParseMode.Minimal
+		
+		// @ts-ignore
 		targetid: self.match.parserState.userInfo.get(e.values?.targetid)?.steamId || '',
+		// @ts-ignore
 		userid: self.match.parserState.userInfo.get(e.values?.userid)?.steamId || '',
+		// @ts-ignore
 		attacker: self.match.parserState.userInfo.get(e.values?.attacker)?.steamId || '',
 	}
 	
