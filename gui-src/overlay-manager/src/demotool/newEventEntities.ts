@@ -1,4 +1,4 @@
-import {GameEvent} from '@demostf/demo.js/src/Data/GameEventTypes'
+import {GameEvent} from '@demostf/demo.js/build/Data/GameEventTypes'
 import {DemoToolEvents} from './demoToolEvents'
 import {Conds} from './conds'
 

@@ -2,6 +2,7 @@ node_modules
 demos
 dist
 lib
+lib-build
 sound
 _site
 .cache

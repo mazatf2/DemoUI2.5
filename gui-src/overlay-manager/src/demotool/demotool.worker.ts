@@ -1,10 +1,12 @@
 import * as Comlink from 'comlink'
-import {GameEvent} from '@demostf/demo.js/src/Data/GameEventTypes'
-import {Demo, Match, PlayerCondition, UserInfo} from '@demostf/demo.js/src'
-import {Analyser} from '@demostf/demo.js/src/Analyser'
-import {MessageType} from '@demostf/demo.js/src/Data/Message'
+import {GameEvent} from '@demostf/demo.js/build/Data/GameEventTypes'
+import {Demo, Match} from '@demostf/demo.js'
+import {PlayerCondition} from '@demostf/demo.js/build/Data/PlayerCondition'
+import {UserInfo} from '@demostf/demo.js/build/Data/UserInfo'
+import {Analyser} from '@demostf/demo.js/Build/Analyser'
+import {MessageType} from '@demostf/demo.js/Build/Data/Message'
 import {DemoToolEvents, playerCondKey} from './demoToolEvents'
-import {ParseMode} from '@demostf/demo.js/src/Demo'
+import {ParseMode} from '@demostf/demo.js/Build/Demo'
 import {newEventEntities} from './newEventEntities'
 import {newEventMinimal} from './newEventMinimal'
 import {Conds} from './conds'
@@ -300,4 +302,12 @@ export class DemoTool {
 	}
 }
 
-Comlink.expose(DemoTool)
+if (typeof window !== 'undefined') {
+	Comlink.expose(DemoTool)
+} else {
+	const nodeEndpoint = eval('require("comlink/dist/umd/node-adapter")')
+	const parentPort = eval('require("worker_threads").parentPort')
+	globalThis.MessageChannel = eval('require("worker_threads").MessageChannel')
+	
+	Comlink.expose(DemoTool, nodeEndpoint(parentPort))
+}

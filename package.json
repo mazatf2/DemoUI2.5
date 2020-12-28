@@ -11,6 +11,7 @@
 		"start-electron": "electron --enable-transparent-visuals --disable-gpu gui-electron.js",
 		"parcel-watch": "parcel watch gui-src/gui.html",
 		"prebuild": "parcel build ./gui-src/overlay-manager/src/demotool/demotool.worker.ts --out-dir lib",
+		"build-demotool": "parcel build ./gui-src/overlay-manager/src/demotool/demotool.worker.ts --out-dir lib-build",
 		"watch-demotool": "parcel watch ./gui-src/overlay-manager/src/demotool/demotool.worker.ts --out-dir lib",
 		"watch-gh-pages": "parcel watch ./gh-pages/index.html --out-dir _site",
 		"build": "rm -rf _site && parcel build --no-minify --no-source-maps --public-url https://mazatf2.github.io/DemoUI2.5 ./gh-pages/index.html --out-dir _site",

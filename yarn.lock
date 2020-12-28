@@ -888,7 +888,7 @@
   dependencies:
     bit-buffer "^0.2.4"
     snappyjs "^0.6.0"
-    text-encoding-shim "git+https://gitlab.com/hongaar/text-encoding-shim.git#83ff0f77f48d05b8ce83ddc7ca49d8df61363b31"
+    text-encoding-shim "^1.0.5"
 
 "@develar/schema-utils@~2.6.5":
   version "2.6.5"
@@ -6118,9 +6118,10 @@ terser@^4.8.0:
     source-map "~0.6.1"
     source-map-support "~0.5.12"
 
-"text-encoding-shim@git+https://gitlab.com/hongaar/text-encoding-shim.git#83ff0f77f48d05b8ce83ddc7ca49d8df61363b31":
-  version "1.0.0"
-  resolved "git+https://gitlab.com/hongaar/text-encoding-shim.git#83ff0f77f48d05b8ce83ddc7ca49d8df61363b31"
+text-encoding-shim@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/text-encoding-shim/-/text-encoding-shim-1.0.5.tgz#dfd9cde8dbbffe0c52be2fc277a6a65c66d23e41"
+  integrity sha512-H7yYW+jRn4yhu60ygZ2f/eMhXPITRt4QSUTKzLm+eCaDsdX8avmgWpmtmHAzesjBVUTAypz9odu5RKUjX5HNYA==
 
 through2@^2.0.0, through2@~2.0.3:
   version "2.0.5"

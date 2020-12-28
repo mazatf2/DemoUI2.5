@@ -1,4 +1,4 @@
-import {PlayerCondition} from '@demostf/demo.js/src/index'
+import {PlayerCondition} from '@demostf/demo.js/build/Data/PlayerCondition'
 
 export type playerCondKey = Partial<keyof typeof PlayerCondition>
 
