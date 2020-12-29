@@ -1,4 +1,4 @@
-import {Match, PlayerCondition} from '@demostf/demo.js'
+import {Match, PlayerCondition} from '@demostf/demo.js/src'
 import {dbEntry} from './demotool.worker'
 import {playerCondKey} from './demoToolEvents'
 
