@@ -1,8 +1,29 @@
 import {GameEvent} from '@demostf/demo.js/build/Data/GameEventTypes'
 import {DemoToolEvents} from './demoToolEvents'
-import {Conds} from './conds'
+import {activeConds, Conds} from './conds'
 
-export function newEventEntities(self, e: GameEvent | DemoToolEvents, tick: number, conds: Conds) {
+type newEventEntities = {
+	tick: number
+	name: GameEvent['name'] | DemoToolEvents['name']
+	values: GameEvent['values'] | DemoToolEvents['values']
+	extend: {
+		targetid: string
+		userid: string
+		attacker: string
+	}
+	extend_conds: {
+		targetid: activeConds
+		userid: activeConds
+		attacker: activeConds
+	}
+	extend_conds_last: {
+		targetid: activeConds
+		userid: activeConds
+		attacker: activeConds
+	}
+}
+
+export function newEventEntities(self, e: GameEvent | DemoToolEvents, tick: number, conds: Conds): newEventEntities {
 	
 	// @ts-ignore
 	let targetid = e.values?.targetid || -100

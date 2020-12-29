@@ -1,10 +1,19 @@
 import {GameEvent} from '@demostf/demo.js/build/Data/GameEventTypes'
 import {DemoToolEvents} from './demoToolEvents'
 
-export function newEventMinimal(self, e: GameEvent | DemoToolEvents, tick: number) {
-	let extend = {}
-	
-	extend = {
+type newEventMinimal = {
+	tick: number
+	name: GameEvent['name'] | DemoToolEvents['name']
+	values: GameEvent['values'] | DemoToolEvents['values']
+	extend: {
+		targetid: string
+		userid: string
+		attacker: string
+	}
+}
+
+export function newEventMinimal(self, e: GameEvent | DemoToolEvents, tick: number): newEventMinimal {
+	let extend = {
 		// for ParseMode.Minimal
 		
 		// @ts-ignore

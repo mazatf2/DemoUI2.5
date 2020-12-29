@@ -20,11 +20,11 @@ type output = {
 }
 type outputCallback = () => outputBatch
 type outputBatch = Array<GameEvent | DemoToolEvents | string>
-type parse = {
+export type parseArgs = {
 	arrayBuffer: ArrayBuffer,
 	outputBatchSize: number,
 	outputType: outputType,
-	gameEvents: string[],
+	gameEvents: Partial<GameEvent['name'] | DemoToolEvents['name']>[],
 	parserMode: ParseMode
 	conds: Partial<keyof typeof PlayerCondition>[]
 	condDurations: Partial<keyof typeof PlayerCondition>[]
@@ -98,7 +98,7 @@ export class DemoTool {
 		}
 	}
 	
-	parse(opts: parse, callback) {
+	parse(opts: parseArgs, callback) {
 		if (!opts.outputBatchSize) opts.outputBatchSize = 1
 		if (!opts.outputType) opts.outputType = 'obj'
 		if (!opts.parserMode) opts.parserMode = ParseMode.MINIMAL

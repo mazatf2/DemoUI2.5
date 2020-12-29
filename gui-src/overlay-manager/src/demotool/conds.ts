@@ -2,6 +2,8 @@ import {Match, PlayerCondition} from '@demostf/demo.js'
 import {dbEntry} from './demotool.worker'
 import {playerCondKey} from './demoToolEvents'
 
+export type activeConds = Partial<Record<keyof typeof PlayerCondition, boolean>>
+
 export class Conds {
 	public conds: Partial<keyof typeof PlayerCondition>[]
 	public duration: Partial<keyof typeof PlayerCondition>[]
@@ -19,7 +21,7 @@ export class Conds {
 		return Object.fromEntries(this.conds.map(cond => [cond, []]))
 	}
 	
-	getActive(userId: number, match: Match): Partial<Record<keyof typeof PlayerCondition, boolean>> {
+	getActive(userId: number, match: Match): activeConds {
 		let player
 		const get = userId => match.getPlayerByUserId(userId)
 		
