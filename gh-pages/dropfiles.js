@@ -15,14 +15,14 @@ globalThis.define('component-dropfile', {
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
 		<div class="container content">
 		<p>
-			Drag & drop or
 			<a
 				href=""
 				onclick=${(e) => {this.showFileSelect(e)}}
 				class=""
 			>
-				select a .dem
+				Select a TF2 stv .dem
 			</a>
+			or drag it here.
 		</p>
 		</div>
 		<input
@@ -47,6 +47,7 @@ globalThis.define('component-dropfile', {
 			
 			const buff = await file.arrayBuffer()
 			this.onArrayBuffer(buff)
+			this.html``
 			break
 		}
 	},
