@@ -6,8 +6,8 @@ import {commands} from '../../../commands.js'
 import {strings, team_from_index, teams} from '../../../utils.js'
 
 async function getRounds(arrayBuffer) {
-	if (arrayBuffer.byteLength < 100) return []
-	
+	if (arrayBuffer.byteLength < 100) return {rounds: [], users: []}
+
 	let demotool_worker = new Worker('../../../../lib/demotool.worker.js')
 	if (process && process?.versions?.electron)
 		demotool_worker = new Worker('file:../lib/demotool.worker.js')
@@ -41,7 +41,11 @@ async function getRounds(arrayBuffer) {
 	
 	console.log(demotool)
 	console.log(rounds)
-	return rounds
+
+	const users = await demotool.getUsers()
+	users.sort((a, b) => a.team.localeCompare(b.team))
+
+	return {rounds: rounds, users: users}
 }
 
 const style = css`
@@ -364,7 +368,7 @@ define('page-roundinfo', {
 		this.render()
 	},
 	async update() {
-		const rounds = await getRounds(this.arrayBuffer)
+		const {rounds, users} = await getRounds(this.arrayBuffer)
 		console.log(rounds)
 		const options = {showSpoilers: true, scalePx: 16}
 		const components = rounds.map(round => RoundComponent(round, options))
@@ -372,6 +376,8 @@ define('page-roundinfo', {
 		this.html`
 			<link href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" rel="stylesheet">
 			<style>${style}</style>
+			<page-users .users=${users}/>
+			<br>
 			<div class="timeline">
 				${components}
 			</div>
