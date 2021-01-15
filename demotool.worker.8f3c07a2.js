@@ -3204,7 +3204,9 @@ parcelRequire = function (e, r, t, n) {
   }, {}],
   "FGKG": [function (require, module, exports) {
     var define;
-    var e;
+    var global = arguments[3];
+    var e,
+        t = arguments[3];
     !function (t, n) {
       if ("function" == typeof e && e.amd) e([], n);else if ("object" == typeof exports) module.exports = n();else {
         var r = n();
@@ -3213,17 +3215,17 @@ parcelRequire = function (e, r, t, n) {
     }(this, function () {
       "use strict";
 
-      var e = "undefined" != typeof GLOBAL ? GLOBAL : self;
+      var e = void 0 !== t ? t : self;
       if (void 0 !== e.TextEncoder && void 0 !== e.TextDecoder) return {
         TextEncoder: e.TextEncoder,
         TextDecoder: e.TextDecoder
       };
-      var t = ["utf8", "utf-8", "unicode-1-1-utf-8"];
+      var n = ["utf8", "utf-8", "unicode-1-1-utf-8"];
       return {
         TextEncoder: function (e) {
-          if (t.indexOf(e) < 0 && void 0 !== e && null != e) throw new RangeError("Invalid encoding type. Only utf-8 is supported");
+          if (n.indexOf(e) < 0 && null != e) throw new RangeError("Invalid encoding type. Only utf-8 is supported");
           this.encoding = "utf-8", this.encode = function (e) {
-            if ("string" != typeof e) throw new TypeError("passed argument must be of tye string");
+            if ("string" != typeof e) throw new TypeError("passed argument must be of type string");
             var t = unescape(encodeURIComponent(e)),
                 n = new Uint8Array(t.length);
             return t.split("").forEach(function (e, t) {
@@ -3231,21 +3233,20 @@ parcelRequire = function (e, r, t, n) {
             }), n;
           };
         },
-        TextDecoder: function (e, n) {
-          if (t.indexOf(e) < 0 && void 0 !== e && null != e) throw new RangeError("Invalid encoding type. Only utf-8 is supported");
-          if (this.encoding = "utf-8", this.ignoreBOM = !1, this.fatal = void 0 !== n && fatal in n && n.fatal, "boolean" != typeof this.fatal) throw new TypeError("fatal flag must be boolean");
+        TextDecoder: function (e, t) {
+          if (n.indexOf(e) < 0 && null != e) throw new RangeError("Invalid encoding type. Only utf-8 is supported");
+          if (this.encoding = "utf-8", this.ignoreBOM = !1, this.fatal = void 0 !== t && "fatal" in t && t.fatal, "boolean" != typeof this.fatal) throw new TypeError("fatal flag must be boolean");
 
           this.decode = function (e, t) {
             if (void 0 === e) return "";
-            var n = void 0 !== t && n in t && t.stream;
-            if ("boolean" != typeof n) throw new TypeError("stream option must be boolean");
+            if ("boolean" != typeof (void 0 !== t && "stream" in t && t.stream)) throw new TypeError("stream option must be boolean");
 
             if (ArrayBuffer.isView(e)) {
-              var r = new Uint8Array(e.buffer),
-                  o = new Array(r.length);
-              return r.forEach(function (e, t) {
-                o[t] = String.fromCharCode(e);
-              }), decodeURIComponent(escape(o.join("")));
+              var n = new Uint8Array(e.buffer, e.byteOffset, e.byteLength),
+                  r = new Array(n.length);
+              return n.forEach(function (e, t) {
+                r[t] = String.fromCharCode(e);
+              }), decodeURIComponent(escape(r.join("")));
             }
 
             throw new TypeError("passed argument must be an array buffer view");
@@ -6099,22 +6100,112 @@ parcelRequire = function (e, r, t, n) {
   "TFPF": [function (require, module, exports) {
     "use strict";
 
+    function e(e) {
+      return e;
+    }
+
     Object.defineProperty(exports, "__esModule", {
       value: !0
-    }), exports.DemoToolEvents = void 0;
-
-    const o = o => ({
-      name: o,
-      values: {}
-    }),
-          e = {
-      demotool_pause_start: () => o("demotool_pause_start"),
-      demotool_pause_end: () => o("demotool_pause_end"),
-      demotool_json_end: () => o("demotool_json_end")
-    };
-
-    exports.DemoToolEvents = e;
+    }), exports.DemoToolEvents = e;
   }, {}],
+  "Yg8T": [function (require, module, exports) {
+    "use strict";
+
+    function e(e, t, a, d) {
+      var s, o, r, l, i, n;
+      let c = (null === (s = t.values) || void 0 === s ? void 0 : s.targetid) || -100,
+          u = (null === (o = t.values) || void 0 === o ? void 0 : o.userid) || -100,
+          v = (null === (r = t.values) || void 0 === r ? void 0 : r.attacker) || -100;
+      "crossbow_heal" === t.name && (c = t.values.target || -100, u = t.values.healer || -100);
+
+      const g = {
+        targetid: (null === (l = e.match.parserState.userInfo.get(c)) || void 0 === l ? void 0 : l.steamId) || "",
+        userid: (null === (i = e.match.parserState.userInfo.get(u)) || void 0 === i ? void 0 : i.steamId) || "",
+        attacker: (null === (n = e.match.parserState.userInfo.get(v)) || void 0 === n ? void 0 : n.steamId) || ""
+      },
+            h = t => -100 === t ? d.conds_placeholder() : d.getActive(t, e.match),
+            p = {
+        targetid: h(c),
+        userid: h(u),
+        attacker: h(v)
+      },
+            _ = {
+        targetid: e.lastTickConds.get(c) || d.conds_placeholder(),
+        userid: e.lastTickConds.get(u) || d.conds_placeholder(),
+        attacker: e.lastTickConds.get(v) || d.conds_placeholder()
+      };
+
+      return {
+        tick: a,
+        ...t,
+        extend: g,
+        extend_conds: p,
+        extend_conds_last: _
+      };
+    }
+
+    Object.defineProperty(exports, "__esModule", {
+      value: !0
+    }), exports.newEventEntities = e;
+  }, {}],
+  "HNes": [function (require, module, exports) {
+    "use strict";
+
+    function e(e, t, a) {
+      var r, d, i, o, l, s;
+      let u = {
+        targetid: (null === (d = e.match.parserState.userInfo.get(null === (r = t.values) || void 0 === r ? void 0 : r.targetid)) || void 0 === d ? void 0 : d.steamId) || "",
+        userid: (null === (o = e.match.parserState.userInfo.get(null === (i = t.values) || void 0 === i ? void 0 : i.userid)) || void 0 === o ? void 0 : o.steamId) || "",
+        attacker: (null === (s = e.match.parserState.userInfo.get(null === (l = t.values) || void 0 === l ? void 0 : l.attacker)) || void 0 === s ? void 0 : s.steamId) || ""
+      };
+      return {
+        tick: a,
+        ...t,
+        extend: u
+      };
+    }
+
+    Object.defineProperty(exports, "__esModule", {
+      value: !0
+    }), exports.newEventMinimal = e;
+  }, {}],
+  "E25O": [function (require, module, exports) {
+    "use strict";
+
+    Object.defineProperty(exports, "__esModule", {
+      value: !0
+    }), exports.Conds = void 0;
+
+    var e = require("@demostf/demo.js/src");
+
+    class o {
+      constructor(e, o) {
+        this.conds = e, this.duration = o;
+      }
+
+      conds_placeholder() {
+        return Object.fromEntries(this.conds.map(e => [e, !1]));
+      }
+
+      dbEntry_placeholder() {
+        return Object.fromEntries(this.conds.map(e => [e, []]));
+      }
+
+      getActive(o, t) {
+        let r;
+        r = -100 === o ? null : (e => t.getPlayerByUserId(e))(o);
+
+        const s = o => (null == r ? void 0 : r.hasCondition(null === e.PlayerCondition || void 0 === e.PlayerCondition ? void 0 : e.PlayerCondition[o])) || !1;
+
+        return Object.fromEntries(this.conds.map(e => [e, s(e)]));
+      }
+
+    }
+
+    exports.Conds = o;
+  }, {
+    "@demostf/demo.js/src": "ie32"
+  }],
   "YPVd": [function (require, module, exports) {
     "use strict";
 
@@ -6122,213 +6213,190 @@ parcelRequire = function (e, r, t, n) {
       value: !0
     }), exports.DemoTool = void 0;
 
-    var t = n(require("comlink")),
-        e = require("@demostf/demo.js/src"),
+    var e = i(require("comlink")),
+        t = require("@demostf/demo.js/src"),
         s = require("@demostf/demo.js/src/Data/Message"),
         o = require("./demoToolEvents"),
-        a = require("@demostf/demo.js/src/Demo");
+        n = require("@demostf/demo.js/src/Demo"),
+        r = require("./newEventEntities"),
+        a = require("./newEventMinimal"),
+        u = require("./conds");
 
-    function r() {
+    function c() {
       if ("function" != typeof WeakMap) return null;
-      var t = new WeakMap();
-      return r = function () {
-        return t;
-      }, t;
+      var e = new WeakMap();
+      return c = function () {
+        return e;
+      }, e;
     }
 
-    function n(t) {
-      if (t && t.__esModule) return t;
-      if (null === t || "object" != typeof t && "function" != typeof t) return {
-        default: t
+    function i(e) {
+      if (e && e.__esModule) return e;
+      if (null === e || "object" != typeof e && "function" != typeof e) return {
+        default: e
       };
-      var e = r();
-      if (e && e.has(t)) return e.get(t);
+      var t = c();
+      if (t && t.has(e)) return t.get(e);
       var s = {},
           o = Object.defineProperty && Object.getOwnPropertyDescriptor;
 
-      for (var a in t) if (Object.prototype.hasOwnProperty.call(t, a)) {
-        var n = o ? Object.getOwnPropertyDescriptor(t, a) : null;
-        n && (n.get || n.set) ? Object.defineProperty(s, a, n) : s[a] = t[a];
+      for (var n in e) if (Object.prototype.hasOwnProperty.call(e, n)) {
+        var r = o ? Object.getOwnPropertyDescriptor(e, n) : null;
+        r && (r.get || r.set) ? Object.defineProperty(s, n, r) : s[n] = e[n];
       }
 
-      return s.default = t, e && e.set(t, s), s;
+      return s.default = e, t && t.set(e, s), s;
     }
 
-    const i = () => ({
-      TF_COND_INVULNERABLE: [],
-      TF_COND_INVULNERABLE_WEARINGOFF: [],
-      TF_COND_BLASTJUMPING: [],
-      TF_COND_CRITBOOSTED: []
-    }),
-          u = () => ({
-      TF_COND_INVULNERABLE: !1,
-      TF_COND_INVULNERABLE_WEARINGOFF: !1,
-      TF_COND_BLASTJUMPING: !1,
-      TF_COND_CRITBOOSTED: !1
-    });
-
-    class l {
+    class d {
       constructor() {
         this.lastTickConds = new Map(), this.db = new Map(), this.outputBatchBuffer = [], console.log(this);
       }
 
-      outputBatch(t, e) {
-        t || (t = 1), this.outputBatchBuffer.push(e), this.callback(this.outputBatchBuffer), this.outputBatchBuffer = [];
+      outputBatch(e, t) {
+        e || (e = 1), this.outputBatchBuffer.push(t), this.callback(this.outputBatchBuffer), this.outputBatchBuffer = [];
       }
 
-      json(t) {
-        const e = e => this.outputBatch(t, e);
+      json(e) {
+        const t = t => this.outputBatch(e, t);
 
         return {
-          start: () => e('{"data": [\n'),
-          msg: t => (t => e(JSON.stringify(t) + ",\n"))(t),
-          msg_last: () => (t => e(JSON.stringify(t) + "\n"))(o.DemoToolEvents.demotool_json_end()),
-          end: () => e("]}")
+          start: () => t('{"data": [\n'),
+          msg: e => (e => t(JSON.stringify(e) + ",\n"))(e),
+          msg_last: () => (e => t(JSON.stringify(e) + "\n"))((0, o.DemoToolEvents)({
+            name: "demotool_json_end",
+            values: {}
+          })),
+          end: () => t("]}")
         };
       }
 
-      obj(t) {
-        const e = e => this.outputBatch(t, e);
+      obj(e) {
+        const t = t => this.outputBatch(e, t),
+              s = () => {};
 
         return {
-          start: () => {},
-          msg: t => e(t),
-          msg_last: () => {},
-          end: () => {}
+          start: () => s,
+          msg: e => t(e),
+          msg_last: () => s,
+          end: () => s
         };
       }
 
-      output(t, e) {
-        let s = this.json(e);
-        return "json" === t && (s = this.json(e)), "obj" === t && (s = this.obj(e)), {
+      output(e, t) {
+        let s = this.json(t);
+        return "json" === e && (s = this.json(t)), "obj" === e && (s = this.obj(t)), {
           start: () => s.start(),
-          msg: t => s.msg(t),
+          msg: e => s.msg(e),
           msg_last: () => s.msg_last(),
           end: () => s.end()
         };
       }
 
-      inc() {
-        return 1;
-      }
-
-      parse(t, r) {
-        t.outputBatchSize || (t.outputBatchSize = 1), t.outputType || (t.outputType = "obj"), t.parserMode || (t.parserMode = a.ParseMode.MINIMAL), r || (this.callback = () => {}), r && (this.callback = r), console.log(r, this.callback);
-        let n = ["round_start", "round_end", "teamplay_round_start", "teamplay_round_win", "teamplay_team_ready"];
-        t.gameEvents && (n = t.gameEvents, console.log(t.gameEvents, "gameEvents")), this.demo = new e.Demo(t.arrayBuffer), this.analyser = this.demo.getAnalyser(t.parserMode || a.ParseMode.MINIMAL), this.match = this.analyser.match;
+      parse(e, c) {
+        e.outputBatchSize || (e.outputBatchSize = 1), e.outputType || (e.outputType = "obj"), e.parserMode || (e.parserMode = n.ParseMode.MINIMAL), c || (this.callback = () => {}), c && (this.callback = c), console.log(c, this.callback);
+        let i = ["round_start", "round_end", "teamplay_round_start", "teamplay_round_win", "teamplay_team_ready"];
+        e.gameEvents && (i = e.gameEvents, console.log(e.gameEvents, "gameEvents"));
+        let d = [],
+            l = [];
+        e.conds && (d = e.conds), e.condDurations && (l = e.condDurations), this.demo = new t.Demo(e.arrayBuffer), this.analyser = this.demo.getAnalyser(e.parserMode || n.ParseMode.MINIMAL), this.match = this.analyser.match;
         this.demo;
-        const l = this.analyser,
-              d = this.match,
-              c = this.output(t.outputType, t.outputBatchSize);
-        c.start();
+        const p = this.analyser,
+              m = this.match,
+              h = new u.Conds(d, l),
+              f = this.output(e.outputType, e.outputBatchSize);
+        f.start();
 
-        const h = t => {
-          let s;
-          return {
-            TF_COND_BLASTJUMPING: (null == (s = -100 === t ? null : (t => this.match.getPlayerByUserId(t))(t)) ? void 0 : s.hasCondition(e.PlayerCondition.TF_COND_BLASTJUMPING)) || !1,
-            TF_COND_INVULNERABLE: (null == s ? void 0 : s.hasCondition(e.PlayerCondition.TF_COND_INVULNERABLE)) || !1,
-            TF_COND_INVULNERABLE_WEARINGOFF: (null == s ? void 0 : s.hasCondition(e.PlayerCondition.TF_COND_INVULNERABLE_WEARINGOFF)) || !1,
-            TF_COND_CRITBOOSTED: (null == s ? void 0 : s.hasCondition(e.PlayerCondition.TF_COND_CRITBOOSTED)) || !1
-          };
+        const _ = (e, t) => {
+          const s = (0, r.newEventEntities)(this, e, t, h);
+          return f.msg(s);
         },
-              p = (t, e) => {
-          var s, o, a, r, n, i;
-          let l = (null === (s = t.values) || void 0 === s ? void 0 : s.targetid) || -100,
-              d = (null === (o = t.values) || void 0 === o ? void 0 : o.userid) || -100,
-              p = (null === (a = t.values) || void 0 === a ? void 0 : a.attacker) || -100;
-          "crossbow_heal" === t.name && (l = t.values.target || -100, d = t.values.healer || -100);
-
-          const _ = {
-            targetid: (null === (r = this.match.parserState.userInfo.get(l)) || void 0 === r ? void 0 : r.steamId) || "",
-            userid: (null === (n = this.match.parserState.userInfo.get(d)) || void 0 === n ? void 0 : n.steamId) || "",
-            attacker: (null === (i = this.match.parserState.userInfo.get(p)) || void 0 === i ? void 0 : i.steamId) || ""
-          },
-                m = t => -100 === t ? u() : h(t),
-                v = {
-            targetid: m(l),
-            userid: m(d),
-            attacker: m(p)
-          },
-                g = {
-            targetid: this.lastTickConds.get(l) || u(),
-            userid: this.lastTickConds.get(d) || u(),
-            attacker: this.lastTickConds.get(p) || u()
-          },
-                f = Object.assign(Object.assign({
-            tick: e
-          }, t), {
-            extend: _,
-            extend_conds: v,
-            extend_conds_last: g
-          });
-
-          return c.msg(f);
-        },
-              _ = (t, e) => {
-          var s, o, a, r, n, i;
-          let u = {};
-          u = {
-            targetid: (null === (o = this.match.parserState.userInfo.get(null === (s = t.values) || void 0 === s ? void 0 : s.targetid)) || void 0 === o ? void 0 : o.steamId) || "",
-            userid: (null === (r = this.match.parserState.userInfo.get(null === (a = t.values) || void 0 === a ? void 0 : a.userid)) || void 0 === r ? void 0 : r.steamId) || "",
-            attacker: (null === (i = this.match.parserState.userInfo.get(null === (n = t.values) || void 0 === n ? void 0 : n.attacker)) || void 0 === i ? void 0 : i.steamId) || ""
-          };
-          const l = Object.assign(Object.assign({
-            tick: e
-          }, t), {
-            extend: u
-          });
-          return c.msg(l);
+              g = (e, t) => {
+          const s = (0, a.newEventMinimal)(this, e, t);
+          return f.msg(s);
         };
 
-        let m = (t, e) => {};
+        let v = (e, t) => {};
 
-        m = t.parserMode === a.ParseMode.MINIMAL ? _ : p;
-        let v = 0,
-            g = !1,
-            f = 0;
+        v = e.parserMode === n.ParseMode.MINIMAL ? g : _;
+        let y = 0,
+            M = !1,
+            k = 0;
 
-        for (const e of l.getMessages()) if (e.type === s.MessageType.Packet) for (const s of e.packets) {
-          const r = d.tick - d.startTick,
-                l = () => r + v;
+        for (const t of p.getMessages()) if (t.type === s.MessageType.Packet) for (const s of t.packets) {
+          const r = m.tick - m.startTick,
+                a = () => r + y;
 
-          if ("setPause" === s.packetType && (v += e.tick - r, s.paused ? (g = !0, m(o.DemoToolEvents.demotool_pause_start(), l()), console.log(r, l(), "packet.paused", g, v)) : (g = !1, v += e.tick - r, m(o.DemoToolEvents.demotool_pause_end(), l()), console.log(r, l(), "packet.paused", g, v))), "gameEvent" === s.packetType && n.includes(s.event.name) && m(s.event, l()), "netTick" === s.packetType && s.tick > f) {
-            for (const e of d.playerEntityMap.values()) {
-              const s = e.user.userId;
-              if (t.parserMode === a.ParseMode.MINIMAL) return void this.lastTickConds.set(s, h(s));
+          if ("setPause" === s.packetType && (y += t.tick - r, s.paused ? (M = !0, i.includes("demotool_pause_start") && v((0, o.DemoToolEvents)({
+            name: "demotool_pause_start",
+            values: {}
+          }), a()), console.log(r, a(), "packet.paused", M, y)) : (M = !1, y += t.tick - r, i.includes("demotool_pause_end") && v((0, o.DemoToolEvents)({
+            name: "demotool_pause_end",
+            values: {}
+          }), a()), console.log(r, a(), "packet.paused", M, y))), "gameEvent" === s.packetType && i.includes(s.event.name) && v(s.event, a()), "netTick" === s.packetType && s.tick > k) {
+            for (const t of m.playerEntityMap.values()) {
+              const s = t.user.userId,
+                    r = e => this.lastTickConds.set(e, h.getActive(e, m));
 
-              const o = h(s),
-                    r = this.lastTickConds.get(s) || u(),
-                    n = t => this.db.set(s, t),
-                    d = () => {
-                let t = this.db.get(s);
-                return t || (t = i(), n(t)), t;
+              if (e.parserMode === n.ParseMode.MINIMAL) return void r(s);
+
+              const u = h.getActive(s, m),
+                    c = this.lastTickConds.get(s) || h.conds_placeholder(),
+                    d = e => this.db.set(s, e),
+                    l = () => {
+                let e = this.db.get(s);
+                return e || (e = h.dbEntry_placeholder(), d(e)), e;
               };
 
-              for (const [t, e] of Object.entries(o)) {
-                if (!1 === r[t] && !0 === e) {
-                  const e = d(),
-                        s = e[t];
-                  s.push({
-                    start: l(),
+              for (const [e, t] of Object.entries(u)) {
+                const n = e;
+
+                if (!1 === c[n] && !0 === t) {
+                  const e = l(),
+                        t = e[n];
+                  t.push({
+                    start: a(),
                     end: -1
-                  }), e[t] = s, n(e);
+                  }), e[n] = t, d(e), i.includes("demotool_cond_start") && v((0, o.DemoToolEvents)({
+                    name: "demotool_cond_start",
+                    values: {
+                      userid: s,
+                      cond: n
+                    }
+                  }), a());
                 }
 
-                if (!0 === r[t] && !1 === e) {
-                  const e = d(),
-                        s = e[t];
-                  s[s.length - 1].end = l(), n(e);
+                if (!0 === c[n] && !1 === t) {
+                  const e = l(),
+                        t = e[n],
+                        r = t[t.length - 1];
+                  r.end = a(), d(e), i.includes("demotool_cond_end") && v((0, o.DemoToolEvents)({
+                    name: "demotool_cond_end",
+                    values: {
+                      userid: s,
+                      cond: n
+                    }
+                  }), a()), i.includes("demotool_cond_duration") && v((0, o.DemoToolEvents)({
+                    name: "demotool_cond_duration",
+                    values: {
+                      userid: s,
+                      cond: n,
+                      start: r.start,
+                      end: r.end,
+                      duration: r.end - r.start
+                    }
+                  }), a());
                 }
               }
 
-              this.lastTickConds.set(s, h(s));
+              r(s);
             }
 
-            f = s.tick;
+            k = s.tick;
           }
         }
 
-        c.msg_last(), c.end();
+        f.msg_last(), f.end();
       }
 
       async getUsers() {
@@ -6341,13 +6409,16 @@ parcelRequire = function (e, r, t, n) {
 
     }
 
-    exports.DemoTool = l, t.expose(l);
+    exports.DemoTool = d, e.expose(d);
   }, {
     "comlink": "vZpu",
     "@demostf/demo.js/src": "ie32",
     "@demostf/demo.js/src/Data/Message": "RT7P",
     "./demoToolEvents": "TFPF",
-    "@demostf/demo.js/src/Demo": "zDeL"
+    "@demostf/demo.js/src/Demo": "zDeL",
+    "./newEventEntities": "Yg8T",
+    "./newEventMinimal": "HNes",
+    "./conds": "E25O"
   }]
 }, {}, ["YPVd"], null);
 },{}]},{},["zs1v"], null)
