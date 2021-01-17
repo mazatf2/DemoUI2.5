@@ -13,12 +13,17 @@
 						 "7 8 9";
 }
 
+:root {
+	--pie-button-size: 60px;
+	--pie-section-size: calc(var(--pie-button-size) * 2);
+}
+
 .pie section {
-	width: 100px;
-	height: 100px;
+	width: var(--pie-section-size);
+	height: var(--pie-section-size);
 	pointer-events: none;
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(var(--pie-button-size), 1fr));
 }
 
 .pie section:nth-child(even) {
@@ -31,13 +36,13 @@
 
 /* input element sized */
 .buttonSized {
-	width: 50px;
-	height: 50px;
+	width: var(--pie-button-size);
+	height: var(--pie-button-size);
 }
 
 .pie section button {
-	width: 50px;
-	height: 50px;
+	width: var(--pie-button-size);
+	height: var(--pie-button-size);
 	pointer-events: all;
 }
 

@@ -9,6 +9,9 @@ const keybinds = new Map()
 const hudShowState = new Map()
 let $mountContainer = null
 let mounts = []
+let $dot = null
+let $body = document.body
+let guiButtonSize = 80
 
 const hud = {
 	hideAll: function () {
@@ -50,7 +53,11 @@ const hud = {
 const isInitDone = () => mounts.length > 0
 
 function init() {
+	$dot = document.querySelector('#dot')
+	$body = document.body
 	$mountContainer = document.querySelector('#container')
+	const cssWidth = getComputedStyle(document.querySelector('#getButtonSized')).width
+	guiButtonSize = Number(/\d+/.exec(cssWidth)[0])
 	
 	const inputElementsForLog = []
 	mounts = [
@@ -103,9 +110,6 @@ console.log(keybinds)
 console.log(hudShowState)
 console.log(mounts)
 
-const $dot = document.querySelector('#dot')
-const $body = document.body
-
 window.addEventListener('DOMContentLoaded', (e) => {
 	init()
 	
@@ -132,7 +136,7 @@ document.addEventListener('mousemove', e => {
 	
 	const dis = distance(screenMid, mouse)
 	
-	if (dis < 150) {
+	if (dis < (guiButtonSize * 3) - 10) {
 		mouse.x += e.movementX
 		mouse.y += e.movementY
 	} else {

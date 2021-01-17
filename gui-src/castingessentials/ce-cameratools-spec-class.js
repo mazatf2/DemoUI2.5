@@ -6,6 +6,10 @@ const pie9 = html`
 	<link href="file:gui.css" rel="stylesheet">
 	<link href="file:castingessentials/ce-cameratools-spec-class.css" rel="stylesheet">
 	
+	<link href="./gui.css" rel="stylesheet">
+	<link href="./castingessentials/ce-cameratools-spec-class.css" rel="stylesheet">
+	
+	
 	<div id="container">
 		
 		<div class="pie pie9" id="castingessentials-piemenu">
@@ -21,10 +25,10 @@ const pie9 = html`
 				</button>
 			</section>
 			<section>
-				<button class="blu">
+				<button class="blu bluButton">
 					Spy
 				</button>
-				<button class="red">
+				<button class="red redButton">
 					Spy
 				</button>
 			</section>
@@ -82,10 +86,10 @@ const pie9 = html`
 			<section>
 				<div class="buttonSized"></div>
 				<div class="buttonSized"></div>
-				<button class="blu">
+				<button class="blu bluButton">
 					Sniper
 				</button>
-				<button class="red">
+				<button class="red redButton">
 					Sniper
 				</button>
 			</section>
