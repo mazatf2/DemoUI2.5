@@ -14,7 +14,7 @@
 }
 
 :root {
-	--pie-button-size: 60px;
+	--pie-button-size: 70px;
 	--pie-section-size: calc(var(--pie-button-size) * 2);
 }
 

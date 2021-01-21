@@ -1,10 +1,9 @@
 const path = require('path')
-const {overlay_manager_key, tf2_path} = require('../config.json')
-
 import {define} from 'https://unpkg.com/uce@1.12.1?module'
 import './page/roundinfo.js'
 import './page/events.js'
 
+const {overlay_manager_key, tf2_path} = require('../config.json')
 const demoPath = path.join(tf2_path + '/tf/custom/demoui2.5/test.dem')
 
 const style = `
@@ -46,18 +45,28 @@ define('overlay-manager', {
 	
 	arrayBuffer: new ArrayBuffer(0),
 	
+	viewMode: 'stv',
+	
 	render(router) {
 		if (!router) router = ''
 		
-		return this.html`<div id='main'>
-		<style>${style}</style>
-		<button onclick=${() => {
-			hide()
-		}}>Hide</button>
-		<page-roundinfo .arrayBuffer="${this.arrayBuffer}"/>
-		<page-events .arrayBuffer="${this.arrayBuffer}"/>
-		</div>
-	`
+		return this.html`
+			<div id="main">
+				<style>${style}</style>
+				<button onclick=${() => {
+					hide()
+				}}>
+					Hide
+				</button>
+				
+				${this.viewMode === 'stv' && 'stv'}
+				${this.viewMode === 'dem' && html`
+					<page-roundinfo .arrayBuffer="${this.arrayBuffer}"/>
+					<page-events .arrayBuffer="${this.arrayBuffer}"/>
+				`
+				}
+			</div>
+		`
 	},
 	
 	route(content) {
@@ -67,8 +76,8 @@ define('overlay-manager', {
 	_once: false,
 	
 	_onKeydown(e) {
-		if (e.code === overlay_manager_key){
-			if(this._once) hide()
+		if (e.code === overlay_manager_key) {
+			if (this._once) hide()
 			this._once = !this._once
 		}
 	},
@@ -78,7 +87,7 @@ define('overlay-manager', {
 		
 		window.addEventListener('keydown', e => this._onKeydown(e)) // this.onKeydown doesnt work with uce/electron
 		
-		const get = async() => {
+		const get = async () => {
 			const demo = await fetch(demoPath)
 			return await demo.arrayBuffer()
 		}

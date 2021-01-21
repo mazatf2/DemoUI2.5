@@ -29,6 +29,17 @@ module.exports.io_manager = () => {
 	ipcRenderer.on('app.logState', (event, message) => {
 		console.log('app.logState', message)
 		console.log(1)
+		window.dispatchEvent(
+			new CustomEvent('app.logState', {detail: message}),
+		)
+	})
+	
+	ipcRenderer.on('app.logState_steam_ids', (event, message) => {
+		console.log('app.logState_steam_ds', message)
+		console.log(1)
+		window.dispatchEvent(
+			new CustomEvent('app.logState_steam_ids', {detail: message}),
+		)
 	})
 	
 	function send(event) {

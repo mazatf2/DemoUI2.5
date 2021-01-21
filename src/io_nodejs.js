@@ -8,7 +8,7 @@ const sendLogState = (logState) => {
 }
 
 const sendSteamIds = (steamIds) => {
-	_webContents.send('app.logState_steam_ds', steamIds)
+	_webContents.send('app.logState_steam_ids', steamIds)
 }
 
 let _webContents = null
