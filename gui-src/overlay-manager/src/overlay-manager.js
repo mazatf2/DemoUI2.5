@@ -1,7 +1,7 @@
 const path = require('path')
-import {define} from 'https://unpkg.com/uce@1.11.4?module'
 const {overlay_manager_key, tf2_path} = require('../config.json')
 
+import {define} from 'https://unpkg.com/uce@1.12.1?module'
 import './page/roundinfo.js'
 import './page/events.js'
 
