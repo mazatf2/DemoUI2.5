@@ -20,6 +20,7 @@ async function getEvents(arrayBuffer) {
 	await demotool.parse({
 		arrayBuffer: arrayBuffer, outputBatchSize: 1, outputType: 'obj', gameEvents: [
 			'player_chargedeployed',
+			//'demotool_player_hurt_others',
 			'player_death',
 			'crossbow_heal',
 			'rocket_jump',
@@ -47,7 +48,7 @@ async function getEvents(arrayBuffer) {
 }
 
 function onGameEvent(eventArr) {
-	console.log(...eventArr)
+	//console.log(...eventArr)
 	if (eventArr.length !== 1) debugger
 	const e = eventArr[0]
 	
@@ -56,29 +57,34 @@ function onGameEvent(eventArr) {
 	const ubered = () => e.extend_conds.userid.TF_COND_INVULNERABLE || e.extend_conds.userid.TF_COND_INVULNERABLE_WEARINGOFF
 	const on = eventName => e.name === eventName
 	const event = (ev) => {
-
 		ev.name = e.name
 		ev.tick = e.tick
+		ev.event = e
+		ev.steamIdFrom = ev.steamId
+		ev.steamId = e.extend[ev.steamId]
 		events.push(ev)
 	}
 	
+	on('player_hurt') && blasting()
+	&& event({steamId: 'userid', labelShort: 'Player got damaged from airshot while blasting'})
+	
 	on('player_death') && blasting() && dmg_blast()
-	&& event({steamId: e.extend.userid, labelShort: 'Player died from airshot while blasting'})
+	&& event({steamId: 'userid', labelShort: 'Player died from airshot while blasting'})
 	
 	on('player_death') && (e.extend_conds.attacker.TF_COND_BLASTJUMPING || e.extend_conds_last.attacker.BLASTJUMPING) && dmg_blast()
-	&& event({steamId: e.extend.attacker, labelShort: 'Attacker got airshot kill while blasting'})
+	&& event({steamId: 'attacker', labelShort: 'Attacker got airshot kill while blasting'})
 	
 	on('player_chargedeployed') && blasting()
-	&& event({steamId: e.extend.userid, labelShort: 'ÜberCharge activated while blasting'})
+	&& event({steamId: 'userid', labelShort: 'ÜberCharge activated while blasting'})
 	
 	on('crossbow_heal') && (e.extend_conds.targetid.TF_COND_BLASTJUMPING || e.extend_conds_last.targetid.BLASTJUMPING)
-	&& event({steamId: e.extend.userid, labelShort: 'Airshot healing arrow'})
+	&& event({steamId: 'userid', labelShort: 'Airshot healing arrow'})
 	
 	on('rocket_jump') || on('sticky_jump') && ubered()
-	&& event({steamId: e.extend.userid, labelShort: 'Blast jump while ubered'})
+	&& event({steamId: 'userid', labelShort: 'Blast jump while ubered'})
 	
 	on('rocket_jump') || on('sticky_jump') && e.extend_conds.userid.TF_COND_CRITBOOSTED
-	&& event({steamId: e.extend.userid, labelShort: 'Blast jump while kritzed'})
+	&& event({steamId: 'userid', labelShort: 'Blast jump while kritzed'})
 	
 	if (blasting()) {
 		console.log('blasting', e)
@@ -88,6 +94,23 @@ function onGameEvent(eventArr) {
 const Row = (e) => {
 	const user = userInfo.find(i => i.steamId === e.steamId)
 	const nickName = user.name || ''
+	const attackers = Object.entries(e.event.extend) //[[key,value], ...]
+	const attackersLen = Object.values(e.event.extend).filter(i => i).length
+	let maybeAttackerId = ''
+	let maybeAttackerFrom = ''
+	if(attackersLen === 1) {
+		maybeAttackerId = e.event.extend[e.steamIdFrom]
+		maybeAttackerFrom = e.steamIdFrom
+	}
+	if(attackersLen === 2) {
+		const temp = attackers.find(i => i[1] !== '' && i[0] !== e.steamIdFrom)
+		maybeAttackerFrom = temp[0]
+		maybeAttackerId = temp[1]
+	}
+	if(attackersLen === 3) {
+		maybeAttackerId = 'error'
+	}
+	const maybeAttackerName = userInfo.find(i => i.steamId === maybeAttackerId)?.name || ''
 	
 	return html`
 	<tr>
@@ -96,7 +119,8 @@ const Row = (e) => {
 		<td>${e.steamId}</td>
 		<td>${e.tick}</td>
 		<td>${e.labelShort}</td>
-		<td>${e.label}</td>
+		<td>${maybeAttackerName}</td>
+		<td>${maybeAttackerId}</td>
 	</tr>`
 }
 
@@ -109,6 +133,7 @@ const Thead = () => {
 			<th>Steam id</th>
 			<th>Tick</th>
 			<th>Label</th>
+			<th></th>
 			<th></th>
 		</tr>
 	</thead>`

@@ -184,6 +184,7 @@ export class DemoTool {
 								newEvent(DemoToolEvents({name: 'demotool_pause_start', values: {}}), correctedTick())
 							}
 							console.log(tick, correctedTick(), 'packet.paused', isPaused, pauseOffset)
+							console.log('msg.tick', msg.tick, 'tick', tick, 'packetTick', packetTick, 'packetTick this', packet?.tick)
 						} else {
 							isPaused = false
 							pauseOffset += msg.tick - tick
@@ -192,14 +193,20 @@ export class DemoTool {
 								newEvent(DemoToolEvents({name: 'demotool_pause_end', values: {}}), correctedTick())
 							}
 							console.log(tick, correctedTick(), 'packet.paused', isPaused, pauseOffset)
+							console.log('msg.tick', msg.tick, 'tick', tick, 'packetTick', packetTick, 'packetTick this', packet?.tick)
 						}
 					}
 					if (packet.packetType === 'gameEvent') {
 						type s = typeof packet.event
 						//console.log(packet.event.name)
 						
-						if (captureThese.includes(packet.event.name)) {
+						if (captureThese.includes(packet.event.name) && packet.event.name !== 'demotool_player_hurt_others') {
 							newEvent(packet.event, correctedTick())
+						}
+						if (captureThese.includes('demotool_player_hurt_others') && packet.event.name === 'player_hurt') {
+							if(packet.event.values.attacker !== packet.event.values.userid) {
+								newEvent(packet.event, correctedTick())
+							}
 						}
 					}
 					if (packet.packetType === 'netTick') {
@@ -300,12 +307,4 @@ export class DemoTool {
 	}
 }
 
-if (typeof window !== 'undefined') {
-	Comlink.expose(DemoTool)
-} else {
-	const nodeEndpoint = eval('require("comlink/dist/umd/node-adapter")')
-	const parentPort = eval('require("worker_threads").parentPort')
-	globalThis.MessageChannel = eval('require("worker_threads").MessageChannel')
-	
-	Comlink.expose(DemoTool, nodeEndpoint(parentPort))
-}
+Comlink.expose(DemoTool)
