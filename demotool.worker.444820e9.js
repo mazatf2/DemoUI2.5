@@ -3204,9 +3204,7 @@ parcelRequire = function (e, r, t, n) {
   }, {}],
   "FGKG": [function (require, module, exports) {
     var define;
-    var global = arguments[3];
-    var e,
-        t = arguments[3];
+    var e;
     !function (t, n) {
       if ("function" == typeof e && e.amd) e([], n);else if ("object" == typeof exports) module.exports = n();else {
         var r = n();
@@ -3215,17 +3213,17 @@ parcelRequire = function (e, r, t, n) {
     }(this, function () {
       "use strict";
 
-      var e = void 0 !== t ? t : self;
+      var e = "undefined" != typeof GLOBAL ? GLOBAL : self;
       if (void 0 !== e.TextEncoder && void 0 !== e.TextDecoder) return {
         TextEncoder: e.TextEncoder,
         TextDecoder: e.TextDecoder
       };
-      var n = ["utf8", "utf-8", "unicode-1-1-utf-8"];
+      var t = ["utf8", "utf-8", "unicode-1-1-utf-8"];
       return {
         TextEncoder: function (e) {
-          if (n.indexOf(e) < 0 && null != e) throw new RangeError("Invalid encoding type. Only utf-8 is supported");
+          if (t.indexOf(e) < 0 && void 0 !== e && null != e) throw new RangeError("Invalid encoding type. Only utf-8 is supported");
           this.encoding = "utf-8", this.encode = function (e) {
-            if ("string" != typeof e) throw new TypeError("passed argument must be of type string");
+            if ("string" != typeof e) throw new TypeError("passed argument must be of tye string");
             var t = unescape(encodeURIComponent(e)),
                 n = new Uint8Array(t.length);
             return t.split("").forEach(function (e, t) {
@@ -3233,20 +3231,21 @@ parcelRequire = function (e, r, t, n) {
             }), n;
           };
         },
-        TextDecoder: function (e, t) {
-          if (n.indexOf(e) < 0 && null != e) throw new RangeError("Invalid encoding type. Only utf-8 is supported");
-          if (this.encoding = "utf-8", this.ignoreBOM = !1, this.fatal = void 0 !== t && "fatal" in t && t.fatal, "boolean" != typeof this.fatal) throw new TypeError("fatal flag must be boolean");
+        TextDecoder: function (e, n) {
+          if (t.indexOf(e) < 0 && void 0 !== e && null != e) throw new RangeError("Invalid encoding type. Only utf-8 is supported");
+          if (this.encoding = "utf-8", this.ignoreBOM = !1, this.fatal = void 0 !== n && fatal in n && n.fatal, "boolean" != typeof this.fatal) throw new TypeError("fatal flag must be boolean");
 
           this.decode = function (e, t) {
             if (void 0 === e) return "";
-            if ("boolean" != typeof (void 0 !== t && "stream" in t && t.stream)) throw new TypeError("stream option must be boolean");
+            var n = void 0 !== t && n in t && t.stream;
+            if ("boolean" != typeof n) throw new TypeError("stream option must be boolean");
 
             if (ArrayBuffer.isView(e)) {
-              var n = new Uint8Array(e.buffer, e.byteOffset, e.byteLength),
-                  r = new Array(n.length);
-              return n.forEach(function (e, t) {
-                r[t] = String.fromCharCode(e);
-              }), decodeURIComponent(escape(r.join("")));
+              var r = new Uint8Array(e.buffer),
+                  o = new Array(r.length);
+              return r.forEach(function (e, t) {
+                o[t] = String.fromCharCode(e);
+              }), decodeURIComponent(escape(o.join("")));
             }
 
             throw new TypeError("passed argument must be an array buffer view");
@@ -6213,42 +6212,42 @@ parcelRequire = function (e, r, t, n) {
       value: !0
     }), exports.DemoTool = void 0;
 
-    var e = i(require("comlink")),
+    var e = u(require("comlink")),
         t = require("@demostf/demo.js/src"),
-        s = require("@demostf/demo.js/src/Data/Message"),
-        o = require("./demoToolEvents"),
+        o = require("@demostf/demo.js/src/Data/Message"),
+        s = require("./demoToolEvents"),
         n = require("@demostf/demo.js/src/Demo"),
         r = require("./newEventEntities"),
         a = require("./newEventMinimal"),
-        u = require("./conds");
+        c = require("./conds");
 
-    function c() {
+    function i() {
       if ("function" != typeof WeakMap) return null;
       var e = new WeakMap();
-      return c = function () {
+      return i = function () {
         return e;
       }, e;
     }
 
-    function i(e) {
+    function u(e) {
       if (e && e.__esModule) return e;
       if (null === e || "object" != typeof e && "function" != typeof e) return {
         default: e
       };
-      var t = c();
+      var t = i();
       if (t && t.has(e)) return t.get(e);
-      var s = {},
-          o = Object.defineProperty && Object.getOwnPropertyDescriptor;
+      var o = {},
+          s = Object.defineProperty && Object.getOwnPropertyDescriptor;
 
       for (var n in e) if (Object.prototype.hasOwnProperty.call(e, n)) {
-        var r = o ? Object.getOwnPropertyDescriptor(e, n) : null;
-        r && (r.get || r.set) ? Object.defineProperty(s, n, r) : s[n] = e[n];
+        var r = s ? Object.getOwnPropertyDescriptor(e, n) : null;
+        r && (r.get || r.set) ? Object.defineProperty(o, n, r) : o[n] = e[n];
       }
 
-      return s.default = e, t && t.set(e, s), s;
+      return o.default = e, t && t.set(e, o), o;
     }
 
-    class d {
+    class l {
       constructor() {
         this.lastTickConds = new Map(), this.db = new Map(), this.outputBatchBuffer = [], console.log(this);
       }
@@ -6263,7 +6262,7 @@ parcelRequire = function (e, r, t, n) {
         return {
           start: () => t('{"data": [\n'),
           msg: e => (e => t(JSON.stringify(e) + ",\n"))(e),
-          msg_last: () => (e => t(JSON.stringify(e) + "\n"))((0, o.DemoToolEvents)({
+          msg_last: () => (e => t(JSON.stringify(e) + "\n"))((0, s.DemoToolEvents)({
             name: "demotool_json_end",
             values: {}
           })),
@@ -6273,113 +6272,115 @@ parcelRequire = function (e, r, t, n) {
 
       obj(e) {
         const t = t => this.outputBatch(e, t),
-              s = () => {};
+              o = () => {};
 
         return {
-          start: () => s,
+          start: () => o,
           msg: e => t(e),
-          msg_last: () => s,
-          end: () => s
+          msg_last: () => o,
+          end: () => o
         };
       }
 
       output(e, t) {
-        let s = this.json(t);
-        return "json" === e && (s = this.json(t)), "obj" === e && (s = this.obj(t)), {
-          start: () => s.start(),
-          msg: e => s.msg(e),
-          msg_last: () => s.msg_last(),
-          end: () => s.end()
+        let o = this.json(t);
+        return "json" === e && (o = this.json(t)), "obj" === e && (o = this.obj(t)), {
+          start: () => o.start(),
+          msg: e => o.msg(e),
+          msg_last: () => o.msg_last(),
+          end: () => o.end()
         };
       }
 
-      parse(e, c) {
-        e.outputBatchSize || (e.outputBatchSize = 1), e.outputType || (e.outputType = "obj"), e.parserMode || (e.parserMode = n.ParseMode.MINIMAL), c || (this.callback = () => {}), c && (this.callback = c), console.log(c, this.callback);
-        let i = ["round_start", "round_end", "teamplay_round_start", "teamplay_round_win", "teamplay_team_ready"];
-        e.gameEvents && (i = e.gameEvents, console.log(e.gameEvents, "gameEvents"));
-        let d = [],
-            l = [];
-        e.conds && (d = e.conds), e.condDurations && (l = e.condDurations), this.demo = new t.Demo(e.arrayBuffer), this.analyser = this.demo.getAnalyser(e.parserMode || n.ParseMode.MINIMAL), this.match = this.analyser.match;
+      parse(e, i) {
+        e.outputBatchSize || (e.outputBatchSize = 1), e.outputType || (e.outputType = "obj"), e.parserMode || (e.parserMode = n.ParseMode.MINIMAL), i || (this.callback = () => {}), i && (this.callback = i), console.log(i, this.callback);
+        let u = ["round_start", "round_end", "teamplay_round_start", "teamplay_round_win", "teamplay_team_ready"];
+        e.gameEvents && (u = e.gameEvents, console.log(e.gameEvents, "gameEvents"));
+        let l = [],
+            d = [];
+        e.conds && (l = e.conds), e.condDurations && (d = e.condDurations), this.demo = new t.Demo(e.arrayBuffer), this.analyser = this.demo.getAnalyser(e.parserMode || n.ParseMode.MINIMAL), this.match = this.analyser.match;
         this.demo;
+
         const p = this.analyser,
               m = this.match,
-              h = new u.Conds(d, l),
-              f = this.output(e.outputType, e.outputBatchSize);
-        f.start();
+              h = new c.Conds(l, d),
+              _ = this.output(e.outputType, e.outputBatchSize);
 
-        const _ = (e, t) => {
-          const s = (0, r.newEventEntities)(this, e, t, h);
-          return f.msg(s);
+        _.start();
+
+        const f = (e, t) => {
+          const o = (0, r.newEventEntities)(this, e, t, h);
+          return _.msg(o);
         },
-              g = (e, t) => {
-          const s = (0, a.newEventMinimal)(this, e, t);
-          return f.msg(s);
+              v = (e, t) => {
+          const o = (0, a.newEventMinimal)(this, e, t);
+          return _.msg(o);
         };
 
-        let v = (e, t) => {};
+        let g = (e, t) => {};
 
-        v = e.parserMode === n.ParseMode.MINIMAL ? g : _;
-        let y = 0,
-            M = !1,
-            k = 0;
+        g = e.parserMode === n.ParseMode.MINIMAL ? v : f;
+        let k = 0,
+            y = !1,
+            M = 0;
 
-        for (const t of p.getMessages()) if (t.type === s.MessageType.Packet) for (const s of t.packets) {
+        for (const t of p.getMessages()) if (t.type === o.MessageType.Packet) for (const o of t.packets) {
           const r = m.tick - m.startTick,
-                a = () => r + y;
+                a = () => r + k;
 
-          if ("setPause" === s.packetType && (y += t.tick - r, s.paused ? (M = !0, i.includes("demotool_pause_start") && v((0, o.DemoToolEvents)({
+          if ("setPause" === o.packetType && (k += t.tick - r, o.paused ? (y = !0, u.includes("demotool_pause_start") && g((0, s.DemoToolEvents)({
             name: "demotool_pause_start",
             values: {}
-          }), a()), console.log(r, a(), "packet.paused", M, y)) : (M = !1, y += t.tick - r, i.includes("demotool_pause_end") && v((0, o.DemoToolEvents)({
+          }), a()), console.log(r, a(), "packet.paused", y, k), console.log("msg.tick", t.tick, "tick", r, "packetTick", M, "packetTick this", null == o ? void 0 : o.tick)) : (y = !1, k += t.tick - r, u.includes("demotool_pause_end") && g((0, s.DemoToolEvents)({
             name: "demotool_pause_end",
             values: {}
-          }), a()), console.log(r, a(), "packet.paused", M, y))), "gameEvent" === s.packetType && i.includes(s.event.name) && v(s.event, a()), "netTick" === s.packetType && s.tick > k) {
+          }), a()), console.log(r, a(), "packet.paused", y, k), console.log("msg.tick", t.tick, "tick", r, "packetTick", M, "packetTick this", null == o ? void 0 : o.tick))), "gameEvent" === o.packetType && (u.includes(o.event.name) && "demotool_player_hurt_others" !== o.event.name && g(o.event, a()), u.includes("demotool_player_hurt_others") && "player_hurt" === o.event.name && o.event.values.attacker !== o.event.values.userid && g(o.event, a())), "netTick" === o.packetType && o.tick > M) {
             for (const t of m.playerEntityMap.values()) {
-              const s = t.user.userId,
+              const o = t.user.userId,
                     r = e => this.lastTickConds.set(e, h.getActive(e, m));
 
-              if (e.parserMode === n.ParseMode.MINIMAL) return void r(s);
+              if (e.parserMode === n.ParseMode.MINIMAL) return void r(o);
 
-              const u = h.getActive(s, m),
-                    c = this.lastTickConds.get(s) || h.conds_placeholder(),
-                    d = e => this.db.set(s, e),
-                    l = () => {
-                let e = this.db.get(s);
-                return e || (e = h.dbEntry_placeholder(), d(e)), e;
+              const c = h.getActive(o, m),
+                    i = this.lastTickConds.get(o) || h.conds_placeholder(),
+                    l = e => this.db.set(o, e),
+                    d = () => {
+                let e = this.db.get(o);
+                return e || (e = h.dbEntry_placeholder(), l(e)), e;
               };
 
-              for (const [e, t] of Object.entries(u)) {
+              for (const [e, t] of Object.entries(c)) {
                 const n = e;
 
-                if (!1 === c[n] && !0 === t) {
-                  const e = l(),
+                if (!1 === i[n] && !0 === t) {
+                  const e = d(),
                         t = e[n];
                   t.push({
                     start: a(),
                     end: -1
-                  }), e[n] = t, d(e), i.includes("demotool_cond_start") && v((0, o.DemoToolEvents)({
+                  }), e[n] = t, l(e), u.includes("demotool_cond_start") && g((0, s.DemoToolEvents)({
                     name: "demotool_cond_start",
                     values: {
-                      userid: s,
+                      userid: o,
                       cond: n
                     }
                   }), a());
                 }
 
-                if (!0 === c[n] && !1 === t) {
-                  const e = l(),
+                if (!0 === i[n] && !1 === t) {
+                  const e = d(),
                         t = e[n],
                         r = t[t.length - 1];
-                  r.end = a(), d(e), i.includes("demotool_cond_end") && v((0, o.DemoToolEvents)({
+                  r.end = a(), l(e), u.includes("demotool_cond_end") && g((0, s.DemoToolEvents)({
                     name: "demotool_cond_end",
                     values: {
-                      userid: s,
+                      userid: o,
                       cond: n
                     }
-                  }), a()), i.includes("demotool_cond_duration") && v((0, o.DemoToolEvents)({
+                  }), a()), u.includes("demotool_cond_duration") && g((0, s.DemoToolEvents)({
                     name: "demotool_cond_duration",
                     values: {
-                      userid: s,
+                      userid: o,
                       cond: n,
                       start: r.start,
                       end: r.end,
@@ -6389,14 +6390,14 @@ parcelRequire = function (e, r, t, n) {
                 }
               }
 
-              r(s);
+              r(o);
             }
 
-            k = s.tick;
+            M = o.tick;
           }
         }
 
-        f.msg_last(), f.end();
+        _.msg_last(), _.end();
       }
 
       async getUsers() {
@@ -6409,7 +6410,7 @@ parcelRequire = function (e, r, t, n) {
 
     }
 
-    exports.DemoTool = d, e.expose(d);
+    exports.DemoTool = l, e.expose(l);
   }, {
     "comlink": "vZpu",
     "@demostf/demo.js/src": "ie32",

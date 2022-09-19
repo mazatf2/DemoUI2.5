@@ -822,7 +822,7 @@ async function getRounds(arrayBuffer) {
     rounds: [],
     users: []
   };
-  let demotool_worker = new Worker("https://mazatf2.github.io/DemoUI2.5/demotool.worker.8f3c07a2.js");
+  let demotool_worker = new Worker("https://mazatf2.github.io/DemoUI2.5/demotool.worker.444820e9.js");
   if (process && process?.versions?.electron) demotool_worker = new Worker('file:../lib/demotool.worker.js');
   const Demotool = Comlink.wrap(demotool_worker);
   const demotool = await new Demotool();
@@ -1208,4 +1208,4 @@ define('page-roundinfo', {
   }
 
 });
-},{"comlink":"JZPE","../../../commands.js":"pq01","../../../utils.js":"Ndla","./..\\..\\..\\..\\lib\\demotool.worker.js":[["demotool.worker.8f3c07a2.js","zs1v"],"zs1v"],"process":"pBGv"}]},{},["vvhj"], null)
+},{"comlink":"JZPE","../../../commands.js":"pq01","../../../utils.js":"Ndla","./..\\..\\..\\..\\lib\\demotool.worker.js":[["demotool.worker.444820e9.js","zs1v"],"zs1v"],"process":"pBGv"}]},{},["vvhj"], null)

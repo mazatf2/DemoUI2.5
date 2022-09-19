@@ -758,7 +758,7 @@ let db = [];
 
 async function getEvents(arrayBuffer) {
   if (arrayBuffer.byteLength < 100) return [];
-  let demotool_worker = new Worker("https://mazatf2.github.io/DemoUI2.5/demotool.worker.8f3c07a2.js");
+  let demotool_worker = new Worker("https://mazatf2.github.io/DemoUI2.5/demotool.worker.444820e9.js");
   if (process && process?.versions?.electron) demotool_worker = new Worker('file:../lib/demotool.worker.js');
   const Demotool = Comlink.wrap(demotool_worker);
   const demotool = await new Demotool();
@@ -766,7 +766,8 @@ async function getEvents(arrayBuffer) {
     arrayBuffer: arrayBuffer,
     outputBatchSize: 1,
     outputType: 'obj',
-    gameEvents: ['player_chargedeployed', 'player_death', 'crossbow_heal', 'rocket_jump', 'sticky_jump', 'demotool_pause_start', 'demotool_pause_end', 'demotool_cond_start', 'demotool_pause_end'],
+    gameEvents: ['player_chargedeployed', //'demotool_player_hurt_others',
+    'player_death', 'crossbow_heal', 'rocket_jump', 'sticky_jump', 'demotool_pause_start', 'demotool_pause_end', 'demotool_cond_start', 'demotool_pause_end'],
     conds: ['TF_COND_BLASTJUMPING', 'TF_COND_CRITBOOSTED', 'TF_COND_INVULNERABLE', 'TF_COND_INVULNERABLE_WEARINGOFF'],
     parserMode: 1
   }, Comlink.proxy(onGameEvent));
@@ -778,7 +779,7 @@ async function getEvents(arrayBuffer) {
 }
 
 function onGameEvent(eventArr) {
-  console.log(...eventArr);
+  //console.log(...eventArr)
   if (eventArr.length !== 1) debugger;
   const e = eventArr[0];
 
@@ -794,31 +795,38 @@ function onGameEvent(eventArr) {
   const event = ev => {
     ev.name = e.name;
     ev.tick = e.tick;
+    ev.event = e;
+    ev.steamIdFrom = ev.steamId;
+    ev.steamId = e.extend[ev.steamId];
     events.push(ev);
   };
 
+  on('player_hurt') && blasting() && event({
+    steamId: 'userid',
+    labelShort: 'Player got damaged from airshot while blasting'
+  });
   on('player_death') && blasting() && dmg_blast() && event({
-    steamId: e.extend.userid,
+    steamId: 'userid',
     labelShort: 'Player died from airshot while blasting'
   });
   on('player_death') && (e.extend_conds.attacker.TF_COND_BLASTJUMPING || e.extend_conds_last.attacker.BLASTJUMPING) && dmg_blast() && event({
-    steamId: e.extend.attacker,
+    steamId: 'attacker',
     labelShort: 'Attacker got airshot kill while blasting'
   });
   on('player_chargedeployed') && blasting() && event({
-    steamId: e.extend.userid,
+    steamId: 'userid',
     labelShort: 'ÜberCharge activated while blasting'
   });
   on('crossbow_heal') && (e.extend_conds.targetid.TF_COND_BLASTJUMPING || e.extend_conds_last.targetid.BLASTJUMPING) && event({
-    steamId: e.extend.userid,
+    steamId: 'userid',
     labelShort: 'Airshot healing arrow'
   });
   on('rocket_jump') || on('sticky_jump') && ubered() && event({
-    steamId: e.extend.userid,
+    steamId: 'userid',
     labelShort: 'Blast jump while ubered'
   });
   on('rocket_jump') || on('sticky_jump') && e.extend_conds.userid.TF_COND_CRITBOOSTED && event({
-    steamId: e.extend.userid,
+    steamId: 'userid',
     labelShort: 'Blast jump while kritzed'
   });
 
@@ -830,6 +838,28 @@ function onGameEvent(eventArr) {
 const Row = e => {
   const user = userInfo.find(i => i.steamId === e.steamId);
   const nickName = user.name || '';
+  const attackers = Object.entries(e.event.extend); //[[key,value], ...]
+
+  const attackersLen = Object.values(e.event.extend).filter(i => i).length;
+  let maybeAttackerId = '';
+  let maybeAttackerFrom = '';
+
+  if (attackersLen === 1) {
+    maybeAttackerId = e.event.extend[e.steamIdFrom];
+    maybeAttackerFrom = e.steamIdFrom;
+  }
+
+  if (attackersLen === 2) {
+    const temp = attackers.find(i => i[1] !== '' && i[0] !== e.steamIdFrom);
+    maybeAttackerFrom = temp[0];
+    maybeAttackerId = temp[1];
+  }
+
+  if (attackersLen === 3) {
+    maybeAttackerId = 'error';
+  }
+
+  const maybeAttackerName = userInfo.find(i => i.steamId === maybeAttackerId)?.name || '';
   return html`
 	<tr>
 		<td>${e.name}</td>
@@ -837,7 +867,8 @@ const Row = e => {
 		<td>${e.steamId}</td>
 		<td>${e.tick}</td>
 		<td>${e.labelShort}</td>
-		<td>${e.label}</td>
+		<td>${maybeAttackerName}</td>
+		<td>${maybeAttackerId}</td>
 	</tr>`;
 };
 
@@ -850,6 +881,7 @@ const Thead = () => {
 			<th>Steam id</th>
 			<th>Tick</th>
 			<th>Label</th>
+			<th></th>
 			<th></th>
 		</tr>
 	</thead>`;
@@ -893,4 +925,4 @@ define('page-events', {
   }
 
 });
-},{"comlink":"JZPE","./..\\..\\..\\..\\lib\\demotool.worker.js":[["demotool.worker.8f3c07a2.js","zs1v"],"zs1v"],"process":"pBGv"}]},{},["wLbz"], null)
+},{"comlink":"JZPE","./..\\..\\..\\..\\lib\\demotool.worker.js":[["demotool.worker.444820e9.js","zs1v"],"zs1v"],"process":"pBGv"}]},{},["wLbz"], null)
