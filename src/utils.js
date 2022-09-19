@@ -8,7 +8,7 @@ export let teams = {
 	neutral: 'neutral',
 	red: 'red',
 	blu: 'blu',
-	
+
 }
 
 for (const i of Object.keys(_teams)) {
@@ -24,5 +24,5 @@ export const strings = {
 	get(str) {
 		return this[str] || ''
 	},
-	
+
 }

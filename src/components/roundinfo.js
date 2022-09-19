@@ -2,15 +2,12 @@ const Comlink = require('comlink')
 const define = globalThis.define
 const html = globalThis.html
 const css = globalThis.css
-import {commands} from '../../../commands.js'
-import {strings, team_from_index, teams} from '../../../utils.js'
+import {strings, team_from_index, teams} from '../utils.js'
 
 async function getRounds(arrayBuffer) {
 	if (arrayBuffer.byteLength < 100) return {rounds: [], users: []}
 
-	let demotool_worker = new Worker('../../../../lib/demotool.worker.js')
-	if (process && process?.versions?.electron)
-		demotool_worker = new Worker('file:../lib/demotool.worker.js')
+	let demotool_worker = new Worker('../../lib/demotool.worker.js')
 	
 	const Demotool = Comlink.wrap(demotool_worker)
 	const demotool = await new Demotool()
@@ -111,9 +108,6 @@ const style = css`
 const GotoButton = (txt, tick, title = '') => {
 	return html`
 	<button
-		onclick=${() => {
-		commands.goto_tick(tick)
-	}}
 		title=${title}
 	>
 		${txt}
@@ -196,12 +190,8 @@ const RoundComponent = (round, options) => {
 		const offset = 200
 		const n = tick => Number(tick) - offset
 		
-		event(round.midCapture, 'cap-point/' + midWinner, () => {
-			commands.goto_tick(n(round.midCapture?.tick))
-		}, `Skip to mid point capture: ${round.midCapture?.tick}`)
-		event(round.firstDeath, 'health_dead', () => {
-			commands.goto_tick_extend(n(round.firstDeath?.tick), 'ce_cameratools_spec_steamid ' + round.firstDeath?.extend?.userid || '' )
-		}, `Skip to first kill: ${round.firstDeath?.tick}`)
+		event(round.midCapture, 'cap-point/' + midWinner, () => {}, `Skip to mid point capture: ${round.midCapture?.tick}`)
+		event(round.firstDeath, 'health_dead', () => {}, `Skip to first kill: ${round.firstDeath?.tick}`)
 	}
 	
 	return html`
