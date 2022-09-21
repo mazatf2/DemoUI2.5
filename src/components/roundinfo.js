@@ -230,7 +230,7 @@ let cpCaptures = []
 let deaths = []
 
 function onGameEvent(eventArr = []) {
-	console.log('onEvent', ...eventArr)
+	//console.log('onEvent', ...eventArr)
 	
 	const on = eventName => eventArr.filter(i => i.name === eventName)
 	

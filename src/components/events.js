@@ -18,7 +18,7 @@ async function getEvents(arrayBuffer) {
 	await demotool.parse({
 		arrayBuffer: arrayBuffer, outputBatchSize: 1, outputType: 'obj', gameEvents: [
 			'player_chargedeployed',
-			//'demotool_player_hurt_others',
+			'demotool_player_hurt_others',
 			'player_death',
 			'crossbow_heal',
 			'rocket_jump',
@@ -84,7 +84,7 @@ function onGameEvent(eventArr) {
 	on('rocket_jump') || on('sticky_jump') && e.extend_conds.userid.TF_COND_CRITBOOSTED
 	&& event({steamId: 'userid', labelShort: 'Blast jump while kritzed'})
 	
-	if (blasting()) {
+	if (blasting() && window.dev) {
 		console.log('blasting', e)
 	}
 }
