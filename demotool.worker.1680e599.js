@@ -173,7 +173,7 @@ parcelRequire = function (e, r, t, n) {
   if (parcelRequire = f, i) throw i;
   return f;
 }({
-  "vZpu": [function (require, module, exports) {
+  "dVJy": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -446,7 +446,7 @@ parcelRequire = function (e, r, t, n) {
       return new Array(4).fill(0).map(() => Math.floor(Math.random() * Number.MAX_SAFE_INTEGER).toString(16)).join("-");
     }
   }, {}],
-  "ZxbG": [function (require, module, exports) {
+  "QAnv": [function (require, module, exports) {
     "use strict";
 
     exports.byteLength = u, exports.toByteArray = i, exports.fromByteArray = d;
@@ -504,7 +504,7 @@ parcelRequire = function (e, r, t, n) {
 
     t["-".charCodeAt(0)] = 62, t["_".charCodeAt(0)] = 63;
   }, {}],
-  "xduo": [function (require, module, exports) {
+  "O1Qa": [function (require, module, exports) {
     exports.read = function (a, o, t, r, h) {
       var M,
           p,
@@ -544,14 +544,14 @@ parcelRequire = function (e, r, t, n) {
       a[t + s - u] |= 128 * l;
     };
   }, {}],
-  "MPXn": [function (require, module, exports) {
+  "ZCp3": [function (require, module, exports) {
     var r = {}.toString;
 
     module.exports = Array.isArray || function (t) {
       return "[object Array]" == r.call(t);
     };
   }, {}],
-  "ISQD": [function (require, module, exports) {
+  "fe91": [function (require, module, exports) {
     var global = arguments[3];
 
     var t = arguments[3],
@@ -1350,12 +1350,12 @@ parcelRequire = function (e, r, t, n) {
       return t != t;
     }
   }, {
-    "base64-js": "ZxbG",
-    "ieee754": "xduo",
-    "isarray": "MPXn",
-    "buffer": "ISQD"
+    "base64-js": "QAnv",
+    "ieee754": "O1Qa",
+    "isarray": "ZCp3",
+    "buffer": "fe91"
   }],
-  "pQ3g": [function (require, module, exports) {
+  "iwlb": [function (require, module, exports) {
     var Buffer = require("buffer").Buffer;
 
     var define;
@@ -1605,9 +1605,9 @@ parcelRequire = function (e, r, t, n) {
       });
     }();
   }, {
-    "buffer": "ISQD"
+    "buffer": "fe91"
   }],
-  "ta4y": [function (require, module, exports) {
+  "LMQS": [function (require, module, exports) {
     "use strict";
 
     var e,
@@ -1808,7 +1808,7 @@ parcelRequire = function (e, r, t, n) {
       return this._eventsCount > 0 ? e(this._events) : [];
     };
   }, {}],
-  "mHpU": [function (require, module, exports) {
+  "OreL": [function (require, module, exports) {
     "use strict";
 
     function e(e, i) {
@@ -1886,7 +1886,7 @@ parcelRequire = function (e, r, t, n) {
       value: !0
     }), exports.handleGameEvent = void 0, exports.handleGameEvent = e;
   }, {}],
-  "EhbX": [function (require, module, exports) {
+  "yzjq": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -1906,7 +1906,7 @@ parcelRequire = function (e, r, t, n) {
 
     exports.Vector = t;
   }, {}],
-  "qfWC": [function (require, module, exports) {
+  "h5UE": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -1945,9 +1945,9 @@ parcelRequire = function (e, r, t, n) {
 
     exports.SendProp = r;
   }, {
-    "./Vector": "EhbX"
+    "./Vector": "yzjq"
   }],
-  "YuTM": [function (require, module, exports) {
+  "zVSi": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -2017,9 +2017,9 @@ parcelRequire = function (e, r, t, n) {
 
     exports.PacketEntity = r;
   }, {
-    "./SendProp": "qfWC"
+    "./SendProp": "h5UE"
   }],
-  "Td55": [function (require, module, exports) {
+  "z4Yg": [function (require, module, exports) {
     "use strict";
 
     function e(e, n, a) {
@@ -2040,7 +2040,7 @@ parcelRequire = function (e, r, t, n) {
       value: !0
     }), exports.handleBaseEntity = void 0, exports.handleBaseEntity = e;
   }, {}],
-  "T7lR": [function (require, module, exports) {
+  "yRAc": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -2076,9 +2076,9 @@ parcelRequire = function (e, r, t, n) {
 
     exports.Player = i;
   }, {
-    "./Vector": "EhbX"
+    "./Vector": "yzjq"
   }],
-  "iop8": [function (require, module, exports) {
+  "KkD2": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -2301,9 +2301,9 @@ parcelRequire = function (e, r, t, n) {
 
     exports.handleHL2DMEntity = a;
   }, {
-    "../Data/Player": "T7lR"
+    "../Data/Player": "yRAc"
   }],
-  "WnF9": [function (require, module, exports) {
+  "M9RL": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -2750,11 +2750,11 @@ parcelRequire = function (e, r, t, n) {
 
     exports.handleTFEntity = n;
   }, {
-    "../Data/PacketEntity": "YuTM",
-    "../Data/Player": "T7lR",
-    "../Data/Vector": "EhbX"
+    "../Data/PacketEntity": "zVSi",
+    "../Data/Player": "yRAc",
+    "../Data/Vector": "yzjq"
   }],
-  "to3C": [function (require, module, exports) {
+  "wqyr": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -2789,12 +2789,12 @@ parcelRequire = function (e, r, t, n) {
 
     exports.handlePacketEntities = i, exports.handlePacketEntitiesForState = a;
   }, {
-    "../Data/PacketEntity": "YuTM",
-    "./BaseEntityHandler": "Td55",
-    "./HL2DMEntityHandler": "iop8",
-    "./TFEntityHandler": "WnF9"
+    "../Data/PacketEntity": "zVSi",
+    "./BaseEntityHandler": "z4Yg",
+    "./HL2DMEntityHandler": "KkD2",
+    "./TFEntityHandler": "M9RL"
   }],
-  "kxdJ": [function (require, module, exports) {
+  "lfy2": [function (require, module, exports) {
     "use strict";
 
     function e(e, t) {
@@ -2810,7 +2810,7 @@ parcelRequire = function (e, r, t, n) {
       value: !0
     }), exports.handleSayText2 = void 0, exports.handleSayText2 = e;
   }, {}],
-  "Sgvq": [function (require, module, exports) {
+  "BVWM": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -2924,11 +2924,11 @@ parcelRequire = function (e, r, t, n) {
 
     exports.Match = a;
   }, {
-    "../PacketHandler/GameEvent": "mHpU",
-    "../PacketHandler/PacketEntities": "to3C",
-    "../PacketHandler/SayText2": "kxdJ"
+    "../PacketHandler/GameEvent": "OreL",
+    "../PacketHandler/PacketEntities": "wqyr",
+    "../PacketHandler/SayText2": "lfy2"
   }],
-  "RT7P": [function (require, module, exports) {
+  "QLqZ": [function (require, module, exports) {
     "use strict";
 
     var e;
@@ -2938,7 +2938,7 @@ parcelRequire = function (e, r, t, n) {
       e[e.Sigon = 1] = "Sigon", e[e.Packet = 2] = "Packet", e[e.SyncTick = 3] = "SyncTick", e[e.ConsoleCmd = 4] = "ConsoleCmd", e[e.UserCmd = 5] = "UserCmd", e[e.DataTables = 6] = "DataTables", e[e.Stop = 7] = "Stop", e[e.StringTables = 8] = "StringTables";
     }(e = exports.MessageType || (exports.MessageType = {}));
   }, {}],
-  "XAae": [function (require, module, exports) {
+  "tjse": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -2983,11 +2983,11 @@ parcelRequire = function (e, r, t, n) {
 
     exports.Analyser = a;
   }, {
-    "events": "ta4y",
-    "./Data/Match": "Sgvq",
-    "./Data/Message": "RT7P"
+    "events": "LMQS",
+    "./Data/Match": "BVWM",
+    "./Data/Message": "QLqZ"
   }],
-  "d4Rl": [function (require, module, exports) {
+  "H8pU": [function (require, module, exports) {
     "use strict";
 
     var e;
@@ -2997,7 +2997,7 @@ parcelRequire = function (e, r, t, n) {
       e[e.file = 2] = "file", e[e.netTick = 3] = "netTick", e[e.stringCmd = 4] = "stringCmd", e[e.setConVar = 5] = "setConVar", e[e.sigOnState = 6] = "sigOnState", e[e.print = 7] = "print", e[e.serverInfo = 8] = "serverInfo", e[e.classInfo = 10] = "classInfo", e[e.setPause = 11] = "setPause", e[e.createStringTable = 12] = "createStringTable", e[e.updateStringTable = 13] = "updateStringTable", e[e.voiceInit = 14] = "voiceInit", e[e.voiceData = 15] = "voiceData", e[e.parseSounds = 17] = "parseSounds", e[e.setView = 18] = "setView", e[e.fixAngle = 19] = "fixAngle", e[e.bspDecal = 21] = "bspDecal", e[e.userMessage = 23] = "userMessage", e[e.entityMessage = 24] = "entityMessage", e[e.gameEvent = 25] = "gameEvent", e[e.packetEntities = 26] = "packetEntities", e[e.tempEntities = 27] = "tempEntities", e[e.preFetch = 28] = "preFetch", e[e.menu = 29] = "menu", e[e.gameEventList = 30] = "gameEventList", e[e.getCvarValue = 31] = "getCvarValue", e[e.cmdKeyValues = 32] = "cmdKeyValues";
     }(e = exports.PacketTypeId || (exports.PacketTypeId = {}));
   }, {}],
-  "oW0S": [function (require, module, exports) {
+  "kDn8": [function (require, module, exports) {
     "use strict";
 
     function e(e, t) {
@@ -3010,7 +3010,7 @@ parcelRequire = function (e, r, t, n) {
       value: !0
     }), exports.handleGameEventList = void 0, exports.handleGameEventList = e;
   }, {}],
-  "ZU6U": [function (require, module, exports) {
+  "kjDW": [function (require, module, exports) {
     "use strict";
 
     function e(e, t) {
@@ -3068,7 +3068,7 @@ parcelRequire = function (e, r, t, n) {
       value: !0
     }), exports.handleTable = exports.handleStringTableUpdate = exports.handleStringTables = exports.handleStringTable = void 0, exports.handleStringTable = e, exports.handleStringTables = t, exports.handleStringTableUpdate = n, exports.handleTable = a;
   }, {}],
-  "WPER": [function (require, module, exports) {
+  "WRKG": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -3170,12 +3170,12 @@ parcelRequire = function (e, r, t, n) {
 
     exports.ParserState = n, exports.getClassBits = i, exports.getSendTable = r, exports.createParserState = l;
   }, {
-    "../PacketHandler/GameEventList": "oW0S",
-    "../PacketHandler/PacketEntities": "to3C",
-    "../PacketHandler/StringTable": "ZU6U",
-    "./Message": "RT7P"
+    "../PacketHandler/GameEventList": "kDn8",
+    "../PacketHandler/PacketEntities": "wqyr",
+    "../PacketHandler/StringTable": "kjDW",
+    "./Message": "QLqZ"
   }],
-  "RzAz": [function (require, module, exports) {
+  "sUtz": [function (require, module, exports) {
     "use strict";
 
     function e(e) {
@@ -3202,7 +3202,7 @@ parcelRequire = function (e, r, t, n) {
       value: !0
     }), exports.encodeHeader = exports.parseHeader = void 0, exports.parseHeader = e, exports.encodeHeader = r;
   }, {}],
-  "FGKG": [function (require, module, exports) {
+  "OACT": [function (require, module, exports) {
     var define;
     var e;
     !function (t, n) {
@@ -3254,7 +3254,7 @@ parcelRequire = function (e, r, t, n) {
       };
     });
   }, {}],
-  "xi7q": [function (require, module, exports) {
+  "GtMa": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -3270,7 +3270,7 @@ parcelRequire = function (e, r, t, n) {
 
     exports.Parser = t;
   }, {}],
-  "yR1u": [function (require, module, exports) {
+  "x1Ky": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -3310,11 +3310,11 @@ parcelRequire = function (e, r, t, n) {
       }
     };
   }, {
-    "text-encoding-shim": "FGKG",
-    "../../Data/Message": "RT7P",
-    "./Parser": "xi7q"
+    "text-encoding-shim": "OACT",
+    "../../Data/Message": "QLqZ",
+    "./Parser": "GtMa"
   }],
-  "QFKZ": [function (require, module, exports) {
+  "B5Tw": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -3373,7 +3373,7 @@ parcelRequire = function (e, r, t, n) {
       P[P.SPROP_UNSIGNED = 1] = "SPROP_UNSIGNED", P[P.SPROP_COORD = 2] = "SPROP_COORD", P[P.SPROP_NOSCALE = 4] = "SPROP_NOSCALE", P[P.SPROP_ROUNDDOWN = 8] = "SPROP_ROUNDDOWN", P[P.SPROP_ROUNDUP = 16] = "SPROP_ROUNDUP", P[P.SPROP_NORMAL = 32] = "SPROP_NORMAL", P[P.SPROP_EXCLUDE = 64] = "SPROP_EXCLUDE", P[P.SPROP_XYZE = 128] = "SPROP_XYZE", P[P.SPROP_INSIDEARRAY = 256] = "SPROP_INSIDEARRAY", P[P.SPROP_PROXY_ALWAYS_YES = 512] = "SPROP_PROXY_ALWAYS_YES", P[P.SPROP_CHANGES_OFTEN = 1024] = "SPROP_CHANGES_OFTEN", P[P.SPROP_IS_A_VECTOR_ELEM = 2048] = "SPROP_IS_A_VECTOR_ELEM", P[P.SPROP_COLLAPSIBLE = 4096] = "SPROP_COLLAPSIBLE", P[P.SPROP_COORD_MP = 8192] = "SPROP_COORD_MP", P[P.SPROP_COORD_MP_LOWPRECISION = 16384] = "SPROP_COORD_MP_LOWPRECISION", P[P.SPROP_COORD_MP_INTEGRAL = 32768] = "SPROP_COORD_MP_INTEGRAL", P[P.SPROP_VARINT = 32] = "SPROP_VARINT";
     }(e = exports.SendPropFlag || (exports.SendPropFlag = {}));
   }, {}],
-  "ksIf": [function (require, module, exports) {
+  "hlX4": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -3436,9 +3436,9 @@ parcelRequire = function (e, r, t, n) {
 
     exports.SendTable = t;
   }, {
-    "./SendPropDefinition": "QFKZ"
+    "./SendPropDefinition": "B5Tw"
   }],
-  "sCSf": [function (require, module, exports) {
+  "Wijt": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -3454,7 +3454,7 @@ parcelRequire = function (e, r, t, n) {
 
     exports.ServerClass = e;
   }, {}],
-  "NX9B": [function (require, module, exports) {
+  "mMII": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -3570,12 +3570,12 @@ parcelRequire = function (e, r, t, n) {
       }
     };
   }, {
-    "../../Data/Message": "RT7P",
-    "../../Data/SendPropDefinition": "QFKZ",
-    "../../Data/SendTable": "ksIf",
-    "../../Data/ServerClass": "sCSf"
+    "../../Data/Message": "QLqZ",
+    "../../Data/SendPropDefinition": "B5Tw",
+    "../../Data/SendTable": "hlX4",
+    "../../Data/ServerClass": "Wijt"
   }],
-  "CHBE": [function (require, module, exports) {
+  "OpLt": [function (require, module, exports) {
     "use strict";
 
     function e(e) {
@@ -3590,7 +3590,7 @@ parcelRequire = function (e, r, t, n) {
       value: !0
     }), exports.logBase2 = void 0, exports.logBase2 = e;
   }, {}],
-  "OMjK": [function (require, module, exports) {
+  "qcki": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -3660,9 +3660,9 @@ parcelRequire = function (e, r, t, n) {
 
     exports.makeUnsigned = r, exports.readBitVar = e, exports.writeBitVar = i, exports.readUBitVar = e, exports.readVarInt = s, exports.writeVarInt = a;
   }, {
-    "../Math": "CHBE"
+    "../Math": "OpLt"
   }],
-  "fxUG": [function (require, module, exports) {
+  "Oirr": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -3789,12 +3789,12 @@ parcelRequire = function (e, r, t, n) {
 
     exports.SendPropParser = o;
   }, {
-    "../Data/SendPropDefinition": "QFKZ",
-    "../Data/Vector": "EhbX",
-    "../Math": "CHBE",
-    "./readBitVar": "OMjK"
+    "../Data/SendPropDefinition": "B5Tw",
+    "../Data/Vector": "yzjq",
+    "../Math": "OpLt",
+    "./readBitVar": "qcki"
   }],
-  "oCBX": [function (require, module, exports) {
+  "ByDl": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -3905,13 +3905,13 @@ parcelRequire = function (e, r, t, n) {
 
     exports.SendPropEncoder = a;
   }, {
-    "../Data/SendPropDefinition": "QFKZ",
-    "../Data/Vector": "EhbX",
-    "../Math": "CHBE",
-    "./readBitVar": "OMjK",
-    "./SendPropParser": "fxUG"
+    "../Data/SendPropDefinition": "B5Tw",
+    "../Data/Vector": "yzjq",
+    "../Math": "OpLt",
+    "./readBitVar": "qcki",
+    "./SendPropParser": "Oirr"
   }],
-  "wc6M": [function (require, module, exports) {
+  "j1p9": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -3957,10 +3957,10 @@ parcelRequire = function (e, r, t, n) {
 
     exports.getVecCoord = r, exports.encodeVecCoord = t, exports.ParseBSPDecal = n, exports.EncodeBSPDecal = d;
   }, {
-    "../SendPropEncoder": "oCBX",
-    "../SendPropParser": "fxUG"
+    "../SendPropEncoder": "ByDl",
+    "../SendPropParser": "Oirr"
   }],
-  "JIPy": [function (require, module, exports) {
+  "pVYJ": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -4005,9 +4005,9 @@ parcelRequire = function (e, r, t, n) {
 
     exports.ParseClassInfo = s, exports.EncodeClassInfo = t;
   }, {
-    "../../Math": "CHBE"
+    "../../Math": "OpLt"
   }],
-  "Ivwd": [function (require, module, exports) {
+  "Cror": [function (require, module, exports) {
     "use strict";
 
     var r = [0, 255, 65535, 16777215, 4294967295];
@@ -4068,7 +4068,7 @@ parcelRequire = function (e, r, t, n) {
       return !0;
     }, exports.SnappyDecompressor = s;
   }, {}],
-  "jsnR": [function (require, module, exports) {
+  "m9Mg": [function (require, module, exports) {
     "use strict";
 
     var r = 16,
@@ -4191,7 +4191,7 @@ parcelRequire = function (e, r, t, n) {
       return i;
     }, exports.SnappyCompressor = v;
   }, {}],
-  "r7L2": [function (require, module, exports) {
+  "rH1J": [function (require, module, exports) {
     var t,
         e,
         n = module.exports = {};
@@ -4295,7 +4295,7 @@ parcelRequire = function (e, r, t, n) {
       return 0;
     };
   }, {}],
-  "dxBK": [function (require, module, exports) {
+  "RdAC": [function (require, module, exports) {
     var process = require("process");
 
     var Buffer = require("buffer").Buffer;
@@ -4358,12 +4358,12 @@ parcelRequire = function (e, r, t, n) {
 
     exports.uncompress = p, exports.compress = u;
   }, {
-    "./snappy_decompressor": "Ivwd",
-    "./snappy_compressor": "jsnR",
-    "process": "r7L2",
-    "buffer": "ISQD"
+    "./snappy_decompressor": "Cror",
+    "./snappy_compressor": "m9Mg",
+    "process": "rH1J",
+    "buffer": "fe91"
   }],
-  "qjo0": [function (require, module, exports) {
+  "eIyi": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -4470,9 +4470,9 @@ parcelRequire = function (e, r, t, n) {
       return Math.min(r, n - 1);
     }
   }, {
-    "../Math": "CHBE"
+    "../Math": "OpLt"
   }],
-  "KL3D": [function (require, module, exports) {
+  "MCtB": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -4544,13 +4544,13 @@ parcelRequire = function (e, r, t, n) {
 
     exports.ParseCreateStringTable = n, exports.EncodeCreateStringTable = s;
   }, {
-    "bit-buffer": "pQ3g",
-    "../../Math": "CHBE",
-    "../readBitVar": "OMjK",
-    "snappyjs": "dxBK",
-    "../StringTableParser": "qjo0"
+    "bit-buffer": "iwlb",
+    "../../Math": "OpLt",
+    "../readBitVar": "qcki",
+    "snappyjs": "RdAC",
+    "../StringTableParser": "eIyi"
   }],
-  "boVx": [function (require, module, exports) {
+  "fYJ7": [function (require, module, exports) {
     "use strict";
 
     var e;
@@ -4560,7 +4560,7 @@ parcelRequire = function (e, r, t, n) {
       e[e.STRING = 1] = "STRING", e[e.FLOAT = 2] = "FLOAT", e[e.LONG = 3] = "LONG", e[e.SHORT = 4] = "SHORT", e[e.BYTE = 5] = "BYTE", e[e.BOOLEAN = 6] = "BOOLEAN", e[e.LOCAL = 7] = "LOCAL";
     }(e = exports.GameEventValueType || (exports.GameEventValueType = {}));
   }, {}],
-  "oOG8": [function (require, module, exports) {
+  "QEvd": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -4672,9 +4672,9 @@ parcelRequire = function (e, r, t, n) {
 
     exports.ParseGameEvent = o, exports.EncodeGameEvent = i;
   }, {
-    "../../Data/GameEvent": "boVx"
+    "../../Data/GameEvent": "fYJ7"
   }],
-  "W1EZ": [function (require, module, exports) {
+  "JJ5b": [function (require, module, exports) {
     "use strict";
 
     function e(e) {
@@ -4730,7 +4730,7 @@ parcelRequire = function (e, r, t, n) {
       value: !0
     }), exports.EncodeGameEventList = exports.ParseGameEventList = void 0, exports.ParseGameEventList = e, exports.EncodeGameEventList = t;
   }, {}],
-  "qjaL": [function (require, module, exports) {
+  "g9BL": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -4787,12 +4787,12 @@ parcelRequire = function (e, r, t, n) {
 
     exports.getEntityUpdate = o, exports.encodeEntityUpdate = i;
   }, {
-    "../Data/SendProp": "qfWC",
-    "./readBitVar": "OMjK",
-    "./SendPropEncoder": "oCBX",
-    "./SendPropParser": "fxUG"
+    "../Data/SendProp": "h5UE",
+    "./readBitVar": "qcki",
+    "./SendPropEncoder": "ByDl",
+    "./SendPropParser": "Oirr"
   }],
-  "u5gL": [function (require, module, exports) {
+  "l9AK": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -4941,12 +4941,12 @@ parcelRequire = function (e, r, t, n) {
 
     exports.ParsePacketEntities = E, exports.EncodePacketEntities = p;
   }, {
-    "../../Data/PacketEntity": "YuTM",
-    "../../Data/ParserState": "WPER",
-    "../EntityDecoder": "qjaL",
-    "../readBitVar": "OMjK"
+    "../../Data/PacketEntity": "zVSi",
+    "../../Data/ParserState": "WRKG",
+    "../EntityDecoder": "g9BL",
+    "../readBitVar": "qcki"
   }],
-  "D5tu": [function (require, module, exports) {
+  "RgkT": [function (require, module, exports) {
     "use strict";
 
     function t(t, n, s = "packetType", i = {}) {
@@ -5040,7 +5040,7 @@ parcelRequire = function (e, r, t, n) {
       value: !0
     }), exports.make = void 0, exports.make = t;
   }, {}],
-  "ClNU": [function (require, module, exports) {
+  "EDYg": [function (require, module, exports) {
     "use strict";
 
     function e(e) {
@@ -5064,7 +5064,7 @@ parcelRequire = function (e, r, t, n) {
       value: !0
     }), exports.EncodeParseSounds = exports.ParseParseSounds = void 0, exports.ParseParseSounds = e, exports.EncodeParseSounds = t;
   }, {}],
-  "PPjv": [function (require, module, exports) {
+  "IqTV": [function (require, module, exports) {
     "use strict";
 
     function e(e) {
@@ -5093,7 +5093,7 @@ parcelRequire = function (e, r, t, n) {
       value: !0
     }), exports.EncodeSetConVar = exports.ParseSetConVar = void 0, exports.ParseSetConVar = e, exports.EncodeSetConVar = r;
   }, {}],
-  "hk9m": [function (require, module, exports) {
+  "GcNy": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -5116,9 +5116,9 @@ parcelRequire = function (e, r, t, n) {
 
     exports.DynamicBitView = t;
   }, {
-    "bit-buffer": "pQ3g"
+    "bit-buffer": "iwlb"
   }],
-  "dNMu": [function (require, module, exports) {
+  "RbPo": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -5141,10 +5141,10 @@ parcelRequire = function (e, r, t, n) {
 
     exports.DynamicBitStream = r;
   }, {
-    "bit-buffer": "pQ3g",
-    "./DynamicBitView": "hk9m"
+    "bit-buffer": "iwlb",
+    "./DynamicBitView": "GcNy"
   }],
-  "V2ft": [function (require, module, exports) {
+  "mb8e": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -5211,13 +5211,13 @@ parcelRequire = function (e, r, t, n) {
 
     exports.ParseTempEntities = s, exports.EncodeTempEntities = a;
   }, {
-    "../../Data/PacketEntity": "YuTM",
-    "../../Data/ParserState": "WPER",
-    "../../DynamicBitStream": "dNMu",
-    "../EntityDecoder": "qjaL",
-    "../readBitVar": "OMjK"
+    "../../Data/PacketEntity": "zVSi",
+    "../../Data/ParserState": "WRKG",
+    "../../DynamicBitStream": "RbPo",
+    "../EntityDecoder": "g9BL",
+    "../readBitVar": "qcki"
   }],
-  "iXwx": [function (require, module, exports) {
+  "vu7p": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -5258,9 +5258,9 @@ parcelRequire = function (e, r, t, n) {
 
     exports.ParseUpdateStringTable = t, exports.EncodeUpdateStringTable = r;
   }, {
-    "../StringTableParser": "qjo0"
+    "../StringTableParser": "eIyi"
   }],
-  "aUhx": [function (require, module, exports) {
+  "S9Zo": [function (require, module, exports) {
     "use strict";
 
     var e, a;
@@ -5272,7 +5272,7 @@ parcelRequire = function (e, r, t, n) {
       e[e.HUD_PRINTNOTIFY = 1] = "HUD_PRINTNOTIFY", e[e.HUD_PRINTCONSOLE = 2] = "HUD_PRINTCONSOLE", e[e.HUD_PRINTTALK = 3] = "HUD_PRINTTALK", e[e.HUD_PRINTCENTER = 4] = "HUD_PRINTCENTER";
     }(a = exports.HudTextLocation || (exports.HudTextLocation = {})), exports.UserMessagePacketTypeMap = new Map([["sayText2", e.SayText2], ["textMsg", e.TextMsg], ["train", e.Train], ["voiceSubtitle", e.VoiceSubtitle], ["breakModelPumpkin", e.BreakModel_Pumpkin], ["resetHUD", e.ResetHUD], ["shake", e.Shake], ["unknownUserMessage", -1]]);
   }, {}],
-  "kC6x": [function (require, module, exports) {
+  "JB5U": [function (require, module, exports) {
     "use strict";
 
     function e(e) {
@@ -5319,7 +5319,7 @@ parcelRequire = function (e, r, t, n) {
       value: !0
     }), exports.EncodeSayText2 = exports.ParseSayText2 = void 0, exports.ParseSayText2 = e, exports.EncodeSayText2 = t;
   }, {}],
-  "ZZ0S": [function (require, module, exports) {
+  "Wpmj": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -5392,11 +5392,11 @@ parcelRequire = function (e, r, t, n) {
 
     exports.ParseUserMessage = n, exports.EncodeUserMessage = i;
   }, {
-    "../../Data/UserMessage": "aUhx",
-    "../UserMessage/SayText2": "kC6x",
-    "./ParserGenerator": "D5tu"
+    "../../Data/UserMessage": "S9Zo",
+    "../UserMessage/SayText2": "JB5U",
+    "./ParserGenerator": "RgkT"
   }],
-  "IMa8": [function (require, module, exports) {
+  "IvQE": [function (require, module, exports) {
     "use strict";
 
     function t(t) {
@@ -5420,7 +5420,7 @@ parcelRequire = function (e, r, t, n) {
       value: !0
     }), exports.EncodeVoiceData = exports.ParseVoiceData = void 0, exports.ParseVoiceData = t, exports.EncodeVoiceData = e;
   }, {}],
-  "Hhet": [function (require, module, exports) {
+  "wd0f": [function (require, module, exports) {
     "use strict";
 
     function t(t) {
@@ -5446,7 +5446,7 @@ parcelRequire = function (e, r, t, n) {
       value: !0
     }), exports.EncodeVoiceInit = exports.ParseVoiceInit = void 0, exports.ParseVoiceInit = t, exports.EncodeVoiceInit = i;
   }, {}],
-  "Wvot": [function (require, module, exports) {
+  "rmgk": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -5582,25 +5582,25 @@ parcelRequire = function (e, r, t, n) {
       }
     };
   }, {
-    "../Packet/BSPDecal": "wc6M",
-    "../Packet/ClassInfo": "JIPy",
-    "../Packet/CreateStringTable": "KL3D",
-    "../Packet/GameEvent": "oOG8",
-    "../Packet/GameEventList": "W1EZ",
-    "../Packet/PacketEntities": "u5gL",
-    "../Packet/ParserGenerator": "D5tu",
-    "../Packet/ParseSounds": "ClNU",
-    "../Packet/SetConVar": "PPjv",
-    "../Packet/TempEntities": "V2ft",
-    "../Packet/UpdateStringTable": "iXwx",
-    "../Packet/UserMessage": "ZZ0S",
-    "../Packet/VoiceData": "IMa8",
-    "../Packet/VoiceInit": "Hhet",
-    "../../Data/Message": "RT7P",
-    "../../Data/Packet": "d4Rl",
-    "../../Data/Vector": "EhbX"
+    "../Packet/BSPDecal": "j1p9",
+    "../Packet/ClassInfo": "pVYJ",
+    "../Packet/CreateStringTable": "MCtB",
+    "../Packet/GameEvent": "QEvd",
+    "../Packet/GameEventList": "JJ5b",
+    "../Packet/PacketEntities": "l9AK",
+    "../Packet/ParserGenerator": "RgkT",
+    "../Packet/ParseSounds": "EDYg",
+    "../Packet/SetConVar": "IqTV",
+    "../Packet/TempEntities": "mb8e",
+    "../Packet/UpdateStringTable": "vu7p",
+    "../Packet/UserMessage": "Wpmj",
+    "../Packet/VoiceData": "IvQE",
+    "../Packet/VoiceInit": "wd0f",
+    "../../Data/Message": "QLqZ",
+    "../../Data/Packet": "H8pU",
+    "../../Data/Vector": "yzjq"
   }],
-  "TZRC": [function (require, module, exports) {
+  "yBKN": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -5617,9 +5617,9 @@ parcelRequire = function (e, r, t, n) {
       encodeMessage: (e, s) => {}
     };
   }, {
-    "../../Data/Message": "RT7P"
+    "../../Data/Message": "QLqZ"
   }],
-  "uuHh": [function (require, module, exports) {
+  "A8Cn": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -5716,9 +5716,9 @@ parcelRequire = function (e, r, t, n) {
       }
     };
   }, {
-    "../../Data/Message": "RT7P"
+    "../../Data/Message": "QLqZ"
   }],
-  "lgtr": [function (require, module, exports) {
+  "svLs": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -5741,9 +5741,9 @@ parcelRequire = function (e, r, t, n) {
       }
     };
   }, {
-    "../../Data/Message": "RT7P"
+    "../../Data/Message": "QLqZ"
   }],
-  "ua8e": [function (require, module, exports) {
+  "n1Ny": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -5770,9 +5770,9 @@ parcelRequire = function (e, r, t, n) {
       }
     };
   }, {
-    "../../Data/Message": "RT7P"
+    "../../Data/Message": "QLqZ"
   }],
-  "uaCG": [function (require, module, exports) {
+  "iwgC": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -5845,19 +5845,19 @@ parcelRequire = function (e, r, t, n) {
 
     exports.Parser = l;
   }, {
-    "./Data/Message": "RT7P",
-    "./Data/Packet": "d4Rl",
-    "./Data/ParserState": "WPER",
-    "./Parser/Header": "RzAz",
-    "./Parser/Message/ConsoleCmd": "yR1u",
-    "./Parser/Message/DataTable": "NX9B",
-    "./Parser/Message/Packet": "Wvot",
-    "./Parser/Message/Stop": "TZRC",
-    "./Parser/Message/StringTable": "uuHh",
-    "./Parser/Message/SyncTick": "lgtr",
-    "./Parser/Message/UserCmd": "ua8e"
+    "./Data/Message": "QLqZ",
+    "./Data/Packet": "H8pU",
+    "./Data/ParserState": "WRKG",
+    "./Parser/Header": "sUtz",
+    "./Parser/Message/ConsoleCmd": "x1Ky",
+    "./Parser/Message/DataTable": "mMII",
+    "./Parser/Message/Packet": "rmgk",
+    "./Parser/Message/Stop": "yBKN",
+    "./Parser/Message/StringTable": "A8Cn",
+    "./Parser/Message/SyncTick": "svLs",
+    "./Parser/Message/UserCmd": "n1Ny"
   }],
-  "zDeL": [function (require, module, exports) {
+  "y7Ci": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -5908,12 +5908,12 @@ parcelRequire = function (e, r, t, n) {
 
     exports.Demo = i;
   }, {
-    "bit-buffer": "pQ3g",
-    "./Analyser": "XAae",
-    "./Data/Packet": "d4Rl",
-    "./Parser": "uaCG"
+    "bit-buffer": "iwlb",
+    "./Analyser": "tjse",
+    "./Data/Packet": "H8pU",
+    "./Parser": "iwgC"
   }],
-  "laxe": [function (require, module, exports) {
+  "Ox55": [function (require, module, exports) {
     "use strict";
 
     var _;
@@ -5924,21 +5924,21 @@ parcelRequire = function (e, r, t, n) {
       _[_.TF_COND_AIMING = 0] = "TF_COND_AIMING", _[_.TF_COND_ZOOMED = 1] = "TF_COND_ZOOMED", _[_.TF_COND_DISGUISING = 2] = "TF_COND_DISGUISING", _[_.TF_COND_DISGUISED = 3] = "TF_COND_DISGUISED", _[_.TF_COND_STEALTHED = 4] = "TF_COND_STEALTHED", _[_.TF_COND_INVULNERABLE = 5] = "TF_COND_INVULNERABLE", _[_.TF_COND_TELEPORTED = 6] = "TF_COND_TELEPORTED", _[_.TF_COND_TAUNTING = 7] = "TF_COND_TAUNTING", _[_.TF_COND_INVULNERABLE_WEARINGOFF = 8] = "TF_COND_INVULNERABLE_WEARINGOFF", _[_.TF_COND_STEALTHED_BLINK = 9] = "TF_COND_STEALTHED_BLINK", _[_.TF_COND_SELECTED_TO_TELEPORT = 10] = "TF_COND_SELECTED_TO_TELEPORT", _[_.TF_COND_CRITBOOSTED = 11] = "TF_COND_CRITBOOSTED", _[_.TF_COND_TMPDAMAGEBONUS = 12] = "TF_COND_TMPDAMAGEBONUS", _[_.TF_COND_FEIGN_DEATH = 13] = "TF_COND_FEIGN_DEATH", _[_.TF_COND_PHASE = 14] = "TF_COND_PHASE", _[_.TF_COND_STUNNED = 15] = "TF_COND_STUNNED", _[_.TF_COND_OFFENSEBUFF = 16] = "TF_COND_OFFENSEBUFF", _[_.TF_COND_SHIELD_CHARGE = 17] = "TF_COND_SHIELD_CHARGE", _[_.TF_COND_DEMO_BUFF = 18] = "TF_COND_DEMO_BUFF", _[_.TF_COND_ENERGY_BUFF = 19] = "TF_COND_ENERGY_BUFF", _[_.TF_COND_RADIUSHEAL = 20] = "TF_COND_RADIUSHEAL", _[_.TF_COND_HEALTH_BUFF = 21] = "TF_COND_HEALTH_BUFF", _[_.TF_COND_BURNING = 22] = "TF_COND_BURNING", _[_.TF_COND_HEALTH_OVERHEALED = 23] = "TF_COND_HEALTH_OVERHEALED", _[_.TF_COND_URINE = 24] = "TF_COND_URINE", _[_.TF_COND_BLEEDING = 25] = "TF_COND_BLEEDING", _[_.TF_COND_DEFENSEBUFF = 26] = "TF_COND_DEFENSEBUFF", _[_.TF_COND_MAD_MILK = 27] = "TF_COND_MAD_MILK", _[_.TF_COND_MEGAHEAL = 28] = "TF_COND_MEGAHEAL", _[_.TF_COND_REGENONDAMAGEBUFF = 29] = "TF_COND_REGENONDAMAGEBUFF", _[_.TF_COND_MARKEDFORDEATH = 30] = "TF_COND_MARKEDFORDEATH", _[_.TF_COND_NOHEALINGDAMAGEBUFF = 31] = "TF_COND_NOHEALINGDAMAGEBUFF", _[_.TF_COND_SPEED_BOOST = 32] = "TF_COND_SPEED_BOOST", _[_.TF_COND_CRITBOOSTED_PUMPKIN = 33] = "TF_COND_CRITBOOSTED_PUMPKIN", _[_.TF_COND_CRITBOOSTED_USER_BUFF = 34] = "TF_COND_CRITBOOSTED_USER_BUFF", _[_.TF_COND_CRITBOOSTED_DEMO_CHARGE = 35] = "TF_COND_CRITBOOSTED_DEMO_CHARGE", _[_.TF_COND_SODAPOPPER_HYPE = 36] = "TF_COND_SODAPOPPER_HYPE", _[_.TF_COND_CRITBOOSTED_FIRST_BLOOD = 37] = "TF_COND_CRITBOOSTED_FIRST_BLOOD", _[_.TF_COND_CRITBOOSTED_BONUS_TIME = 38] = "TF_COND_CRITBOOSTED_BONUS_TIME", _[_.TF_COND_CRITBOOSTED_CTF_CAPTURE = 39] = "TF_COND_CRITBOOSTED_CTF_CAPTURE", _[_.TF_COND_CRITBOOSTED_ON_KILL = 40] = "TF_COND_CRITBOOSTED_ON_KILL", _[_.TF_COND_CANNOT_SWITCH_FROM_MELEE = 41] = "TF_COND_CANNOT_SWITCH_FROM_MELEE", _[_.TF_COND_DEFENSEBUFF_NO_CRIT_BLOCK = 42] = "TF_COND_DEFENSEBUFF_NO_CRIT_BLOCK", _[_.TF_COND_REPROGRAMMED = 43] = "TF_COND_REPROGRAMMED", _[_.TF_COND_CRITBOOSTED_RAGE_BUFF = 44] = "TF_COND_CRITBOOSTED_RAGE_BUFF", _[_.TF_COND_DEFENSEBUFF_HIGH = 45] = "TF_COND_DEFENSEBUFF_HIGH", _[_.TF_COND_SNIPERCHARGE_RAGE_BUFF = 46] = "TF_COND_SNIPERCHARGE_RAGE_BUFF", _[_.TF_COND_DISGUISE_WEARINGOFF = 47] = "TF_COND_DISGUISE_WEARINGOFF", _[_.TF_COND_MARKEDFORDEATH_SILENT = 48] = "TF_COND_MARKEDFORDEATH_SILENT", _[_.TF_COND_DISGUISED_AS_DISPENSER = 49] = "TF_COND_DISGUISED_AS_DISPENSER", _[_.TF_COND_SAPPED = 50] = "TF_COND_SAPPED", _[_.TF_COND_INVULNERABLE_HIDE_UNLESS_DAMAGED = 51] = "TF_COND_INVULNERABLE_HIDE_UNLESS_DAMAGED", _[_.TF_COND_INVULNERABLE_USER_BUFF = 52] = "TF_COND_INVULNERABLE_USER_BUFF", _[_.TF_COND_HALLOWEEN_BOMB_HEAD = 53] = "TF_COND_HALLOWEEN_BOMB_HEAD", _[_.TF_COND_HALLOWEEN_THRILLER = 54] = "TF_COND_HALLOWEEN_THRILLER", _[_.TF_COND_RADIUSHEAL_ON_DAMAGE = 55] = "TF_COND_RADIUSHEAL_ON_DAMAGE", _[_.TF_COND_CRITBOOSTED_CARD_EFFECT = 56] = "TF_COND_CRITBOOSTED_CARD_EFFECT", _[_.TF_COND_INVULNERABLE_CARD_EFFECT = 57] = "TF_COND_INVULNERABLE_CARD_EFFECT", _[_.TF_COND_MEDIGUN_UBER_BULLET_RESIST = 58] = "TF_COND_MEDIGUN_UBER_BULLET_RESIST", _[_.TF_COND_MEDIGUN_UBER_BLAST_RESIST = 59] = "TF_COND_MEDIGUN_UBER_BLAST_RESIST", _[_.TF_COND_MEDIGUN_UBER_FIRE_RESIST = 60] = "TF_COND_MEDIGUN_UBER_FIRE_RESIST", _[_.TF_COND_MEDIGUN_SMALL_BULLET_RESIST = 61] = "TF_COND_MEDIGUN_SMALL_BULLET_RESIST", _[_.TF_COND_MEDIGUN_SMALL_BLAST_RESIST = 62] = "TF_COND_MEDIGUN_SMALL_BLAST_RESIST", _[_.TF_COND_MEDIGUN_SMALL_FIRE_RESIST = 63] = "TF_COND_MEDIGUN_SMALL_FIRE_RESIST", _[_.TF_COND_STEALTHED_USER_BUFF = 64] = "TF_COND_STEALTHED_USER_BUFF", _[_.TF_COND_MEDIGUN_DEBUFF = 65] = "TF_COND_MEDIGUN_DEBUFF", _[_.TF_COND_STEALTHED_USER_BUFF_FADING = 66] = "TF_COND_STEALTHED_USER_BUFF_FADING", _[_.TF_COND_BULLET_IMMUNE = 67] = "TF_COND_BULLET_IMMUNE", _[_.TF_COND_BLAST_IMMUNE = 68] = "TF_COND_BLAST_IMMUNE", _[_.TF_COND_FIRE_IMMUNE = 69] = "TF_COND_FIRE_IMMUNE", _[_.TF_COND_PREVENT_DEATH = 70] = "TF_COND_PREVENT_DEATH", _[_.TF_COND_MVM_BOT_STUN_RADIOWAVE = 71] = "TF_COND_MVM_BOT_STUN_RADIOWAVE", _[_.TF_COND_HALLOWEEN_SPEED_BOOST = 72] = "TF_COND_HALLOWEEN_SPEED_BOOST", _[_.TF_COND_HALLOWEEN_QUICK_HEAL = 73] = "TF_COND_HALLOWEEN_QUICK_HEAL", _[_.TF_COND_HALLOWEEN_GIANT = 74] = "TF_COND_HALLOWEEN_GIANT", _[_.TF_COND_HALLOWEEN_TINY = 75] = "TF_COND_HALLOWEEN_TINY", _[_.TF_COND_HALLOWEEN_IN_HELL = 76] = "TF_COND_HALLOWEEN_IN_HELL", _[_.TF_COND_HALLOWEEN_GHOST_MODE = 77] = "TF_COND_HALLOWEEN_GHOST_MODE", _[_.TF_COND_MINICRITBOOSTED_ON_KILL = 78] = "TF_COND_MINICRITBOOSTED_ON_KILL", _[_.TF_COND_OBSCURED_SMOKE = 79] = "TF_COND_OBSCURED_SMOKE", _[_.TF_COND_PARACHUTE_ACTIVE = 80] = "TF_COND_PARACHUTE_ACTIVE", _[_.TF_COND_BLASTJUMPING = 81] = "TF_COND_BLASTJUMPING", _[_.TF_COND_HALLOWEEN_KART = 82] = "TF_COND_HALLOWEEN_KART", _[_.TF_COND_HALLOWEEN_KART_DASH = 83] = "TF_COND_HALLOWEEN_KART_DASH", _[_.TF_COND_BALLOON_HEAD = 84] = "TF_COND_BALLOON_HEAD", _[_.TF_COND_MELEE_ONLY = 85] = "TF_COND_MELEE_ONLY", _[_.TF_COND_SWIMMING_CURSE = 86] = "TF_COND_SWIMMING_CURSE", _[_.TF_COND_FREEZE_INPUT = 87] = "TF_COND_FREEZE_INPUT", _[_.TF_COND_HALLOWEEN_KART_CAGE = 88] = "TF_COND_HALLOWEEN_KART_CAGE", _[_.TF_COND_DONOTUSE_0 = 89] = "TF_COND_DONOTUSE_0", _[_.TF_COND_RUNE_STRENGTH = 90] = "TF_COND_RUNE_STRENGTH", _[_.TF_COND_RUNE_HASTE = 91] = "TF_COND_RUNE_HASTE", _[_.TF_COND_RUNE_REGEN = 92] = "TF_COND_RUNE_REGEN", _[_.TF_COND_RUNE_RESIST = 93] = "TF_COND_RUNE_RESIST", _[_.TF_COND_RUNE_VAMPIRE = 94] = "TF_COND_RUNE_VAMPIRE", _[_.TF_COND_RUNE_REFLECT = 95] = "TF_COND_RUNE_REFLECT", _[_.TF_COND_RUNE_PRECISION = 96] = "TF_COND_RUNE_PRECISION", _[_.TF_COND_RUNE_AGILITY = 97] = "TF_COND_RUNE_AGILITY", _[_.TF_COND_GRAPPLINGHOOK = 98] = "TF_COND_GRAPPLINGHOOK", _[_.TF_COND_GRAPPLINGHOOK_SAFEFALL = 99] = "TF_COND_GRAPPLINGHOOK_SAFEFALL", _[_.TF_COND_GRAPPLINGHOOK_LATCHED = 100] = "TF_COND_GRAPPLINGHOOK_LATCHED", _[_.TF_COND_GRAPPLINGHOOK_BLEEDING = 101] = "TF_COND_GRAPPLINGHOOK_BLEEDING", _[_.TF_COND_AFTERBURN_IMMUNE = 102] = "TF_COND_AFTERBURN_IMMUNE", _[_.TF_COND_RUNE_KNOCKOUT = 103] = "TF_COND_RUNE_KNOCKOUT", _[_.TF_COND_RUNE_IMBALANCE = 104] = "TF_COND_RUNE_IMBALANCE", _[_.TF_COND_CRITBOOSTED_RUNE_TEMP = 105] = "TF_COND_CRITBOOSTED_RUNE_TEMP", _[_.TF_COND_PASSTIME_INTERCEPTION = 106] = "TF_COND_PASSTIME_INTERCEPTION", _[_.TF_COND_SWIMMING_NO_EFFECTS = 107] = "TF_COND_SWIMMING_NO_EFFECTS", _[_.TF_COND_PURGATORY = 108] = "TF_COND_PURGATORY", _[_.TF_COND_RUNE_KING = 109] = "TF_COND_RUNE_KING", _[_.TF_COND_RUNE_PLAGUE = 110] = "TF_COND_RUNE_PLAGUE", _[_.TF_COND_RUNE_SUPERNOVA = 111] = "TF_COND_RUNE_SUPERNOVA", _[_.TF_COND_PLAGUE = 112] = "TF_COND_PLAGUE", _[_.TF_COND_KING_BUFFED = 113] = "TF_COND_KING_BUFFED", _[_.TF_COND_TEAM_GLOWS = 114] = "TF_COND_TEAM_GLOWS", _[_.TF_COND_KNOCKED_INTO_AIR = 115] = "TF_COND_KNOCKED_INTO_AIR", _[_.TF_COND_COMPETITIVE_WINNER = 116] = "TF_COND_COMPETITIVE_WINNER", _[_.TF_COND_COMPETITIVE_LOSER = 117] = "TF_COND_COMPETITIVE_LOSER", _[_.TF_COND_HEALING_DEBUFF = 118] = "TF_COND_HEALING_DEBUFF", _[_.TF_COND_PASSTIME_PENALTY_DEBUFF = 119] = "TF_COND_PASSTIME_PENALTY_DEBUFF", _[_.TF_COND_GRAPPLED_TO_PLAYER = 120] = "TF_COND_GRAPPLED_TO_PLAYER", _[_.TF_COND_GRAPPLED_BY_PLAYER = 121] = "TF_COND_GRAPPLED_BY_PLAYER", _[_.TF_COND_PARACHUTE_DEPLOYED = 122] = "TF_COND_PARACHUTE_DEPLOYED", _[_.TF_COND_GAS = 123] = "TF_COND_GAS", _[_.TF_COND_BURNING_PYRO = 124] = "TF_COND_BURNING_PYRO", _[_.TF_COND_ROCKETPACK = 125] = "TF_COND_ROCKETPACK", _[_.TF_COND_LOST_FOOTING = 126] = "TF_COND_LOST_FOOTING", _[_.TF_COND_AIR_CURRENT = 127] = "TF_COND_AIR_CURRENT", _[_.TF_COND_HALLOWEEN_HELL_HEAL = 128] = "TF_COND_HALLOWEEN_HELL_HEAL";
     }(_ = exports.PlayerCondition || (exports.PlayerCondition = {}));
   }, {}],
-  "ipew": [function (require, module, exports) {
+  "fv66": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
       value: !0
     }), exports.GameEventTypeIdMap = void 0, exports.GameEventTypeIdMap = new Map([["server_spawn", 0], ["server_changelevel_failed", 1], ["server_shutdown", 2], ["server_cvar", 3], ["server_message", 4], ["server_addban", 5], ["server_removeban", 6], ["player_connect", 7], ["player_connect_client", 8], ["player_info", 9], ["player_disconnect", 10], ["player_activate", 11], ["player_say", 12], ["client_disconnect", 13], ["client_beginconnect", 14], ["client_connected", 15], ["client_fullconnect", 16], ["host_quit", 17], ["team_info", 18], ["team_score", 19], ["teamplay_broadcast_audio", 20], ["player_team", 21], ["player_class", 22], ["player_death", 23], ["player_hurt", 24], ["player_chat", 25], ["player_score", 26], ["player_spawn", 27], ["player_shoot", 28], ["player_use", 29], ["player_changename", 30], ["player_hintmessage", 31], ["base_player_teleported", 32], ["game_init", 33], ["game_newmap", 34], ["game_start", 35], ["game_end", 36], ["round_start", 37], ["round_end", 38], ["game_message", 39], ["break_breakable", 40], ["break_prop", 41], ["entity_killed", 42], ["bonus_updated", 43], ["achievement_event", 44], ["achievement_increment", 45], ["physgun_pickup", 46], ["flare_ignite_npc", 47], ["helicopter_grenade_punt_miss", 48], ["user_data_downloaded", 49], ["ragdoll_dissolved", 50], ["hltv_changed_mode", 51], ["hltv_changed_target", 52], ["vote_ended", 53], ["vote_started", 54], ["vote_changed", 55], ["vote_passed", 56], ["vote_failed", 57], ["vote_cast", 58], ["vote_options", 59], ["replay_saved", 60], ["entered_performance_mode", 61], ["browse_replays", 62], ["replay_youtube_stats", 63], ["inventory_updated", 64], ["cart_updated", 65], ["store_pricesheet_updated", 66], ["gc_connected", 67], ["item_schema_initialized", 68], ["intro_finish", 69], ["intro_nextcamera", 70], ["mm_lobby_chat", 71], ["mm_lobby_member_join", 72], ["mm_lobby_member_leave", 73], ["player_changeclass", 74], ["tf_map_time_remaining", 75], ["tf_game_over", 76], ["ctf_flag_captured", 77], ["controlpoint_initialized", 78], ["controlpoint_updateimages", 79], ["controlpoint_updatelayout", 80], ["controlpoint_updatecapping", 81], ["controlpoint_updateowner", 82], ["controlpoint_starttouch", 83], ["controlpoint_endtouch", 84], ["controlpoint_pulse_element", 85], ["controlpoint_fake_capture", 86], ["controlpoint_fake_capture_mult", 87], ["teamplay_round_selected", 88], ["teamplay_round_start", 89], ["teamplay_round_active", 90], ["teamplay_waiting_begins", 91], ["teamplay_waiting_ends", 92], ["teamplay_waiting_abouttoend", 93], ["teamplay_restart_round", 94], ["teamplay_ready_restart", 95], ["teamplay_round_restart_seconds", 96], ["teamplay_team_ready", 97], ["teamplay_round_win", 98], ["teamplay_update_timer", 99], ["teamplay_round_stalemate", 100], ["teamplay_overtime_begin", 101], ["teamplay_overtime_end", 102], ["teamplay_suddendeath_begin", 103], ["teamplay_suddendeath_end", 104], ["teamplay_game_over", 105], ["teamplay_map_time_remaining", 106], ["teamplay_timer_flash", 107], ["teamplay_timer_time_added", 108], ["teamplay_point_startcapture", 109], ["teamplay_point_captured", 110], ["teamplay_point_locked", 111], ["teamplay_point_unlocked", 112], ["teamplay_capture_broken", 113], ["teamplay_capture_blocked", 114], ["teamplay_flag_event", 115], ["teamplay_win_panel", 116], ["teamplay_teambalanced_player", 117], ["teamplay_setup_finished", 118], ["teamplay_alert", 119], ["training_complete", 120], ["show_freezepanel", 121], ["hide_freezepanel", 122], ["freezecam_started", 123], ["localplayer_changeteam", 124], ["localplayer_score_changed", 125], ["localplayer_changeclass", 126], ["localplayer_respawn", 127], ["building_info_changed", 128], ["localplayer_changedisguise", 129], ["player_account_changed", 130], ["spy_pda_reset", 131], ["flagstatus_update", 132], ["player_stats_updated", 133], ["playing_commentary", 134], ["player_chargedeployed", 135], ["player_builtobject", 136], ["player_upgradedobject", 137], ["player_carryobject", 138], ["player_dropobject", 139], ["object_removed", 140], ["object_destroyed", 141], ["object_detonated", 142], ["achievement_earned", 143], ["spec_target_updated", 144], ["tournament_stateupdate", 145], ["tournament_enablecountdown", 146], ["player_calledformedic", 147], ["player_askedforball", 148], ["localplayer_becameobserver", 149], ["player_ignited_inv", 150], ["player_ignited", 151], ["player_extinguished", 152], ["player_teleported", 153], ["player_healedmediccall", 154], ["localplayer_chargeready", 155], ["localplayer_winddown", 156], ["player_invulned", 157], ["escort_speed", 158], ["escort_progress", 159], ["escort_recede", 160], ["gameui_activated", 161], ["gameui_hidden", 162], ["player_escort_score", 163], ["player_healonhit", 164], ["player_stealsandvich", 165], ["show_class_layout", 166], ["show_vs_panel", 167], ["player_damaged", 168], ["arena_player_notification", 169], ["arena_match_maxstreak", 170], ["arena_round_start", 171], ["arena_win_panel", 172], ["pve_win_panel", 173], ["air_dash", 174], ["landed", 175], ["player_damage_dodged", 176], ["player_stunned", 177], ["scout_grand_slam", 178], ["scout_slamdoll_landed", 179], ["arrow_impact", 180], ["player_jarated", 181], ["player_jarated_fade", 182], ["player_shield_blocked", 183], ["player_pinned", 184], ["player_healedbymedic", 185], ["player_sapped_object", 186], ["item_found", 187], ["show_annotation", 188], ["hide_annotation", 189], ["post_inventory_application", 190], ["controlpoint_unlock_updated", 191], ["deploy_buff_banner", 192], ["player_buff", 193], ["medic_death", 194], ["overtime_nag", 195], ["teams_changed", 196], ["halloween_pumpkin_grab", 197], ["rocket_jump", 198], ["rocket_jump_landed", 199], ["sticky_jump", 200], ["sticky_jump_landed", 201], ["medic_defended", 202], ["localplayer_healed", 203], ["player_destroyed_pipebomb", 204], ["object_deflected", 205], ["player_mvp", 206], ["raid_spawn_mob", 207], ["raid_spawn_squad", 208], ["nav_blocked", 209], ["path_track_passed", 210], ["num_cappers_changed", 211], ["player_regenerate", 212], ["update_status_item", 213], ["stats_resetround", 214], ["scorestats_accumulated_update", 215], ["scorestats_accumulated_reset", 216], ["achievement_earned_local", 217], ["player_healed", 218], ["building_healed", 219], ["item_pickup", 220], ["duel_status", 221], ["fish_notice", 222], ["fish_notice__arm", 223], ["throwable_hit", 224], ["pumpkin_lord_summoned", 225], ["pumpkin_lord_killed", 226], ["merasmus_summoned", 227], ["merasmus_killed", 228], ["merasmus_escape_warning", 229], ["merasmus_escaped", 230], ["eyeball_boss_summoned", 231], ["eyeball_boss_stunned", 232], ["eyeball_boss_killed", 233], ["eyeball_boss_killer", 234], ["eyeball_boss_escape_imminent", 235], ["eyeball_boss_escaped", 236], ["npc_hurt", 237], ["controlpoint_timer_updated", 238], ["player_highfive_start", 239], ["player_highfive_cancel", 240], ["player_highfive_success", 241], ["player_bonuspoints", 242], ["player_upgraded", 243], ["player_buyback", 244], ["player_used_powerup_bottle", 245], ["christmas_gift_grab", 246], ["player_killed_achievement_zone", 247], ["party_updated", 248], ["lobby_updated", 249], ["mvm_mission_update", 250], ["recalculate_holidays", 251], ["player_currency_changed", 252], ["doomsday_rocket_open", 253], ["remove_nemesis_relationships", 254], ["mvm_creditbonus_wave", 255], ["mvm_creditbonus_all", 256], ["mvm_creditbonus_all_advanced", 257], ["mvm_quick_sentry_upgrade", 258], ["mvm_tank_destroyed_by_players", 259], ["mvm_kill_robot_delivering_bomb", 260], ["mvm_pickup_currency", 261], ["mvm_bomb_carrier_killed", 262], ["mvm_sentrybuster_detonate", 263], ["mvm_scout_marked_for_death", 264], ["mvm_medic_powerup_shared", 265], ["mvm_begin_wave", 266], ["mvm_wave_complete", 267], ["mvm_mission_complete", 268], ["mvm_bomb_reset_by_player", 269], ["mvm_bomb_alarm_triggered", 270], ["mvm_bomb_deploy_reset_by_player", 271], ["mvm_wave_failed", 272], ["mvm_reset_stats", 273], ["damage_resisted", 274], ["revive_player_notify", 275], ["revive_player_stopped", 276], ["revive_player_complete", 277], ["player_turned_to_ghost", 278], ["medigun_shield_blocked_damage", 279], ["mvm_adv_wave_complete_no_gates", 280], ["mvm_sniper_headshot_currency", 281], ["mvm_mannhattan_pit", 282], ["flag_carried_in_detection_zone", 283], ["mvm_adv_wave_killed_stun_radio", 284], ["player_directhit_stun", 285], ["mvm_sentrybuster_killed", 286], ["upgrades_file_changed", 287], ["rd_team_points_changed", 288], ["rd_rules_state_changed", 289], ["rd_robot_killed", 290], ["rd_robot_impact", 291], ["teamplay_pre_round_time_left", 292], ["parachute_deploy", 293], ["parachute_holster", 294], ["kill_refills_meter", 295], ["rps_taunt_event", 296], ["conga_kill", 297], ["player_initial_spawn", 298], ["competitive_victory", 299], ["competitive_stats_update", 300], ["minigame_win", 301], ["sentry_on_go_active", 302], ["duck_xp_level_up", 303], ["questlog_opened", 304], ["schema_updated", 305], ["localplayer_pickup_weapon", 306], ["rd_player_score_points", 307], ["demoman_det_stickies", 308], ["quest_objective_completed", 309], ["player_score_changed", 310], ["killed_capping_player", 311], ["environmental_death", 312], ["projectile_direct_hit", 313], ["pass_get", 314], ["pass_score", 315], ["pass_free", 316], ["pass_pass_caught", 317], ["pass_ball_stolen", 318], ["pass_ball_blocked", 319], ["damage_prevented", 320], ["halloween_boss_killed", 321], ["escaped_loot_island", 322], ["tagged_player_as_it", 323], ["merasmus_stunned", 324], ["merasmus_prop_found", 325], ["halloween_skeleton_killed", 326], ["escape_hell", 327], ["cross_spectral_bridge", 328], ["minigame_won", 329], ["respawn_ghost", 330], ["kill_in_hell", 331], ["halloween_duck_collected", 332], ["special_score", 333], ["team_leader_killed", 334], ["halloween_soul_collected", 335], ["recalculate_truce", 336], ["deadringer_cheat_death", 337], ["crossbow_heal", 338], ["damage_mitigated", 339], ["payload_pushed", 340], ["player_abandoned_match", 341], ["cl_drawline", 342], ["restart_timer_time", 343], ["winlimit_changed", 344], ["winpanel_show_scores", 345], ["top_streams_request_finished", 346], ["competitive_state_changed", 347], ["global_war_data_updated", 348], ["stop_watch_changed", 349], ["ds_stop", 350], ["ds_screenshot", 351], ["show_match_summary", 352], ["experience_changed", 353], ["begin_xp_lerp", 354], ["matchmaker_stats_updated", 355], ["rematch_vote_period_over", 356], ["rematch_failed_to_create", 357], ["player_rematch_change", 358], ["ping_updated", 359], ["player_next_map_vote_change", 360], ["vote_maps_changed", 361], ["hltv_status", 362], ["hltv_cameraman", 363], ["hltv_rank_camera", 364], ["hltv_rank_entity", 365], ["hltv_fixed", 366], ["hltv_chase", 367], ["hltv_message", 368], ["hltv_title", 369], ["hltv_chat", 370], ["replay_startrecord", 371], ["replay_sessioninfo", 372], ["replay_endrecord", 373], ["replay_replaysavailable", 374], ["replay_servererror", 375]]);
   }, {}],
-  "hVJd": [function (require, module, exports) {
+  "WzNp": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
       value: !0
     });
   }, {}],
-  "ie32": [function (require, module, exports) {
+  "iDkm": [function (require, module, exports) {
     "use strict";
 
     Object.defineProperty(exports, "__esModule", {
@@ -6081,20 +6081,20 @@ parcelRequire = function (e, r, t, n) {
       }
     });
   }, {
-    "./Demo": "zDeL",
-    "./Parser": "uaCG",
-    "./Data/Match": "Sgvq",
-    "./Data/Player": "T7lR",
-    "./Data/PlayerCondition": "laxe",
-    "./Data/GameEventTypes": "ipew",
-    "./Data/PacketEntity": "YuTM",
-    "./Data/SendPropDefinition": "QFKZ",
-    "./Data/SendProp": "qfWC",
-    "./Data/Vector": "EhbX",
-    "./Data/World": "hVJd",
-    "./Data/UserInfo": "hVJd",
-    "./Data/Header": "hVJd",
-    "./Data/Packet": "d4Rl"
+    "./Demo": "y7Ci",
+    "./Parser": "iwgC",
+    "./Data/Match": "BVWM",
+    "./Data/Player": "yRAc",
+    "./Data/PlayerCondition": "Ox55",
+    "./Data/GameEventTypes": "fv66",
+    "./Data/PacketEntity": "zVSi",
+    "./Data/SendPropDefinition": "B5Tw",
+    "./Data/SendProp": "h5UE",
+    "./Data/Vector": "yzjq",
+    "./Data/World": "WzNp",
+    "./Data/UserInfo": "WzNp",
+    "./Data/Header": "WzNp",
+    "./Data/Packet": "H8pU"
   }],
   "TFPF": [function (require, module, exports) {
     "use strict";
@@ -6203,7 +6203,7 @@ parcelRequire = function (e, r, t, n) {
 
     exports.Conds = o;
   }, {
-    "@demostf/demo.js/src": "ie32"
+    "@demostf/demo.js/src": "iDkm"
   }],
   "YPVd": [function (require, module, exports) {
     "use strict";
@@ -6412,11 +6412,11 @@ parcelRequire = function (e, r, t, n) {
 
     exports.DemoTool = l, e.expose(l);
   }, {
-    "comlink": "vZpu",
-    "@demostf/demo.js/src": "ie32",
-    "@demostf/demo.js/src/Data/Message": "RT7P",
+    "comlink": "dVJy",
+    "@demostf/demo.js/src": "iDkm",
+    "@demostf/demo.js/src/Data/Message": "QLqZ",
     "./demoToolEvents": "TFPF",
-    "@demostf/demo.js/src/Demo": "zDeL",
+    "@demostf/demo.js/src/Demo": "y7Ci",
     "./newEventEntities": "Yg8T",
     "./newEventMinimal": "HNes",
     "./conds": "E25O"

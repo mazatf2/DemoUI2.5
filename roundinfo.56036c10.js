@@ -535,28 +535,7 @@ function requestResponseMessage(ep, msg, transfers) {
 function generateUUID() {
   return new Array(4).fill(0).map(() => Math.floor(Math.random() * Number.MAX_SAFE_INTEGER).toString(16)).join("-");
 }
-},{}],"pq01":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.commands = void 0;
-
-const commandOut = (type, arg) => {
-  const event = new CustomEvent(type + '', {
-    detail: arg
-  });
-  window.dispatchEvent(event);
-};
-
-const commands = {
-  goto_tick_extend: (tick, extend) => commandOut('app.goto_tick', `demo_gototick ${tick}; ${extend || ''}`),
-  goto_tick: tick => commandOut('app.goto_tick', 'demo_gototick ' + tick),
-  exec: str => commandOut('app.exec', str)
-};
-exports.commands = commands;
-},{}],"Ndla":[function(require,module,exports) {
+},{}],"O3AG":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -593,223 +572,11 @@ const strings = {
 
 };
 exports.strings = strings;
-},{}],"pBGv":[function(require,module,exports) {
+},{}],"wrOX":[function(require,module,exports) {
 
-// shim for using process in browser
-var process = module.exports = {}; // cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-  throw new Error('setTimeout has not been defined');
-}
-
-function defaultClearTimeout() {
-  throw new Error('clearTimeout has not been defined');
-}
-
-(function () {
-  try {
-    if (typeof setTimeout === 'function') {
-      cachedSetTimeout = setTimeout;
-    } else {
-      cachedSetTimeout = defaultSetTimout;
-    }
-  } catch (e) {
-    cachedSetTimeout = defaultSetTimout;
-  }
-
-  try {
-    if (typeof clearTimeout === 'function') {
-      cachedClearTimeout = clearTimeout;
-    } else {
-      cachedClearTimeout = defaultClearTimeout;
-    }
-  } catch (e) {
-    cachedClearTimeout = defaultClearTimeout;
-  }
-})();
-
-function runTimeout(fun) {
-  if (cachedSetTimeout === setTimeout) {
-    //normal enviroments in sane situations
-    return setTimeout(fun, 0);
-  } // if setTimeout wasn't available but was latter defined
-
-
-  if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-    cachedSetTimeout = setTimeout;
-    return setTimeout(fun, 0);
-  }
-
-  try {
-    // when when somebody has screwed with setTimeout but no I.E. maddness
-    return cachedSetTimeout(fun, 0);
-  } catch (e) {
-    try {
-      // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-      return cachedSetTimeout.call(null, fun, 0);
-    } catch (e) {
-      // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-      return cachedSetTimeout.call(this, fun, 0);
-    }
-  }
-}
-
-function runClearTimeout(marker) {
-  if (cachedClearTimeout === clearTimeout) {
-    //normal enviroments in sane situations
-    return clearTimeout(marker);
-  } // if clearTimeout wasn't available but was latter defined
-
-
-  if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-    cachedClearTimeout = clearTimeout;
-    return clearTimeout(marker);
-  }
-
-  try {
-    // when when somebody has screwed with setTimeout but no I.E. maddness
-    return cachedClearTimeout(marker);
-  } catch (e) {
-    try {
-      // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-      return cachedClearTimeout.call(null, marker);
-    } catch (e) {
-      // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-      // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-      return cachedClearTimeout.call(this, marker);
-    }
-  }
-}
-
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-  if (!draining || !currentQueue) {
-    return;
-  }
-
-  draining = false;
-
-  if (currentQueue.length) {
-    queue = currentQueue.concat(queue);
-  } else {
-    queueIndex = -1;
-  }
-
-  if (queue.length) {
-    drainQueue();
-  }
-}
-
-function drainQueue() {
-  if (draining) {
-    return;
-  }
-
-  var timeout = runTimeout(cleanUpNextTick);
-  draining = true;
-  var len = queue.length;
-
-  while (len) {
-    currentQueue = queue;
-    queue = [];
-
-    while (++queueIndex < len) {
-      if (currentQueue) {
-        currentQueue[queueIndex].run();
-      }
-    }
-
-    queueIndex = -1;
-    len = queue.length;
-  }
-
-  currentQueue = null;
-  draining = false;
-  runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-  var args = new Array(arguments.length - 1);
-
-  if (arguments.length > 1) {
-    for (var i = 1; i < arguments.length; i++) {
-      args[i - 1] = arguments[i];
-    }
-  }
-
-  queue.push(new Item(fun, args));
-
-  if (queue.length === 1 && !draining) {
-    runTimeout(drainQueue);
-  }
-}; // v8 likes predictible objects
-
-
-function Item(fun, array) {
-  this.fun = fun;
-  this.array = array;
-}
-
-Item.prototype.run = function () {
-  this.fun.apply(null, this.array);
-};
-
-process.title = 'browser';
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) {
-  return [];
-};
-
-process.binding = function (name) {
-  throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () {
-  return '/';
-};
-
-process.chdir = function (dir) {
-  throw new Error('process.chdir is not supported');
-};
-
-process.umask = function () {
-  return 0;
-};
-},{}],"vvhj":[function(require,module,exports) {
-
-var process = require("process");
 "use strict";
 
-var _commands = require("../../../commands.js");
-
-var _utils = require("../../../utils.js");
+var _utils = require("../utils.js");
 
 const Comlink = require('comlink');
 
@@ -822,8 +589,7 @@ async function getRounds(arrayBuffer) {
     rounds: [],
     users: []
   };
-  let demotool_worker = new Worker("https://mazatf2.github.io/DemoUI2.5/demotool.worker.444820e9.js");
-  if (process && process?.versions?.electron) demotool_worker = new Worker('file:../lib/demotool.worker.js');
+  let demotool_worker = new Worker("https://mazatf2.github.io/DemoUI2.5/demotool.worker.1680e599.js");
   const Demotool = Comlink.wrap(demotool_worker);
   const demotool = await new Demotool();
   await demotool.parse({
@@ -906,9 +672,6 @@ const style = css`
 const GotoButton = (txt, tick, title = '') => {
   return html`
 	<button
-		onclick=${() => {
-    _commands.commands.goto_tick(tick);
-  }}
 		title=${title}
 	>
 		${txt}
@@ -992,12 +755,8 @@ const RoundComponent = (round, options) => {
 
     const n = tick => Number(tick) - offset;
 
-    event(round.midCapture, 'cap-point/' + midWinner, () => {
-      _commands.commands.goto_tick(n(round.midCapture?.tick));
-    }, `Skip to mid point capture: ${round.midCapture?.tick}`);
-    event(round.firstDeath, 'health_dead', () => {
-      _commands.commands.goto_tick_extend(n(round.firstDeath?.tick), 'ce_cameratools_spec_steamid ' + round.firstDeath?.extend?.userid || '');
-    }, `Skip to first kill: ${round.firstDeath?.tick}`);
+    event(round.midCapture, 'cap-point/' + midWinner, () => {}, `Skip to mid point capture: ${round.midCapture?.tick}`);
+    event(round.firstDeath, 'health_dead', () => {}, `Skip to first kill: ${round.firstDeath?.tick}`);
   }
 
   return html`
@@ -1048,8 +807,7 @@ let cpCaptures = [];
 let deaths = [];
 
 function onGameEvent(eventArr = []) {
-  console.log('onEvent', ...eventArr);
-
+  //console.log('onEvent', ...eventArr)
   const on = eventName => eventArr.filter(i => i.name === eventName);
 
   const newPause = on('demotool_pause_start');
@@ -1208,4 +966,4 @@ define('page-roundinfo', {
   }
 
 });
-},{"comlink":"JZPE","../../../commands.js":"pq01","../../../utils.js":"Ndla","./..\\..\\..\\..\\lib\\demotool.worker.js":[["demotool.worker.444820e9.js","zs1v"],"zs1v"],"process":"pBGv"}]},{},["vvhj"], null)
+},{"comlink":"JZPE","../utils.js":"O3AG","./..\\..\\lib\\demotool.worker.js":[["demotool.worker.1680e599.js","zs1v"],"zs1v"]}]},{},["wrOX"], null)
